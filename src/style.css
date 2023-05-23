@@ -1,0 +1,24 @@
+body {
+    width: max-content;
+    height: auto;
+    display: flex;
+    background-color: grey;
+    justify-content: center;
+}
+
+footer {
+    position: fixed; /*que la posicion sea fija independiente del contenido*/
+    left:0px; /* que a la izquierda no tenga margen o padding??*/
+    bottom:0px; /* que abajo no tenga margen o padding??*/
+    width: 100%; /* que su ancho sea el 100% de su contenedor*/
+    background-color: white;
+    opacity: 0.5;
+    text-align: center;
+    
+}
+
+footer p {
+    font-family: 'verdana' ;
+    font-size: smaller;
+}
+
