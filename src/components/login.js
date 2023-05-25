@@ -6,8 +6,8 @@ export const login = () => {
   document.body.style.backgroundColor = '#ffffff';
   const header = document.getElementById('header');
   header.style.backgroundImage = 'url("Images/header.jpg")';
-  const homeDiv = document.createElement('div');
-  homeDiv.setAttribute('class', 'loginDiv');
+  const loginDiv = document.createElement('div');
+  loginDiv.setAttribute('class', 'loginDiv');
   const menu = document.createElement('div');
   menu.setAttribute('id', 'menu');
   menu.setAttribute('class', 'menu');
@@ -19,20 +19,17 @@ export const login = () => {
   buttonMenu.setAttribute('class', 'buttonMenu');
   buttonMenu.setAttribute('id', 'buttonMenu');
   buttonMenu.innerHTML = `
-  <img src="Images/menu.png" alt="buttonMenu"></button>`;
+  <img src="Images/menu.png" alt="buttonMenu">`;
 
-  const buttonHome = document.createElement('button');
   const menuOptionsDiv = document.createElement('div');
   menuOptionsDiv.setAttribute('class', 'menuOptionsDiv');
   menuOptionsDiv.setAttribute('id', 'menuOptionsDiv');
 
-  buttonHome.textContent = 'Regresar al Home';
-
-  homeDiv.appendChild(menu);
+  loginDiv.appendChild(menu);
   menu.appendChild(labelLogin);
   menu.appendChild(buttonMenu);
 
-  homeDiv.innerHTML += `
+  loginDiv.innerHTML += `
   <input type="text" class="inputLogin" id="inputLogin" placeholder="Escribe tu publicación aquí">
   <br>
   <button class="buttonPublicar">Publicar</button>
@@ -40,20 +37,21 @@ export const login = () => {
   <div class="containerPublications">Aquí irán las publicaciones</div>
   <br>`;
 
-  homeDiv.appendChild(buttonHome);
+  menuOptionsDiv.innerHTML = `
+        <button class="close" id="close"><img src="Images/9.png" alt="buttonMenu"></button>
+        <a href="" class="optionMenu" id="acercaDe" style="text-decoration:none">Acerca de</a>
+        <a href="" class="optionMenu" id="perfil" style="text-decoration:none">Perfil</a>
+        <a href="" class="optionMenu" id="cerrarSesion" style="text-decoration:none">Cerrar sesión</a>`;
 
-  homeDiv
-    .querySelector('#menu')
-    .insertAdjacentElement('beforeend', menuOptionsDiv);
-
-  homeDiv.querySelector('#buttonMenu').addEventListener('click', () => {
-    menuOptionsDiv.innerHTML = `
-    <a href="" class="optionMenu" id="acercaDe" style="text-decoration:none">Acerca de</a>
-    <a href="" class="optionMenu" id="perfil" style="text-decoration:none">Perfil</a>
-    <a href="" class="optionMenu" id="cerrarSesion" style="text-decoration:none">Cerrar sesión</a>`;
-    console.log(menuOptionsDiv);
+  loginDiv.querySelector('#buttonMenu').addEventListener('click', () => {
+    menuOptionsDiv.style.display = 'block';
+    menuOptionsDiv.style.display = 'flex';
+    loginDiv.querySelector('#menu').insertAdjacentElement('beforeend', menuOptionsDiv);
+    loginDiv.querySelector('#menu').querySelector('#close').addEventListener('click', () => {
+      menuOptionsDiv.style.display = 'none';
+    });
+    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => onNavigate('/'));
   });
 
-  buttonHome.addEventListener('click', () => onNavigate('/'));
-  return homeDiv;
+  return loginDiv;
 };
