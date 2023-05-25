@@ -2,96 +2,122 @@ html {
     box-sizing: border-box;
     max-width: 99%;
     font-family: "Open Sans", sans-serif;
+}
 
+button{
+    font-family: "Open Sans", sans-serif;
 }
 
 body {
     width: 100%;
-    height: auto;
-    padding-top: 120px;
+    height: 100%;
     display: flex;
-    justify-content: center;
-    background-color:gray;
+    flex-direction: column;
     background-size: cover; /*la imagen cubre la pantalla*/
     background-position: center center; /*centra la imagen vertila y horizontalmente*/
     background-attachment: fixed; /*se fija la imagen para que la altura de la imagen no supera el contenido*/
 }
 
-#iniciarSesionDiv {
-    width: 220px;
-    height: 350px;
+.root{
     display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: center;
-    background-color: transparent ;
-
+    justify-content: center;
 }
 
-#iniciarSesionDiv p {
+/*--------------------------HEADER ROUTES------------------------*/
+header img {
+    height: 7em;
+    margin-left: 8px;
+    margin-top: 10px;
+    margin-bottom: 25px;
+}
+
+/*--------------------------HOME------------------------*/
+
+
+#iniciarSesionDiv {
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 350px;
+    align-items: center;
+    background-color: transparent ;
+}
+
+#homeTitle {
     display: flex;
     margin-bottom: 0%;
     font-family: 'Glacial Indifference', sans-serif;
+    font-size: 2em;
+    margin: 0;
 }
 
-#parrafo {
-    font-size:x-large;
-    font-weight:bold;
-    margin-bottom: 0;
-    text-decoration: underline;
+
+#line {
+    background-color: black;
+    width: 17em;
+    height: .3em;
 }
 
 #iniciarSesionDiv2 {
-    width: 280px;
-    height: 220px;
+    width: 17em;
+    gap: 15px;
     display: flex;
     flex-direction: column;
     justify-content: space-around;
     align-items: start;
     background-color: rgba(255, 255, 255, 0.7); 
-    padding-left: 20px ;
-    padding-bottom: 15px;
-    border-radius: 7%;
+    border-radius: 20px;
+    padding: 1em;
+    padding-bottom: 2em;
+    padding-left: 3em;
 }
+
 
 #iniciarSesionDiv2 input {
-    background-color: #2CD3E1;
-    
+    background-color: rgba(44, 211, 225, 1);
+    color: rgba(95, 95, 95, 1);
+    font-size: 1.1em;
+    font-family: 'Glacial Indifference', sans-serif;
+    border: none;
+    height: 2em;
 }
 
-#iniciarSesionDiv label {
-    margin-top: 20px;
+
+#ingresarConDiv {
     font-family: 'Glacial Indifference', sans-serif;
     font-weight:bold;
+    font-size: 1.1em;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10%;
+    padding: 1.5%;
     
 }
 
-
-
 #buttonLogin {
-    width: 180px;
-    height: 40px;
-    background-color: #F266AB;
+    width: 9.5em;
+    height: 2.2em;
+    background-color: rgba(242, 102, 171, 1);
     border-radius: 20px;
     border-color: white;
-    border-width: 2px;
+    font-size: 1.3em;
     font-weight: bold;
-    font-size: large;
-    font-family:'Glacial Indifference', sans-serif ;
-    margin: 20px;
+    margin: 1em;
+    margin-bottom: 0;
+    align-self: center;
 }
 
 #buttonRegister {
-    width: 180px;
-    height: 40px;
-    background-color: #FFC519;
+    width: 9.5em;
+    height: 2.2em;
+    background-color: rgba(255, 197, 25, 1);
     border-radius: 20px;
     border-color: white;
+    font-size: 1.3em;
     font-weight: bold;
-    font-size: large;
-    border-width: 2px;
-    font-family:'Glacial Indifference', sans-serif; 
+    margin: 1em;
+    align-self: center;
 }
+
 
 #socialNetworksDiv {
     margin-top: 20px;
@@ -106,16 +132,82 @@ body {
     height: 30px;
 }
 
+/*--------------------------REGISTER------------------------*/
+
+.registerContainer{
+    display: flex;
+    flex-direction: column;
+}
+
+.containerFormRegister{
+    background-color: rgba(255, 255, 255, 0.70);
+    display: flex;
+    flex-direction: column; 
+    padding: 1em;
+    padding-bottom: 2em;
+    border-radius: 20px;
+    width: 17em;
+    gap: 15px;
+}
+
+.registerTitle{
+    font-size: 2em;
+    margin: 0;
+}
+
+.line {
+    background-color: black;
+    width: 17em;
+    height: .3em;
+}
+
+.labelRegister{
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.inputRegister{
+    background-color: rgba(44, 211, 225, 1);
+    color: rgba(95, 95, 95, 1);
+    font-size: 1.1em;
+    font-family: 'Glacial Indifference', sans-serif;
+    border: none;
+    height: 2em;
+}
+
+.buttonRegister{
+    background-color: rgba(242, 102, 171, 1);
+    border-radius: 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-color: white;
+    width: 9.5em;
+    height: 2.2em;
+    margin: 1em;
+    align-self: center;
+}
+.buttonBackHomeRegister{
+    background-color: rgba(255, 197, 25, 1);
+    border-radius: 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-color: white;
+    width: 9.5em;
+    height: 2.2em;
+    margin: 1em;
+    align-self: center;
+}
+
+/*---------------------FOOTER--------------------*/
 
 footer {
     position: fixed; /*que la posicion sea fija independiente del contenido*/
     left:0px; /* que a la izquierda no tenga margen o padding??*/
     bottom:0px; /* que abajo no tenga margen o padding??*/
     width: 100%; /* que su ancho sea el 100% de su contenedor*/
-    background-color: white;
-    opacity: 0.5;
+    background-color: rgba(255, 255, 255, 0.50);
     text-align: center;
-    padding-bottom: 2%;
+    
 }
 
 footer p {

@@ -7,9 +7,11 @@ export const home = () => {
 
   const iniciarSesionDiv = document.createElement('div');
   iniciarSesionDiv.id = 'iniciarSesionDiv';
-  const p = document.createElement('p');
-  p.textContent = 'Iniciar Sesion';
-  p.id = 'parrafo';
+  const homeTitle = document.createElement('p');
+  homeTitle.textContent = 'Iniciar Sesion';
+  homeTitle.id = 'homeTitle';
+  const lineDiv = document.createElement('div');
+  lineDiv.id = 'lineDiv';
   const pCorreo = document.createElement('p');
   pCorreo.textContent = 'Correo';
   const inputEmail = document.createElement('input');
@@ -23,8 +25,10 @@ export const home = () => {
   const iniciarSesionDiv2 = document.createElement('div');
   iniciarSesionDiv2.id = 'iniciarSesionDiv2';
 
-  const label = document.createElement('label');
-  label.textContent = 'ingresar con';
+  const ingresarConDiv = document.createElement('div');
+  ingresarConDiv.id = 'ingresarConDiv';
+  const ingresarConlabel = document.createElement('label');
+  ingresarConlabel.textContent = 'ingresar con';
   const socialNetworksDiv = document.createElement('div');
   socialNetworksDiv.id = 'socialNetworksDiv';
   const gmail = document.createElement('img');
@@ -44,7 +48,8 @@ export const home = () => {
   buttonRegister.addEventListener('click', () => onNavigate('/register'));
   buttonLogin.addEventListener('click', () => onNavigate('/login'));
 
-  iniciarSesionDiv2.appendChild(p);
+  iniciarSesionDiv2.appendChild(homeTitle);
+  iniciarSesionDiv2.appendChild(lineDiv);
   iniciarSesionDiv2.appendChild(pCorreo);
   iniciarSesionDiv2.appendChild(inputEmail);
   iniciarSesionDiv2.appendChild(pPassword);
@@ -53,7 +58,8 @@ export const home = () => {
   iniciarSesionDiv.appendChild(iniciarSesionDiv2);
   iniciarSesionDiv.appendChild(buttonLogin);
   iniciarSesionDiv.appendChild(buttonRegister);
-  iniciarSesionDiv.appendChild(label);
+  ingresarConDiv.appendChild(ingresarConlabel);
+  iniciarSesionDiv.appendChild(ingresarConDiv);
   iniciarSesionDiv.appendChild(socialNetworksDiv);
 
   homeDiv.appendChild(iniciarSesionDiv);
