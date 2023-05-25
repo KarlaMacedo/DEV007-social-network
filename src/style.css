@@ -23,12 +23,116 @@ body {
     justify-content: center;
 }
 
+/*--------------------------HEADER ROUTES------------------------*/
 header img {
     height: 7em;
     margin-left: 8px;
     margin-top: 10px;
     margin-bottom: 25px;
 }
+
+/*--------------------------HOME------------------------*/
+
+
+#iniciarSesionDiv {
+    display: flex;
+    flex-direction: column;
+    width: 220px;
+    height: 350px;
+    align-items: center;
+    background-color: transparent ;
+}
+
+#homeTitle {
+    display: flex;
+    margin-bottom: 0%;
+    font-family: 'Glacial Indifference', sans-serif;
+    font-size: 2em;
+    margin: 0;
+}
+
+
+#line {
+    background-color: black;
+    width: 17em;
+    height: .3em;
+}
+
+#iniciarSesionDiv2 {
+    width: 17em;
+    gap: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: start;
+    background-color: rgba(255, 255, 255, 0.7); 
+    border-radius: 20px;
+    padding: 1em;
+    padding-bottom: 2em;
+    padding-left: 3em;
+}
+
+
+#iniciarSesionDiv2 input {
+    background-color: rgba(44, 211, 225, 1);
+    color: rgba(95, 95, 95, 1);
+    font-size: 1.1em;
+    font-family: 'Glacial Indifference', sans-serif;
+    border: none;
+    height: 2em;
+}
+
+
+#ingresarConDiv {
+    font-family: 'Glacial Indifference', sans-serif;
+    font-weight:bold;
+    font-size: 1.1em;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10%;
+    padding: 1.5%;
+    
+}
+
+#buttonLogin {
+    width: 9.5em;
+    height: 2.2em;
+    background-color: rgba(242, 102, 171, 1);
+    border-radius: 20px;
+    border-color: white;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 1em;
+    margin-bottom: 0;
+    align-self: center;
+}
+
+#buttonRegister {
+    width: 9.5em;
+    height: 2.2em;
+    background-color: rgba(255, 197, 25, 1);
+    border-radius: 20px;
+    border-color: white;
+    font-size: 1.3em;
+    font-weight: bold;
+    margin: 1em;
+    align-self: center;
+}
+
+
+#socialNetworksDiv {
+    margin-top: 20px;
+    width: 80px;
+    height: 40px;
+    display: flex;
+    justify-content: space-between;
+}
+
+#socialNetworksDiv img{
+    width: 30px;
+    height: 30px;
+}
+
+/*--------------------------REGISTER------------------------*/
 
 .registerContainer{
     display: flex;
@@ -94,6 +198,8 @@ header img {
     align-self: center;
 }
 
+/*---------------------FOOTER--------------------*/
+
 footer {
     position: fixed; /*que la posicion sea fija independiente del contenido*/
     left:0px; /* que a la izquierda no tenga margen o padding??*/
@@ -101,6 +207,7 @@ footer {
     width: 100%; /* que su ancho sea el 100% de su contenedor*/
     background-color: rgba(255, 255, 255, 0.50);
     text-align: center;
+    
 }
 
 footer p {
