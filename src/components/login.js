@@ -22,16 +22,21 @@ export const login = () => {
   <img src="Images/menu.png" alt="buttonMenu"></button>`;
 
   const buttonHome = document.createElement('button');
-
-  buttonHome.textContent = 'Regresar al Home';
-
-  homeDiv.appendChild(menu);
-  menu.appendChild(labelLogin);
-  menu.appendChild(buttonMenu);
-
   const menuOptionsDiv = document.createElement('div');
   menuOptionsDiv.setAttribute('class', 'menuOptionsDiv');
   menuOptionsDiv.setAttribute('id', 'menuOptionsDiv');
+
+  buttonHome.textContent = 'Regresar al Home';
+  buttonMenu.onclick = () => {
+    menuOptionsDiv.innerHTML = `
+    <a href="" class="optionMenu" id="acercaDe" style="text-decoration:none">Acerca de</a>
+    <a href="" class="optionMenu" id="perfil" style="text-decoration:none">Perfil</a>
+    <a href="" class="optionMenu" id="cerrarSesion" style="text-decoration:none">Cerrar sesión</a>`;
+    console.log(menuOptionsDiv);
+  };
+  homeDiv.appendChild(menu);
+  menu.appendChild(labelLogin);
+  menu.appendChild(buttonMenu);
 
   homeDiv.innerHTML += `
   <input type="text" class="inputLogin" id="inputLogin" placeholder="Escribe tu publicación aquí">
@@ -43,13 +48,6 @@ export const login = () => {
 
   homeDiv.appendChild(buttonHome);
 
-  buttonMenu.addEventListener('mouseover', () => {
-    menuOptionsDiv.innerHTML = `
-    <a href="" class="optionMenu" id="acercaDe" style="text-decoration:none">Acerca de</a>
-    <a href="" class="optionMenu" id="perfil" style="text-decoration:none">Perfil</a>
-    <a href="" class="optionMenu" id="cerrarSesion" style="text-decoration:none">Cerrar sesión</a>`;
-    console.log(menuOptionsDiv);
-  });
   menu.insertAdjacentElement('beforeend', menuOptionsDiv);
   buttonHome.addEventListener('click', () => onNavigate('/'));
   return homeDiv;
