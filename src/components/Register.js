@@ -3,6 +3,10 @@ import { onNavigate } from '../main';
 
 export const register = () => {
   document.body.style.backgroundImage = 'url(Images/fondoRegister.png)';
+  const header = document.getElementById('header');
+  header.style.backgroundImage = 'none';
+  // const menu = document.getElementById('menu');
+  // menu.style.display = 'none';
   const homeDiv = document.createElement('div');
   homeDiv.setAttribute('class', 'registerContainer');
   homeDiv.innerHTML = `<div class="containerFormRegister">
