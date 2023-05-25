@@ -1,6 +1,7 @@
+/*---------------------------------------------------FORMATOS GENERALES----------------------------------------------*/
 html {
     box-sizing: border-box;
-    max-width: 99%;
+    max-width: 100%;
     font-family: "Open Sans", sans-serif;
 }
 
@@ -16,6 +17,7 @@ body {
     background-size: cover; /*la imagen cubre la pantalla*/
     background-position: center center; /*centra la imagen vertila y horizontalmente*/
     background-attachment: fixed; /*se fija la imagen para que la altura de la imagen no supera el contenido*/
+    margin: 0;
 }
 
 .root{
@@ -23,7 +25,16 @@ body {
     justify-content: center;
 }
 
-/*--------------------------HEADER ROUTES------------------------*/
+/*---------------------------------------------------FORMATO HEADER----------------------------------------------*/
+header {
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    background-position-y: -509px;
+    display: flex;
+    justify-content: space-between;
+}
+
 header img {
     height: 7em;
     margin-left: 8px;
@@ -33,45 +44,34 @@ header img {
 
 /*--------------------------HOME------------------------*/
 
-
 #iniciarSesionDiv {
     display: flex;
     flex-direction: column;
-    width: 220px;
-    height: 350px;
     align-items: center;
     background-color: transparent ;
 }
 
-#homeTitle {
+#iniciarSesionDiv2 {
+    background-color: rgba(255, 255, 255, 0.70);
     display: flex;
-    margin-bottom: 0%;
-    font-family: 'Glacial Indifference', sans-serif;
-    font-size: 2em;
-    margin: 0;
+    flex-direction: column; 
+    padding: 1em;
+    padding-bottom: 2em;
+    border-radius: 20px;
+    width: 17em;
 }
 
+#homeTitle {
+    font-size: 2em;
+    margin: 0;
+    font-weight: bolder;
+}
 
-#line {
+.line {
     background-color: black;
     width: 17em;
     height: .3em;
 }
-
-#iniciarSesionDiv2 {
-    width: 17em;
-    gap: 15px;
-    display: flex;
-    flex-direction: column;
-    justify-content: space-around;
-    align-items: start;
-    background-color: rgba(255, 255, 255, 0.7); 
-    border-radius: 20px;
-    padding: 1em;
-    padding-bottom: 2em;
-    padding-left: 3em;
-}
-
 
 #iniciarSesionDiv2 input {
     background-color: rgba(44, 211, 225, 1);
@@ -82,15 +82,19 @@ header img {
     height: 2em;
 }
 
+#iniciarSesionDiv2 p {
+    font-size: 1.3em;
+    font-weight: bold;
+    margin-top: 10px;
+    margin-bottom: 10px;
+}
 
 #ingresarConDiv {
-    font-family: 'Glacial Indifference', sans-serif;
-    font-weight:bold;
-    font-size: 1.1em;
+    font-weight:bolder;
+    font-size: 1.3em;
     background-color: rgba(255, 255, 255, 0.7);
     border-radius: 10%;
     padding: 1.5%;
-    
 }
 
 #buttonLogin {
@@ -101,7 +105,7 @@ header img {
     border-color: white;
     font-size: 1.3em;
     font-weight: bold;
-    margin: 1em;
+    margin: 2em;
     margin-bottom: 0;
     align-self: center;
 }
@@ -114,22 +118,32 @@ header img {
     border-color: white;
     font-size: 1.3em;
     font-weight: bold;
-    margin: 1em;
+    margin-top: 1em;
+    margin-bottom: .8em;
     align-self: center;
 }
 
-
-#socialNetworksDiv {
-    margin-top: 20px;
-    width: 80px;
-    height: 40px;
-    display: flex;
-    justify-content: space-between;
+.ingresarConlabel{
+    font-size: 1em;
+    margin: 2px;
 }
 
-#socialNetworksDiv img{
-    width: 30px;
-    height: 30px;
+#socialNetworksDiv {
+    margin-top: 15px;
+    width: 12em;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.gmail{
+    width: 5.2em;
+    height: 4em;
+}
+
+.fb{
+    width: 5em;
+    height: 5.1em;
 }
 
 /*--------------------------REGISTER------------------------*/
@@ -191,21 +205,118 @@ header img {
     border-radius: 20px;
     font-size: 1.3em;
     font-weight: bold;
-    border-color: white;
+    border-color: #ffffff;
     width: 9.5em;
     height: 2.2em;
     margin: 1em;
     align-self: center;
 }
 
-/*---------------------FOOTER--------------------*/
+/*---------------------------------------------------FORMATO LOGIN----------------------------------------------*/
+.menu{
+    display: flex;
+    justify-content: space-between;
+    margin-top: 15px;
+}
 
+.buttonMenu{
+    background-color: transparent;
+    border: transparent;
+    outline: none;
+    width: 4em;
+    padding: 0;
+    height: 4.1em;
+    align-self: center;
+    margin-right: 12px;
+    margin-bottom: 12px;
+}
+
+.buttonMenu img{
+    margin: 0;
+    margin-left: 0;
+    width: 4em;
+    height: 4em;
+    border: solid rgba(164, 89, 209, 1);
+    border-radius: 50%;
+}
+
+.buttonMenu img:hover{
+    cursor: pointer;
+}
+
+.menuOptionsDiv{
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: solid rgba(164, 89, 209, 1);
+    border-radius: 20px;
+    padding: 10px;
+    font-weight: bolder;
+    font-size: 1.2em;
+    height: max-content;
+}
+
+.menuOptionsDiv a:hover{
+    background-color: rgba(242, 102, 171, 0.47);
+    cursor: pointer;
+}
+
+.optionMenu{
+    color: black;
+}
+
+.loginDiv{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.labelLogin{
+    text-align: center;
+    font-size: x-large;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+.inputLogin{
+    background-color: rgba(44, 211, 225, 1);
+    color: rgba(95, 95, 95, 1);
+    font-size: 1.1em;
+    font-family: 'Glacial Indifference', sans-serif;
+    border: none;
+    height: 4em;
+    width: 18em;
+    margin-top: .5em;
+    padding-left: 15px;
+    border-radius: 20px;
+}
+
+.buttonPublicar{
+    background-color: rgba(255, 197, 25, 1);
+    border-radius: 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-color: #ffffff;
+    width: 7.5em;
+    height: 2.2em;
+    align-self: self-end;
+}
+
+.containerPublications{
+    text-align: center;
+    border-radius: 20px;
+    border: solid rgba(164, 89, 209, 1);
+    height: 10em;
+    font-family: 'Glacial Indifference', sans-serif;
+}
+
+/*---------------------------------------------------FORMATO FOOTER----------------------------------------------*/
 footer {
     position: fixed; /*que la posicion sea fija independiente del contenido*/
     left:0px; /* que a la izquierda no tenga margen o padding??*/
     bottom:0px; /* que abajo no tenga margen o padding??*/
     width: 100%; /* que su ancho sea el 100% de su contenedor*/
-    background-color: rgba(255, 255, 255, 0.50);
+    background-color: rgba(217, 217, 217, 0.71);
     text-align: center;
     
 }
@@ -214,4 +325,3 @@ footer p {
     font-family: 'verdana' ;
     font-size: smaller;
 }
-
