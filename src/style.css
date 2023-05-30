@@ -92,6 +92,21 @@ header img {
     margin-top: 10px;
     margin-bottom: 10px;
 }
+.hidePasswords{
+    position: fixed;
+    width: 30px;
+    margin-top: 189px;
+    margin-left: 232px;
+    cursor: pointer;
+}
+
+.showPasswords{
+    position: fixed;
+    width: 30px;
+    margin-top: 189px;
+    margin-left: 232px;
+    cursor: pointer;
+}
 
 #ingresarConDiv {
     font-weight:bolder;
@@ -114,7 +129,7 @@ header img {
     align-self: center;
 }
 
-#buttonRegister {
+#buttonRegisterHome {
     width: 9.5em;
     height: 2.2em;
     background-color: rgba(255, 197, 25, 1);
@@ -143,11 +158,13 @@ header img {
 .gmail{
     width: 5.2em;
     height: 4em;
+    cursor: pointer;
 }
 
 .fb{
     width: 5em;
     height: 5.1em;
+    cursor: pointer;
 }
 
 /*--------------------------REGISTER------------------------*/
@@ -191,6 +208,22 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 2em;
+}
+
+.hidePassword{
+    position: fixed;
+    width: 30px;
+    margin-top: 304px;
+    margin-left: 232px;
+    cursor: pointer;
+}
+
+.showPassword{
+    position: fixed;
+    width: 30px;
+    margin-top: 304px;
+    margin-left: 232px;
+    cursor: pointer;
 }
 
 .buttonRegister{
@@ -323,6 +356,7 @@ header img {
     margin-top: .5em;
     padding-left: 15px;
     border-radius: 20px;
+    align-self: center;
 }
 
 .buttonPublicar{
@@ -334,6 +368,7 @@ header img {
     width: 7.5em;
     height: 2.2em;
     align-self: self-end;
+    margin-right: 10px;
 }
 
 .containerPublications{
@@ -342,6 +377,8 @@ header img {
     border: solid rgba(164, 89, 209, 1);
     height: 10em;
     font-family: 'Glacial Indifference', sans-serif;
+    align-self: center;
+    width: 20em;
 }
 
 /*---------------------------------------------------FORMATO FOOTER----------------------------------------------*/
