@@ -1,7 +1,9 @@
-// eslint-disable-next-line import/no-cycle
-import { onNavigate } from '../main';
+// import { onNavigate } from '../main';
 
-export const login = () => {
+import { currentUserInfo } from '../firebase/index.js';
+
+export const Login = (onNavigate) => {
+  // CREACIÓN DE INTERFAZ
   document.body.style.backgroundImage = 'none';
   document.body.style.backgroundColor = '#ffffff';
   const header = document.getElementById('header');
@@ -14,13 +16,13 @@ export const login = () => {
   const labelLogin = document.createElement('label');
   labelLogin.setAttribute('class', 'labelLogin');
   labelLogin.setAttribute('id', 'labelLogin');
-  labelLogin.textContent = 'Bienvenido Usuario!';
+  console.log(currentUserInfo());
+  labelLogin.textContent = `Bienvenid@ ${currentUserInfo().displayName}!`;
   const buttonMenu = document.createElement('button');
   buttonMenu.setAttribute('class', 'buttonMenu');
   buttonMenu.setAttribute('id', 'buttonMenu');
   buttonMenu.innerHTML = `
   <img src="Images/menu.png" alt="buttonMenu">`;
-
   const menuOptionsDiv = document.createElement('div');
   menuOptionsDiv.setAttribute('class', 'menuOptionsDiv');
   menuOptionsDiv.setAttribute('id', 'menuOptionsDiv');
@@ -37,6 +39,7 @@ export const login = () => {
   <div class="containerPublications">Aquí irán las publicaciones</div>
   <br>`;
 
+  // FUNCIONALIDAD MENU
   menuOptionsDiv.innerHTML = `
         <button class="close" id="close"><img src="Images/9.png" alt="buttonMenu"></button>
         <a href="" class="optionMenu" id="acercaDe" style="text-decoration:none">Acerca de</a>
