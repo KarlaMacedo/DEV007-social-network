@@ -1,8 +1,10 @@
+/* eslint-disable no-unused-vars */
+/* eslint-disable max-len */
+/* eslint-disable import/no-extraneous-dependencies */
 import { initializeApp } from 'firebase/app';
 import { getFirestore, setDoc, doc } from 'firebase/firestore';
 import {
-  getAuth, createUserWithEmailAndPassword, updateProfile,
-  signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
+  getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
 } from 'firebase/auth';
 
 const firebaseConfig = {
@@ -23,9 +25,7 @@ export const db = getFirestore(app);
 export const signIn = (email, password) => signInWithEmailAndPassword(auth, email, password);
 
 // FUNCIÓN REGISTRO
-export const createUser = (email, password) => {
-  createUserWithEmailAndPassword(auth, email, password);
-};
+export const createUser = (email, password) => createUserWithEmailAndPassword(auth, email, password);
 
 // FUNCIÓN GUARADR USUARIO
 export const updateName = (displayName) => {
