@@ -107,13 +107,11 @@ export const Home = (onNavigate) => {
     try {
       const loginEmail = inputEmail.value;
       const loginPassword = inputPassword.value;
-      const userInfoLogin = await signIn(loginEmail, loginPassword);
-      console.log(userInfoLogin.user)
+      await signIn(loginEmail, loginPassword)
         .then(() => {
           onNavigate('/login');
         });
     } catch (error) {
-      console.error(error);
       const errorCode = error.code;
       console.log(errorCode);
       const errorMessage = error.message;
