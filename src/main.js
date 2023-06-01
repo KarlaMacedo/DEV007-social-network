@@ -39,5 +39,16 @@ window.onpopstate = () => {
   rootDiv.appendChild(routes[window.location.pathname](onNavigate));
 };
 
-// EJECUTA () EL LLAMADO DE LA RUTA DONDE ESTÁ EL USUARIO E INGRESA EL RESULTADO AL DIV DEL HTML
-rootDiv.appendChild(routes[window.location.pathname](onNavigate));
+// OBTENIENDO USUARIO DESDE LOCALSTORAGE SI ES QUE EXISTE
+const user = JSON.parse(localStorage.getItem('user'));
+if (user) {
+  rootDiv.appendChild(routes['/login'](onNavigate));
+} else {
+  // EJECUTA () EL LLAMADO DE LA RUTA DONDE ESTÁ EL USUARIO E INGRESA EL RESULTADO AL DIV DEL HTML
+  const pathname = window.location.pathname;
+  if (routes[pathname]) {
+    rootDiv.appendChild(routes[pathname](onNavigate));
+  } else {
+    rootDiv.appendChild(routes['/'](onNavigate));
+  }
+}

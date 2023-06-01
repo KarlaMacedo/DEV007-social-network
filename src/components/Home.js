@@ -107,15 +107,23 @@ export const Home = (onNavigate) => {
     try {
       const loginEmail = inputEmail.value;
       const loginPassword = inputPassword.value;
-      await signIn(loginEmail, loginPassword)
-        .then(() => {
-          onNavigate('/login');
-        });
+      if (loginEmail === '' || loginPassword === '') {
+        homeDiv.querySelector('#iniciarSesionDiv').querySelector('#iniciarSesionDiv2').querySelector('#labelErrors').textContent = 'Debe rellenar todos los campos';
+        return;
+      }
+      const firebaseResponse = await signIn(loginEmail, loginPassword);
+      if (firebaseResponse.user) {
+        localStorage.setItem('user', JSON.stringify(firebaseResponse.user));
+        onNavigate('/login');
+      }
     } catch (error) {
       const errorCode = error.code;
       console.log(errorCode);
       const errorMessage = error.message;
       console.log(errorMessage);
+      if (errorCode === 'auth/invalid-email') {
+        homeDiv.querySelector('#iniciarSesionDiv').querySelector('#iniciarSesionDiv2').querySelector('#labelErrors').textContent = 'Email Invalido';
+      }
       if (errorCode === 'auth/wrong-password') {
         homeDiv.querySelector('#iniciarSesionDiv').querySelector('#iniciarSesionDiv2').querySelector('#labelErrors').textContent = 'Contraseña incorrecta';
       }
