@@ -46,7 +46,7 @@ if (user) {
 } else {
   // EJECUTA () EL LLAMADO DE LA RUTA DONDE ESTÁ EL USUARIO E INGRESA EL RESULTADO AL DIV DEL HTML
   const pathname = window.location.pathname;
-  if (routes[pathname]) {
+  if (routes[pathname] && pathname !== '/login') {
     rootDiv.appendChild(routes[pathname](onNavigate));
   } else {
     rootDiv.appendChild(routes['/'](onNavigate));
