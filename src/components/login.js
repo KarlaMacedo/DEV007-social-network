@@ -17,7 +17,8 @@ export const Login = (onNavigate) => {
   labelLogin.setAttribute('class', 'labelLogin');
   labelLogin.setAttribute('id', 'labelLogin');
   console.log(currentUserInfo());
-  labelLogin.textContent = `Bienvenid@ ${currentUserInfo().displayName}!`;
+  const userName = currentUserInfo() ? currentUserInfo().displayName : JSON.parse(localStorage.getItem('user')).displayName;
+  labelLogin.textContent = `Bienvenid@ ${userName}!`;
   const buttonMenu = document.createElement('button');
   buttonMenu.setAttribute('class', 'buttonMenu');
   buttonMenu.setAttribute('id', 'buttonMenu');
@@ -53,7 +54,10 @@ export const Login = (onNavigate) => {
     loginDiv.querySelector('#menu').querySelector('#close').addEventListener('click', () => {
       menuOptionsDiv.style.display = 'none';
     });
-    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => onNavigate('/'));
+    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => {
+      localStorage.removeItem('user');
+      onNavigate('/');
+    });
   });
 
   return loginDiv;
