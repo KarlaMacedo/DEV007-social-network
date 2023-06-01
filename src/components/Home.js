@@ -34,6 +34,9 @@ export const Home = (onNavigate) => {
   const showPassword = document.createElement('img');
   showPassword.src = 'Images/13.png';
   showPassword.setAttribute('class', 'showPasswords');
+  const labelErrors = document.createElement('label');
+  labelErrors.id = 'labelErrors';
+  labelErrors.setAttribute('class', 'labelErrors');
   const iniciarSesionDiv2 = document.createElement('div');
   iniciarSesionDiv2.id = 'iniciarSesionDiv2';
   const ingresarConDiv = document.createElement('div');
@@ -69,6 +72,7 @@ export const Home = (onNavigate) => {
   iniciarSesionDiv2.appendChild(inputPassword);
   iniciarSesionDiv2.appendChild(hidePassword);
   iniciarSesionDiv2.appendChild(showPassword);
+  iniciarSesionDiv2.appendChild(labelErrors);
 
   iniciarSesionDiv.appendChild(iniciarSesionDiv2);
   iniciarSesionDiv.appendChild(buttonLogin);
@@ -99,15 +103,28 @@ export const Home = (onNavigate) => {
   });
 
   // INICAR SESIÓN CON CORREO Y CONTRASEÑA
-  const loginEmailPassword = async () => {
-    const loginEmail = inputEmail.value;
-    const loginPassword = inputPassword.value;
-    const userInfoLogin = await signIn(loginEmail, loginPassword);
-    console.log(userInfoLogin.user);
-  };
-  buttonLogin.addEventListener('click', () => {
-    loginEmailPassword();
-    onNavigate('/login');
+  buttonLogin.addEventListener('click', async () => {
+    try {
+      const loginEmail = inputEmail.value;
+      const loginPassword = inputPassword.value;
+      const userInfoLogin = await signIn(loginEmail, loginPassword);
+      console.log(userInfoLogin.user)
+        .then(() => {
+          onNavigate('/login');
+        });
+    } catch (error) {
+      console.error(error);
+      const errorCode = error.code;
+      console.log(errorCode);
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      if (errorCode === 'auth/wrong-password') {
+        homeDiv.querySelector('#iniciarSesionDiv').querySelector('#iniciarSesionDiv2').querySelector('#labelErrors').textContent = 'Contraseña incorrecta';
+      }
+      if (errorCode === 'auth/user-not-found') {
+        homeDiv.querySelector('#iniciarSesionDiv').querySelector('#iniciarSesionDiv2').querySelector('#labelErrors').textContent = 'Usuario no registrado';
+      }
+    }
   });
 
   // INICIAR SESIÓN CON GOOGLE

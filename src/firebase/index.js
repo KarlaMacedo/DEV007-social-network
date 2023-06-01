@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 /* eslint-disable max-len */
 /* eslint-disable import/no-extraneous-dependencies */
 import { initializeApp } from 'firebase/app';
@@ -32,7 +31,7 @@ export const updateName = (displayName) => {
   updateProfile(auth.currentUser, { displayName });
 };
 
-// FUNCIÓN GUARADR DATOS USUARIO
+// FUNCIÓN GUARADR DATOS USUARIO EN FIRESTORE
 export const savedUser = (displayName, email, password, uid) => setDoc(doc(db, 'users', uid), {
   displayName,
   email,

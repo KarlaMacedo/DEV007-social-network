@@ -60,7 +60,7 @@ header img {
     display: flex;
     flex-direction: column; 
     padding: 1em;
-    padding-bottom: 2em;
+    padding-bottom: 1em;
     border-radius: 20px;
     width: 17em;
 }
@@ -84,6 +84,7 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 2em;
+    margin-bottom: 0.5em;
 }
 
 #iniciarSesionDiv2 p {
@@ -95,7 +96,7 @@ header img {
 .hidePasswords{
     position: fixed;
     width: 30px;
-    margin-top: 189px;
+    margin-top: 197px;
     margin-left: 232px;
     cursor: pointer;
 }
@@ -103,7 +104,7 @@ header img {
 .showPasswords{
     position: fixed;
     width: 30px;
-    margin-top: 189px;
+    margin-top: 197px;
     margin-left: 232px;
     cursor: pointer;
 }
@@ -179,7 +180,7 @@ header img {
     display: flex;
     flex-direction: column; 
     padding: 1em;
-    padding-bottom: 2em;
+    padding-bottom: 1em;
     border-radius: 20px;
     width: 17em;
     gap: 15px;
@@ -224,6 +225,14 @@ header img {
     margin-top: 304px;
     margin-left: 232px;
     cursor: pointer;
+}
+
+.labelErrors{
+    color: red;
+    font-size: 1em;
+    font-weight: bolder;
+    align-self: center;
+    text-align: center;
 }
 
 .buttonRegister{

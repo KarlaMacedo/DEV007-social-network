@@ -16,11 +16,12 @@ export const Register = (onNavigate) => {
     <label class="labelRegister">Nombre:</label>
     <input type="text" class="inputRegister" id="inputNameRegister" placeholder="Usuario">
     <label class="labelRegister">Correo:</label>
-    <input type="text" class="inputRegister" id="inputMailRegister" placeholder="Correo electrónico">
+    <input type="email" class="inputRegister" id="inputMailRegister" placeholder="Correo electrónico">
     <label class="labelRegister">Contraseña:</label>
     <input type="password" class="inputRegister" id="inputPasswordRegister" placeholder="*******************">
     <img src="Images/12.png" class="hidePassword">
     <img src="Images/13.png" class="showPassword">
+    <label class="labelErrors" id="labelErrors"></label>
     </div>
     <br>`;
   const buttonRegister = document.createElement('button');
@@ -55,25 +56,39 @@ export const Register = (onNavigate) => {
   });
 
   // REGISTRO DE USUARIOS Y GUARDARLOS EN BASE DE DATOS STORE
-  registerDiv.querySelector('#buttonRegister').addEventListener('click', () => {
-    const displayName = registerDiv.querySelector('#containerFormRegister').querySelector('#inputNameRegister').value;
-    const signUpEmail = registerDiv.querySelector('#containerFormRegister').querySelector('#inputMailRegister').value;
-    const signUpPassword = registerDiv.querySelector('#containerFormRegister').querySelector('#inputPasswordRegister').value;
-    console.log(displayName, signUpEmail, signUpPassword);
-    createUser(signUpEmail, signUpPassword)
-      .then((userData) => {
-        const user = userData.user;
-        if (displayName) {
-          console.log(displayName);
-          updateName(displayName);
-          console.log(updateName(displayName));
-        }
-        console.log(savedUser(displayName, signUpEmail, signUpPassword, user.uid));
-        return savedUser(displayName, signUpEmail, signUpPassword, user.uid);
-      })
-      .then(() => {
-        onNavigate('/login');
-      });
+  registerDiv.querySelector('#buttonRegister').addEventListener('click', async () => {
+    try {
+      const displayName = registerDiv.querySelector('#containerFormRegister').querySelector('#inputNameRegister').value;
+      const signUpEmail = registerDiv.querySelector('#containerFormRegister').querySelector('#inputMailRegister').value;
+      const signUpPassword = registerDiv.querySelector('#containerFormRegister').querySelector('#inputPasswordRegister').value;
+      console.log(displayName, signUpEmail, signUpPassword);
+      await createUser(signUpEmail, signUpPassword)
+        .then(async (userCredentials) => {
+          const user = userCredentials.user;
+          if (displayName) {
+            console.log(displayName);
+            await updateName(displayName);
+            console.log(updateName(displayName));
+          }
+          console.log(savedUser(displayName, signUpEmail, signUpPassword, user.uid));
+          return savedUser(displayName, signUpEmail, signUpPassword, user.uid);
+        })
+        .then(() => {
+          onNavigate('/login');
+        });
+    } catch (error) {
+      console.error(error);
+      const errorCode = error.code;
+      console.log(errorCode);
+      const errorMessage = error.message;
+      console.log(errorMessage);
+      if (errorCode === 'auth/email-already-in-use') {
+        registerDiv.querySelector('#containerFormRegister').querySelector('#labelErrors').textContent = 'Ese usuario ya existe';
+      }
+      if (errorCode === 'auth/weak-password') {
+        registerDiv.querySelector('#containerFormRegister').querySelector('#labelErrors').textContent = 'Tu contraseña debe contener al menos 6 caracteres';
+      }
+    }
   });
 
   return registerDiv;
