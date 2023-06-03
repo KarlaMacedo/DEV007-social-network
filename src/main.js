@@ -6,6 +6,7 @@ import { Login } from './components/login.js';
 // VARIABLE QUE ALMACENA LA ETIQUETA DEL HTML QUE CONTENDRÁ
 // EL CONTENIDO DE LA PÁGINA Y QUE SE MODIFICARÁ CONSTANTEMENTE
 const rootDiv = document.getElementById('root');
+
 // VARIABLE QUE ALMACENA EL OBJETO QUE CONTIENE LOS PATHNAME DE CADA VENTANA DE LA PÁGINA
 const routes = {
   '/': Home,
@@ -39,16 +40,18 @@ window.onpopstate = () => {
   rootDiv.appendChild(routes[window.location.pathname](onNavigate));
 };
 
-// OBTENIENDO USUARIO DESDE LOCALSTORAGE SI ES QUE EXISTE
+// OBTENIENDO USUARIO DESDE LOCALSTORAGE SI EXISTE REGISTRO DEL USUARIO Y SI NO EXISTE, TE MANDA A
+// LA RUTA SI EXISTE LA RUTA, PERO A LOGIN NO TE DEJA ACCEDER. Y SI ES UNA RUTA QUE NO EXISTE TE
+// MANDA A HOME
 const user = JSON.parse(localStorage.getItem('user'));
 if (user) {
   rootDiv.appendChild(routes['/login'](onNavigate));
-} else {
-  // EJECUTA () EL LLAMADO DE LA RUTA DONDE ESTÁ EL USUARIO E INGRESA EL RESULTADO AL DIV DEL HTML
+} else { // si no existe el usuario en storage..
   const pathname = window.location.pathname;
   if (routes[pathname] && pathname !== '/login') {
+    // ejecuta () el llamado de la ruta donde está el usuario e ingresa el resultado al div del HTML
     rootDiv.appendChild(routes[pathname](onNavigate));
-  } else {
+  } else { // si no existe la ruta en routes..
     rootDiv.appendChild(routes['/'](onNavigate));
   }
 }
