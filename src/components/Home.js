@@ -9,7 +9,9 @@ import { signIn, loginWithGoogle } from '../firebase/index.js';
 
 export const Home = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
+
   document.body.style.backgroundImage = `url(${fongoHome})`;
+
   const homeDiv = document.createElement('div');
   homeDiv.id = 'homeDiv';
   const header = document.getElementById('header');
@@ -25,8 +27,13 @@ export const Home = (onNavigate) => {
   <p>Contraseña:</p>
   <div class="passwordDiv">
     <input type="password" placeholder="************" id="inputPassword">
+
     <img src="${doce}" class="hidePassword">
     <img src="${trece}" class="showPassword">
+
+    <img src="Images/12.png" class="hidePassword">
+    <img src="Images/13.png" class="showPassword">
+
   </div>
   <label id="labelErrors" class="labelErrors"></label>`;
   const ingresarConDiv = document.createElement('div');
