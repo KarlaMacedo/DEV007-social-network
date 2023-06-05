@@ -1,10 +1,17 @@
 // import { onNavigate } from '../main';
+import fongoHome from '../Images/fongoHome.png';
+import doce from '../Images/12.png';
+import trece from '../Images/13.png';
+import ocho from '../Images/8.png';
+import siete from '../Images/7.png';
 
 import { signIn, loginWithGoogle } from '../firebase/index.js';
 
 export const Home = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
-  document.body.style.backgroundImage = 'url(Images/2.png)';
+
+  document.body.style.backgroundImage = `url(${fongoHome})`;
+
   const homeDiv = document.createElement('div');
   homeDiv.id = 'homeDiv';
   const header = document.getElementById('header');
@@ -20,8 +27,13 @@ export const Home = (onNavigate) => {
   <p>Contraseña:</p>
   <div class="passwordDiv">
     <input type="password" placeholder="************" id="inputPassword">
+
+    <img src="${doce}" class="hidePassword">
+    <img src="${trece}" class="showPassword">
+
     <img src="Images/12.png" class="hidePassword">
     <img src="Images/13.png" class="showPassword">
+
   </div>
   <label id="labelErrors" class="labelErrors"></label>`;
   const ingresarConDiv = document.createElement('div');
@@ -32,10 +44,10 @@ export const Home = (onNavigate) => {
   const socialNetworksDiv = document.createElement('div');
   socialNetworksDiv.id = 'socialNetworksDiv';
   const gmail = document.createElement('img');
-  gmail.src = 'Images/8.png';
+  gmail.src = `${ocho}`;
   gmail.setAttribute('class', 'gmail');
   const facebook = document.createElement('img');
-  facebook.src = 'Images/7.png';
+  facebook.src = `${siete}`;
   facebook.setAttribute('class', 'fb');
   const buttonRegister = document.createElement('button');
   buttonRegister.id = 'buttonRegisterHome';
