@@ -29,6 +29,133 @@ button{
     cursor: pointer;
 }
 
+/*---------------------------------------------------MEDIAS QUERIES----------------------------------------------*/
+@media only screen and (min-width: 600px) and (max-width: 900px) {
+    /*--GENERALES--*/
+    header img {
+        height: 10em !important;
+        margin-left: 15px !important;
+        margin-top: 15px !important;
+        margin-bottom: 35px !important;
+    }
+    .labelErrors{
+        font-size: 1.3em !important;
+    }
+    /*--HOME--*/
+    #homeTitle {
+        font-size: 2.5em !important;
+    }
+    .lineHome{
+        width: 19em !important;
+    }
+    #iniciarSesionDiv2 input{
+        font-size: 1.3em !important;
+    }
+    #iniciarSesionDiv2 p{
+        font-size: 1.5em !important;
+    }
+    #buttonLogin{
+        font-size: 1.5em !important;
+    }
+    #buttonRegisterHome{
+        font-size: 1.5em !important;
+        margin-top: 2em !important;
+        margin-bottom: 2em !important;
+    }
+    .ingresarConlabel{
+        font-size: 1.3em !important;
+    }
+    #socialNetworksDiv {
+        margin-top: 2em !important;
+    }
+    /*--REGISTER--*/
+    .registerContainer{
+        margin-top: 15px !important;
+    }
+    .registerTitle{
+        font-size: 2.5em !important;
+    }
+    .line{
+        width: 19em !important;
+    }
+    .labelRegister{
+        font-size: 1.5em !important; 
+    }
+    .inputRegister{
+        font-size: 1.3em !important;
+    }
+    .buttonRegister{
+        font-size: 1.5em !important;
+    }
+    .buttonBackHomeRegister{
+        font-size: 1.5em !important;
+    }
+    /*--LOGIN--*/
+}
+
+@media screen and (min-width: 1000px) {
+    /*--GENERALES--*/
+    body{
+        background-position-x: 270px !important;
+    }
+    header img {
+        height: 7em !important;
+        margin-left: 15px !important;
+        margin-top: 15px !important;
+        margin-bottom: 15px !important;
+        z-index: 1;
+    }
+    /*--HOME--*/
+    #homeDiv {
+        width: 50% !important;
+        margin-left: -50% !important;
+        background-color: #ffffff !important;
+        position: fixed !important;
+        margin-top: -211px !important;
+        padding-top: 200px !important;
+        padding-bottom: 1000px !important;
+    }
+    #iniciarSesionDiv2{
+        background-color: rgb(209 209 209 / 70%) !important;
+        margin: 20px !important;
+    }
+    #buttonLogin {
+        margin-top: 0px !important;
+    }
+    #buttonRegisterHome {
+        margin-bottom: 0em !important;
+    }
+    #socialNetworksDiv {
+        margin-top: 0px !important;
+    }
+    /*--REGISTER--*/
+    .registerContainer{
+        width: 50% !important;
+        margin-left: -50% !important;
+        background-color: #ffffff !important;
+        position: fixed !important;
+        margin-top: -211px !important;
+        padding-top: 200px !important;
+        padding-bottom: 1000px !important;
+    }
+    .containerFormRegister{
+        background-color: rgb(209 209 209 / 70%) !important;
+        margin: 20px !important;
+    }
+    .buttonRegister{
+        margin: 0px !important;
+    }
+    /*--LOGIN--*/
+    
+}
+
+@media screen and (min-width: 650px) {
+    /*--GENERALES--*/
+    /*--HOME--*/
+    /*--REGISTER--*/
+    /*--LOGIN--*/
+}
+
 /*---------------------------------------------------FORMATO HEADER----------------------------------------------*/
 header {
     background-repeat: no-repeat;
@@ -47,12 +174,16 @@ header img {
 }
 
 /*--------------------------HOME------------------------*/
+#homeDiv{
+    width: 75%;
+}
 
 #iniciarSesionDiv {
     display: flex;
     flex-direction: column;
     align-items: center;
     background-color: transparent ;
+    width: -webkit-fill-available;
 }
 
 #iniciarSesionDiv2 {
@@ -60,9 +191,10 @@ header img {
     display: flex;
     flex-direction: column; 
     padding: 1em;
-    padding-bottom: 2em;
+    padding-bottom: 1em;
     border-radius: 20px;
-    width: 17em;
+    width: -webkit-fill-available;
+    gap: 10px;
 }
 
 #homeTitle {
@@ -71,10 +203,11 @@ header img {
     font-weight: bolder;
 }
 
-.line {
+.lineHome {
     background-color: black;
-    width: 17em;
+    width: 15.5em;
     height: .3em;
+    margin-top: -9px;
 }
 
 #iniciarSesionDiv2 input {
@@ -84,21 +217,29 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 2em;
+    width: -webkit-fill-available;
 }
 
 #iniciarSesionDiv2 p {
     font-size: 1.3em;
     font-weight: bold;
-    margin-top: 10px;
-    margin-bottom: 10px;
+    margin: 0px;
 }
 
-#ingresarConDiv {
-    font-weight:bolder;
-    font-size: 1.3em;
-    background-color: rgba(255, 255, 255, 0.7);
-    border-radius: 10%;
-    padding: 1.5%;
+.hidePassword{
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    align-self: center;
+    margin-right: 10px;
+}
+
+.showPassword{
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    align-self: center;
+    margin-right: 10px;
 }
 
 #buttonLogin {
@@ -114,7 +255,7 @@ header img {
     align-self: center;
 }
 
-#buttonRegister {
+#buttonRegisterHome {
     width: 9.5em;
     height: 2.2em;
     background-color: rgba(255, 197, 25, 1);
@@ -125,6 +266,14 @@ header img {
     margin-top: 1em;
     margin-bottom: .8em;
     align-self: center;
+}
+
+#ingresarConDiv {
+    font-weight:bolder;
+    font-size: 1.3em;
+    background-color: rgba(255, 255, 255, 0.7);
+    border-radius: 10%;
+    padding: 1.5%;
 }
 
 .ingresarConlabel{
@@ -143,18 +292,20 @@ header img {
 .gmail{
     width: 5.2em;
     height: 4em;
+    cursor: pointer;
 }
 
 .fb{
     width: 5em;
     height: 5.1em;
+    cursor: pointer;
 }
 
 /*--------------------------REGISTER------------------------*/
-
 .registerContainer{
     display: flex;
     flex-direction: column;
+    width: 75%;
 }
 
 .containerFormRegister{
@@ -162,9 +313,9 @@ header img {
     display: flex;
     flex-direction: column; 
     padding: 1em;
-    padding-bottom: 2em;
+    padding-bottom: 1em;
     border-radius: 20px;
-    width: 17em;
+    width: -webkit-fill-available;
     gap: 15px;
 }
 
@@ -175,7 +326,7 @@ header img {
 
 .line {
     background-color: black;
-    width: 17em;
+    width: 15em;
     height: .3em;
 }
 
@@ -191,6 +342,41 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 2em;
+}
+
+.passwordDiv{
+    width: -webkit-fill-available;
+    background-color: rgba(44, 211, 225, 1);
+    display: flex;
+    justify-content: space-between;
+}
+
+#inputPasswordRegister{
+    width: 12.5em;
+}
+
+.hidePassword{
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    align-self: center;
+    margin-right: 10px;
+}
+
+.showPassword{
+    width: 30px;
+    height: 21px;
+    cursor: pointer;
+    align-self: center;
+    margin-right: 10px;
+}
+
+.labelErrors{
+    color: red;
+    font-size: 1em;
+    font-weight: bolder;
+    align-self: center;
+    text-align: center;
 }
 
 .buttonRegister{
@@ -217,10 +403,23 @@ header img {
 }
 
 /*---------------------------------------------------FORMATO LOGIN----------------------------------------------*/
+.loginDiv{
+    width: 90%;
+}
+
 .menu{
     display: flex;
     justify-content: space-between;
     margin-top: 15px;
+    margin-bottom: 20px;
+}
+
+.onlyMenu{
+    width: max-content;
+    display: flex;
+    height: max-content;
+    flex-direction: column;
+    align-items: flex-end;
 }
 
 .buttonMenu{
@@ -228,16 +427,14 @@ header img {
     border: transparent;
     outline: none;
     width: 4em;
-    padding: 0;
     height: 4.1em;
-    align-self: center;
-    margin-right: 12px;
-    margin-bottom: 12px;
+    border-radius: 50%;
+    padding: 0;
+    margin-bottom: 4px;
+    margin-right: 4px;
 }
 
 .buttonMenu img{
-    margin: 0;
-    margin-left: 0;
     width: 4em;
     height: 4em;
     border: solid rgba(164, 89, 209, 1);
@@ -256,10 +453,10 @@ header img {
     height: 2em;
     padding: 0;
     align-self: center;
-    margin-right: 148px;
     border-radius: 50%;
     margin-top: -21px;
     position: fixed;
+    margin-right: 148px;
 }
 
 .close img{
@@ -285,9 +482,9 @@ header img {
     font-weight: bolder;
     font-size: 1.2em;
     height: max-content;
-    position: absolute;
-    margin-left: 185px;
-    margin-top: 57px;
+    width: max-content;
+    position: fixed;
+    margin-top: 58px;
 }
 
 .menuOptionsDiv a:hover{
@@ -319,10 +516,11 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 4em;
-    width: 18em;
+    width: -webkit-fill-available;
     margin-top: .5em;
     padding-left: 15px;
     border-radius: 20px;
+    align-self: center;
 }
 
 .buttonPublicar{
@@ -334,6 +532,7 @@ header img {
     width: 7.5em;
     height: 2.2em;
     align-self: self-end;
+    margin-right: 10px;
 }
  
 .divModal{
@@ -436,6 +635,8 @@ header img {
     border: solid rgba(164, 89, 209, 1);
     height: 10em;
     font-family: 'Glacial Indifference', sans-serif;
+    align-self: center;
+    width: -webkit-fill-available;
 }
 
 /*---------------------------------------------------FORMATO FOOTER----------------------------------------------*/
