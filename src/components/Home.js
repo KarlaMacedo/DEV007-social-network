@@ -1,10 +1,11 @@
 // import { onNavigate } from '../main';
+import fongoHome from '../Images/fongoHome.png';
 
 import { signIn, loginWithGoogle } from '../firebase/index.js';
 
 export const Home = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
-  document.body.style.backgroundImage = 'url(Images/fongoHome.png)';
+  document.body.style.backgroundImage = `url(${fongoHome})`;
   const homeDiv = document.createElement('div');
   const header = document.getElementById('header');
   header.style.backgroundImage = 'none';
