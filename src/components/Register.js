@@ -19,7 +19,12 @@ export const register = () => {
     <label class="labelRegister">Correo:</label>
     <input type="text" class="inputRegister" id="inputMailRegister" placeholder="Correo electrónico">
     <label class="labelRegister">Contraseña:</label>
-    <input type="text" class="inputRegister" id="inputPasswordRegister" placeholder="*******************">
+    <div class="passwordDiv">
+      <input type="password" class="inputRegister" id="inputPasswordRegister" placeholder="*******************">
+        <img src="${doce}" class="hidePassword">
+        <img src="${trece}" class="showPassword">
+    </div>
+    <label class="labelErrors" id="labelErrors"></label>
     </div>
     <br>`;
   const buttonRegister = document.createElement('button');

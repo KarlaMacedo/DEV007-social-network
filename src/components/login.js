@@ -1,5 +1,8 @@
-// eslint-disable-next-line import/no-cycle
-import { onNavigate } from '../main';
+// import { onNavigate } from '../main';
+import { currentUserInfo } from '../firebase/index.js';
+import headerImg from '../Images/headers.jpg';
+import menuImg from '../Images/menu.png';
+import nueve from '../Images/9.png';
 
 export const login = () => {
   document.body.style.backgroundImage = 'none';
@@ -30,9 +33,9 @@ export const login = () => {
   menu.appendChild(buttonMenu);
 
   loginDiv.innerHTML += `
-  <input type="text" class="inputLogin" id="inputLogin" placeholder="Escribe tu publicación aquí">
+  <input type="text" class="inputLogin" id="inputLogin" placeholder="Escribe tu publicación dando click aquí">
   <br>
-  <button class="buttonPublicar">Publicar</button>
+  <dialog class="divModal" id="divModal"></dialog>
   <br>
   <div class="containerPublications">Aquí irán las publicaciones</div>
   <br>`;
@@ -52,6 +55,35 @@ export const login = () => {
     });
     loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => onNavigate('/'));
   });
+
+  // FUNCIONALIDAD MODAL POSTS
+  const windowsModal = loginDiv.querySelector('#divModal');
+  windowsModal.style.display = 'none';
+
+  loginDiv.querySelector('#inputLogin').addEventListener(
+    'click',
+    () => {
+      windowsModal.innerHTML = `
+        <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
+        <label class="labelModal">Texto:</label>
+        <input type="text" class="inputModalPost" placeholder="Escribe aquí">
+        <label class="labelModal">Coordenadas:</label>
+        <input type="text" class="inputModal" placeholder="Escribe aquí">
+        <div class="divImgModal"> 
+          <label class="labelModal">Imagen:</label>
+          <button class="buttonModalImg" id="buttonModalImg">Seleccionar archivo</button>
+        </div>
+        <button class="buttonModalPublish" id="buttonModalPublish">Publicar</button>`;
+      windowsModal.showModal();
+      windowsModal.style.display = 'block';
+      windowsModal.style.display = 'flex';
+      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal'); // variable que almacena el boton de cerrar la ventana modal
+      btnClose.addEventListener('click', () => {
+        windowsModal.close();
+        windowsModal.style.display = 'none';
+      });
+    },
+  );
 
   return loginDiv;
 };

@@ -26,7 +26,17 @@ export const home = () => {
   inputPassword.placeholder = '************';
   const iniciarSesionDiv2 = document.createElement('div');
   iniciarSesionDiv2.id = 'iniciarSesionDiv2';
-
+  iniciarSesionDiv2.innerHTML = `<h2 id="homeTitle">Iniciar Sesión</h2>
+  <div id="lineDiv" class="lineHome"></div>
+  <p>Correo:</p>
+  <input type="email" placeholder="Correo electrónico" id="inputEmail">
+  <p>Contraseña:</p>
+  <div class="passwordDiv">
+    <input type="password" placeholder="************" id="inputPassword">
+    <img src="${doce}" class="hidePassword">
+    <img src="${trece}" class="showPassword">
+  </div>
+  <label id="labelErrors" class="labelErrors"></label>`;
   const ingresarConDiv = document.createElement('div');
   ingresarConDiv.id = 'ingresarConDiv';
   const ingresarConlabel = document.createElement('h2');
