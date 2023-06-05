@@ -1,9 +1,12 @@
 // import { onNavigate } from '../main';
 import { createUser, savedUser, updateName } from '../firebase/index.js';
+import uno from '../Images/1.png';
+import doce from '../Images/12.png';
+import trece from '../Images/13.png';
 
 export const Register = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
-  document.body.style.backgroundImage = 'url(Images/fondoRegister.png)';
+  document.body.style.backgroundImage = `url(${uno})`;
   const header = document.getElementById('header');
   header.style.backgroundImage = 'none';
   const registerDiv = document.createElement('div');
@@ -18,9 +21,11 @@ export const Register = (onNavigate) => {
     <label class="labelRegister">Correo:</label>
     <input type="email" class="inputRegister" id="inputMailRegister" placeholder="Correo electrónico">
     <label class="labelRegister">Contraseña:</label>
-    <input type="password" class="inputRegister" id="inputPasswordRegister" placeholder="*******************">
-    <img src="Images/12.png" class="hidePassword">
-    <img src="Images/13.png" class="showPassword">
+    <div class="passwordDiv">
+      <input type="password" class="inputRegister" id="inputPasswordRegister" placeholder="*******************">
+        <img src="${doce}" class="hidePassword">
+        <img src="${trece}" class="showPassword">
+    </div>
     <label class="labelErrors" id="labelErrors"></label>
     </div>
     <br>`;
@@ -62,15 +67,20 @@ export const Register = (onNavigate) => {
       const signUpEmail = registerDiv.querySelector('#containerFormRegister').querySelector('#inputMailRegister').value;
       const signUpPassword = registerDiv.querySelector('#containerFormRegister').querySelector('#inputPasswordRegister').value;
       console.log(displayName, signUpEmail, signUpPassword);
-      await createUser(signUpEmail, signUpPassword)
+      if (displayName === '' || signUpEmail === '' || signUpPassword === '') {
+        registerDiv.querySelector('#containerFormRegister').querySelector('#labelErrors').textContent = 'Debe rellenar todos los campos';
+        return;
+      }
+      await createUser(signUpEmail, signUpPassword) // crea usuario en auth con su info
         .then(async (userCredentials) => {
           const user = userCredentials.user;
           if (displayName) {
             console.log(displayName);
-            await updateName(displayName);
+            await updateName(displayName); // guarda su info en auth firebase
             console.log(updateName(displayName));
           }
           console.log(savedUser(displayName, signUpEmail, signUpPassword, user.uid));
+          // guarda info en data firestore
           return savedUser(displayName, signUpEmail, signUpPassword, user.uid);
         })
         .then(() => {
@@ -82,11 +92,15 @@ export const Register = (onNavigate) => {
       console.log(errorCode);
       const errorMessage = error.message;
       console.log(errorMessage);
+      // etiquetas descriptivas en caso de errores
       if (errorCode === 'auth/email-already-in-use') {
         registerDiv.querySelector('#containerFormRegister').querySelector('#labelErrors').textContent = 'Ese usuario ya existe';
       }
       if (errorCode === 'auth/weak-password') {
         registerDiv.querySelector('#containerFormRegister').querySelector('#labelErrors').textContent = 'Tu contraseña debe contener al menos 6 caracteres';
+      }
+      if (errorCode === 'auth/invalid-email') {
+        registerDiv.querySelector('#containerFormRegister').querySelector('#labelErrors').textContent = 'Email Invalido';
       }
     }
   });
