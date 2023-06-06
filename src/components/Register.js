@@ -27,8 +27,6 @@ export const Register = (onNavigate) => {
       <input type="password" class="inputRegister" id="inputPasswordRegister" placeholder="*******************">
         <img src="${doce}" class="hidePassword">
         <img src="${trece}" class="showPassword">
-        <img src="Images/12.png" class="hidePassword">
-        <img src="Images/13.png" class="showPassword">
     </div>
     <label class="labelErrors" id="labelErrors"></label>
     </div>
