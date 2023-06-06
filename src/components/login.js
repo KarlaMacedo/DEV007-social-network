@@ -1,5 +1,7 @@
 // import { onNavigate } from '../main';
-import { currentUserInfo } from '../firebase/index.js';
+import {
+  currentUserInfo,
+} from '../firebase/index.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
 import nueve from '../Images/9.png';
@@ -84,13 +86,23 @@ export const Login = (onNavigate) => {
         <input type="text" class="inputModal" placeholder="Escribe aquí">
         <div class="divImgModal"> 
           <label class="labelModal">Imagen:</label>
-          <button class="buttonModalImg" id="buttonModalImg">Seleccionar archivo</button>
+          <input type="file" class="buttonModalImg" id="buttonModalImg"></input>
         </div>
         <button class="buttonModalPublish" id="buttonModalPublish">Publicar</button>`;
       windowsModal.showModal();
       windowsModal.style.display = 'block';
       windowsModal.style.display = 'flex';
       const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal'); // variable que almacena el boton de cerrar la ventana modal
+      const btnPublish = loginDiv.querySelector('#divModal').querySelector('#buttonModalPublish');
+
+      btnPublish.addEventListener('click', () => {
+        const imputModalPost = windowsModal.querySelector('.inputModalPost').value;
+        const coordenadas = windowsModal.querySelector('.inputModal').value;
+        const selecImg = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImg').value;
+        console.log(imputModalPost);
+        console.log(coordenadas);
+        console.log(selecImg);
+      });
       btnClose.addEventListener('click', () => {
         windowsModal.close();
         windowsModal.style.display = 'none';
