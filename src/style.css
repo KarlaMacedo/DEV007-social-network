@@ -629,16 +629,40 @@ header img {
     align-self: center;
 }
 
-.containerPublications{
-    text-align: center;
-    border-radius: 20px;
-    border: solid rgba(164, 89, 209, 1);
-    height: 10em;
-    font-family: 'Glacial Indifference', sans-serif;
-    align-self: center;
-    width: -webkit-fill-available;
+.postsContainer{
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
 }
 
+.divPosts{
+    border-radius: 20px;
+    border: solid rgba(164, 89, 209, 1);
+    height: max-content;
+    font-family: 'Glacial Indifference', sans-serif;
+    width: -webkit-fill-available;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 10px;
+}
+
+.buttonLikes{
+    border: 0;
+    padding: 0;
+    width: 53px;
+    background-color: transparent;
+}
+
+.imgButtonLikes{
+    width: 53px;
+}
+
+.likesElement{
+    position: absolute;
+    margin-left: -19px;
+    margin-top: 5px;
+}
 /*---------------------------------------------------FORMATO FOOTER----------------------------------------------*/
 footer {
     position: fixed; /*que la posicion sea fija independiente del contenido*/

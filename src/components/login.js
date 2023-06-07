@@ -1,10 +1,11 @@
 // import { onNavigate } from '../main';
 import {
-  currentUserInfo,
+  currentUserInfo, post, addPost, deleteDocData, auth,
 } from '../firebase/index.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
 import nueve from '../Images/9.png';
+import diez from '../Images/10.png';
 
 export const Login = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
@@ -41,7 +42,7 @@ export const Login = (onNavigate) => {
   <br>
   <dialog class="divModal" id="divModal"></dialog>
   <br>
-  <div class="containerPublications">Aquí irán las publicaciones</div>
+  <div class="postsContainer">Aquí irán las publicaciones</div>
   <br>`;
 
   // FUNCIONALIDAD ETIQUETA DE BIENVENIDA AL USUARIO
@@ -86,29 +87,111 @@ export const Login = (onNavigate) => {
         <input type="text" class="inputModal" placeholder="Escribe aquí">
         <div class="divImgModal"> 
           <label class="labelModal">Imagen:</label>
-          <input type="file" class="buttonModalImg" id="buttonModalImg"></input>
+          <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png" multiple></input>
         </div>
         <button class="buttonModalPublish" id="buttonModalPublish">Publicar</button>`;
       windowsModal.showModal();
       windowsModal.style.display = 'block';
       windowsModal.style.display = 'flex';
-      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal'); // variable que almacena el boton de cerrar la ventana modal
+
+      // cerrar la ventana modal
+      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+
+      btnClose.addEventListener('click', () => {
+        windowsModal.close();
+        windowsModal.style.display = 'none';
+      });
+
+      // publicar posts
       const btnPublish = loginDiv.querySelector('#divModal').querySelector('#buttonModalPublish');
 
-      btnPublish.addEventListener('click', () => {
+      btnPublish.addEventListener('click', async () => {
         const imputModalPost = windowsModal.querySelector('.inputModalPost').value;
         const coordenadas = windowsModal.querySelector('.inputModal').value;
         const selecImg = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImg').value;
         console.log(imputModalPost);
         console.log(coordenadas);
         console.log(selecImg);
-      });
-      btnClose.addEventListener('click', () => {
+        await post(imputModalPost, coordenadas, selecImg);
         windowsModal.close();
         windowsModal.style.display = 'none';
       });
     },
   );
+
+  // MOSTRAR POSTS EN TIEMPO REAL
+  const postsContainer = loginDiv.querySelector('.postsContainer');
+
+  addPost((publ) => {
+    postsContainer.innerHTML = '';
+    publ.forEach((element) => {
+      // por cada post va a crear todo lo de abajo...
+      const postElement = document.createElement('div');
+      postElement.setAttribute('class', 'divPosts');
+      postsContainer.appendChild(postElement);
+
+      const userNameElement = document.createElement('label');
+      userNameElement.setAttribute('class', 'namePosts');
+      userNameElement.textContent = element.userName;
+      postElement.appendChild(userNameElement);
+
+      const dateElement = document.createElement('label');
+      dateElement.setAttribute('class', 'datePosts');
+      dateElement.textContent = element.dateCreate;
+      postElement.appendChild(dateElement);
+
+      const textElement = document.createElement('p');
+      textElement.setAttribute('class', 'textPosts');
+      textElement.textContent = element.text;
+      postElement.appendChild(textElement);
+
+      const imgElement = document.createElement('img');
+      imgElement.setAttribute('class', 'imgPosts');
+      imgElement.src = element.image;
+      postElement.appendChild(imgElement);
+
+      const coordsElement = document.createElement('label');
+      coordsElement.setAttribute('class', 'coordsPosts');
+      coordsElement.textContent = element.coords;
+      postElement.appendChild(coordsElement);
+
+      const divLikes = document.createElement('div');
+      divLikes.setAttribute('class', 'divLikes');
+      const buttonLikes = document.createElement('button');
+      buttonLikes.setAttribute('class', 'buttonLikes');
+      buttonLikes.id = 'buttonLikes';
+      const imgButtonLikes = document.createElement('img');
+      imgButtonLikes.setAttribute('class', 'imgButtonLikes');
+      imgButtonLikes.src = `${diez}`;
+      const likesElement = document.createElement('label');
+      likesElement.setAttribute('class', 'likesElement');
+      likesElement.textContent = element.likes.length;
+      postElement.appendChild(divLikes);
+      divLikes.appendChild(buttonLikes);
+      buttonLikes.appendChild(imgButtonLikes);
+      divLikes.appendChild(likesElement);
+
+      // verifica que el usuario que está logeado sea el dueño del post
+      if (element.userId === auth.currentUser.uid) {
+        // si es el dueño crea el boton de eliminar
+        const deleteButton = document.createElement('button');
+        deleteButton.setAttribute('class', 'deletePost');
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.value = element.id;
+        console.log(element.id);
+        postElement.appendChild(deleteButton);
+        const deleteBtn = loginDiv.querySelector('.postsContainer').querySelector('.divPosts').querySelector('.deletePost');
+        deleteBtn.addEventListener('click', async () => {
+          try {
+            const byePost = await deleteDocData(element.id);
+            console.log(byePost);
+          } catch (e) {
+            console.error('Error delete post: ', e);
+          }
+        });
+      }
+    });
+  });
 
   return loginDiv;
 };
