@@ -99,7 +99,7 @@ export const Login = (onNavigate) => {
       // publicar posts
       const btnPublish = loginDiv.querySelector('#divModal').querySelector('#buttonModalPublish');
 
-      btnPublish.addEventListener('click', async () => {
+      btnPublish.onclick = async () => {
         const inputModalPost = windowsModal.querySelector('.inputModalPost').value;
         const coordenadas = windowsModal.querySelector('.inputModal').value;
         const selecImg = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImg').value;
@@ -115,15 +115,15 @@ export const Login = (onNavigate) => {
           console.log(inputModalPost, coordenadas, selecImg);
           // loginDiv.querySelector('.containerPublications').appendChild();
         }
-      });
+      };
 
       // cerrar la ventana modal
       const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
 
-      btnClose.addEventListener('click', () => {
+      btnClose.onclick = function () {
         windowsModal.close();
         windowsModal.style.display = 'none';
-      });
+      };
     },
   );
 
@@ -133,7 +133,7 @@ export const Login = (onNavigate) => {
   addPost((querySnapshot) => {
     postsContainer.innerHTML = '';
     querySnapshot.forEach((doc) => {
-      // por cada post va a crear todo lo de abajo...
+      // por cada post va a crear todo lo de abajo dándole la info de la data...
       const postElement = document.createElement('div');
       postElement.setAttribute('class', 'divPosts');
       postsContainer.appendChild(postElement);
@@ -145,6 +145,7 @@ export const Login = (onNavigate) => {
 
       const dateElement = document.createElement('label');
       dateElement.setAttribute('class', 'datePosts');
+      // convierte la fecha de firebase a un string de js
       dateElement.textContent = `${doc.dateCreate.toDate().toDateString()} ${doc.dateCreate.toDate().toLocaleTimeString()}`;
       postElement.appendChild(dateElement);
 
@@ -191,20 +192,11 @@ export const Login = (onNavigate) => {
         deleteButton.onclick = function () {
           console.log(doc.id);
           const confirmDelete = window.confirm('¿Seguro quieres eliminar el post?');
-          if (confirmDelete) {
+          if (confirmDelete) { // si el usuario confirma la eliminación del post
             deleteDocData(doc.id);
           }
         };
 
-        // eslint-disable-next-line max-len
-        // const deleteBtn = loginDiv.querySelector('.postsContainer').querySelector('.divPosts').querySelector('.deletePost');
-        /* deleteButton.addEventListener('click', () => {
-          console.log(doc.id);
-          const confirmDelete = window.confirm('¿Seguro quieres eliminar el post?');
-          if (confirmDelete) {
-            deleteDocData(doc.id);
-          }
-        }); */
         postElement.appendChild(deleteButton);
 
         // si es el dueño crea el boton de editar
@@ -212,10 +204,12 @@ export const Login = (onNavigate) => {
         editButton.setAttribute('class', 'editPost');
         editButton.textContent = 'Editar';
         editButton.value = doc.id;
+        editButton.id = doc.id;
         console.log(doc.id);
         console.log(doc.text);
-        postElement.appendChild(editButton);
-        editButton.addEventListener('click', () => {
+
+        editButton.onclick = function () {
+          // abre modal si quiere editar y le da el valor de cada espacio
           windowsModal.innerHTML = `
         <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
         <label class="labelModal">Texto:</label>
@@ -246,7 +240,7 @@ export const Login = (onNavigate) => {
           // publicar posts
           const btnEditDone = loginDiv.querySelector('#divModal').querySelector('#buttonModalEdit');
 
-          btnEditDone.addEventListener('click', async () => {
+          btnEditDone.onclick = async () => {
             const newText = document.getElementById(doc.text);
             const newCoords = document.getElementById(doc.coords);
             // const newImg = document.getElementById(doc.image);
@@ -258,16 +252,18 @@ export const Login = (onNavigate) => {
                 windowsModal.close();
                 windowsModal.style.display = 'none';
               });
-          });
+          };
 
           // cerrar la ventana modal
           const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
 
-          btnClose.addEventListener('click', () => {
+          btnClose.onclick = function () {
             windowsModal.close();
             windowsModal.style.display = 'none';
-          });
-        });
+          };
+        };
+
+        postElement.appendChild(editButton);
       }
     });
   });
