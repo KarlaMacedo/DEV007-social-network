@@ -186,15 +186,26 @@ export const Login = (onNavigate) => {
         deleteButton.setAttribute('class', 'deletePost');
         deleteButton.textContent = 'Eliminar';
         deleteButton.value = doc.id;
-        console.log(doc.id);
-        postElement.appendChild(deleteButton);
-        const deleteBtn = loginDiv.querySelector('.postsContainer').querySelector('.divPosts').querySelector('.deletePost');
-        deleteBtn.addEventListener('click', () => {
+        deleteButton.id = doc.id;
+
+        deleteButton.onclick = function () {
+          console.log(doc.id);
           const confirmDelete = window.confirm('¿Seguro quieres eliminar el post?');
           if (confirmDelete) {
             deleteDocData(doc.id);
           }
-        });
+        };
+
+        // eslint-disable-next-line max-len
+        // const deleteBtn = loginDiv.querySelector('.postsContainer').querySelector('.divPosts').querySelector('.deletePost');
+        /* deleteButton.addEventListener('click', () => {
+          console.log(doc.id);
+          const confirmDelete = window.confirm('¿Seguro quieres eliminar el post?');
+          if (confirmDelete) {
+            deleteDocData(doc.id);
+          }
+        }); */
+        postElement.appendChild(deleteButton);
 
         // si es el dueño crea el boton de editar
         const editButton = document.createElement('button');
@@ -220,13 +231,14 @@ export const Login = (onNavigate) => {
         <button class="buttonModalEdit" id="buttonModalEdit">Listo!</button>`;
           const postTextEdit = windowsModal.querySelector('.inputModalPostEdit');
           const coordsEdit = windowsModal.querySelector('.inputModalEdit');
-          const imgEdit = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImgEdit');
+          // eslint-disable-next-line max-len
+          // const imgEdit = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImgEdit');
           postTextEdit.value = doc.text;
           coordsEdit.value = doc.coords;
-          imgEdit.value = doc.image;
+          // imgEdit.value = doc.image;
           postTextEdit.id = doc.text;
           coordsEdit.id = doc.coords;
-          imgEdit.id = doc.image;
+          // imgEdit.id = doc.image;
           windowsModal.showModal();
           windowsModal.style.display = 'block';
           windowsModal.style.display = 'flex';
@@ -237,11 +249,11 @@ export const Login = (onNavigate) => {
           btnEditDone.addEventListener('click', async () => {
             const newText = document.getElementById(doc.text);
             const newCoords = document.getElementById(doc.coords);
-            const newImg = document.getElementById(doc.image);
+            // const newImg = document.getElementById(doc.image);
             const refPostId = doc.id;
             /* console.log(refPostId); */
             // eslint-disable-next-line max-len
-            await updatePost(refPostId, { text: newText.value, coords: newCoords.value, image: newImg.value })
+            await updatePost(refPostId, { text: newText.value, coords: newCoords.value })
               .then(() => {
                 windowsModal.close();
                 windowsModal.style.display = 'none';
