@@ -1,6 +1,6 @@
 // import { onNavigate } from '../main';
 import {
-  currentUserInfo, post, addPost, deleteDocData, auth,
+  currentUserInfo, post, addPost, deleteDocData, auth, updatePost,
 } from '../firebase/index.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
@@ -38,7 +38,7 @@ export const Login = (onNavigate) => {
   onlyMenu.appendChild(buttonMenu);
 
   loginDiv.innerHTML += `
-  <input type="text" class="inputLogin" id="inputLogin" placeholder="Escribe tu publicación dando click aquí">
+  <button class="inputLogin" id="inputLogin">Crear publicación</button>
   <br>
   <dialog class="divModal" id="divModal"></dialog>
   <br>
@@ -89,30 +89,38 @@ export const Login = (onNavigate) => {
           <label class="labelModal">Imagen:</label>
           <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png" multiple></input>
         </div>
+        <label class="labelErrorsModal" id="labelErrorsModal"></label>
+        <br>
         <button class="buttonModalPublish" id="buttonModalPublish">Publicar</button>`;
       windowsModal.showModal();
       windowsModal.style.display = 'block';
       windowsModal.style.display = 'flex';
 
-      // cerrar la ventana modal
-      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
-
-      btnClose.addEventListener('click', () => {
-        windowsModal.close();
-        windowsModal.style.display = 'none';
-      });
-
       // publicar posts
       const btnPublish = loginDiv.querySelector('#divModal').querySelector('#buttonModalPublish');
 
       btnPublish.addEventListener('click', async () => {
-        const imputModalPost = windowsModal.querySelector('.inputModalPost').value;
+        const inputModalPost = windowsModal.querySelector('.inputModalPost').value;
         const coordenadas = windowsModal.querySelector('.inputModal').value;
         const selecImg = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImg').value;
-        console.log(imputModalPost);
+        console.log(inputModalPost);
         console.log(coordenadas);
         console.log(selecImg);
-        await post(imputModalPost, coordenadas, selecImg);
+        if (inputModalPost === '' && coordenadas === '' && selecImg === '') {
+          windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder publicar';
+        } else {
+          post(inputModalPost, coordenadas, selecImg);
+          windowsModal.close();
+          windowsModal.style.display = 'none';
+          console.log(inputModalPost, coordenadas, selecImg);
+          // loginDiv.querySelector('.containerPublications').appendChild();
+        }
+      });
+
+      // cerrar la ventana modal
+      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+
+      btnClose.addEventListener('click', () => {
         windowsModal.close();
         windowsModal.style.display = 'none';
       });
@@ -122,9 +130,9 @@ export const Login = (onNavigate) => {
   // MOSTRAR POSTS EN TIEMPO REAL
   const postsContainer = loginDiv.querySelector('.postsContainer');
 
-  addPost((publ) => {
+  addPost((querySnapshot) => {
     postsContainer.innerHTML = '';
-    publ.forEach((element) => {
+    querySnapshot.forEach((doc) => {
       // por cada post va a crear todo lo de abajo...
       const postElement = document.createElement('div');
       postElement.setAttribute('class', 'divPosts');
@@ -132,27 +140,27 @@ export const Login = (onNavigate) => {
 
       const userNameElement = document.createElement('label');
       userNameElement.setAttribute('class', 'namePosts');
-      userNameElement.textContent = element.userName;
+      userNameElement.textContent = doc.userName;
       postElement.appendChild(userNameElement);
 
       const dateElement = document.createElement('label');
       dateElement.setAttribute('class', 'datePosts');
-      dateElement.textContent = element.dateCreate;
+      dateElement.textContent = `${doc.dateCreate.toDate().toDateString()} ${doc.dateCreate.toDate().toLocaleTimeString()}`;
       postElement.appendChild(dateElement);
 
       const textElement = document.createElement('p');
       textElement.setAttribute('class', 'textPosts');
-      textElement.textContent = element.text;
+      textElement.textContent = doc.text;
       postElement.appendChild(textElement);
 
       const imgElement = document.createElement('img');
       imgElement.setAttribute('class', 'imgPosts');
-      imgElement.src = element.image;
+      imgElement.src = doc.image;
       postElement.appendChild(imgElement);
 
       const coordsElement = document.createElement('label');
       coordsElement.setAttribute('class', 'coordsPosts');
-      coordsElement.textContent = element.coords;
+      coordsElement.textContent = doc.coords;
       postElement.appendChild(coordsElement);
 
       const divLikes = document.createElement('div');
@@ -165,29 +173,88 @@ export const Login = (onNavigate) => {
       imgButtonLikes.src = `${diez}`;
       const likesElement = document.createElement('label');
       likesElement.setAttribute('class', 'likesElement');
-      likesElement.textContent = element.likes.length;
+      likesElement.textContent = doc.likes.length;
       postElement.appendChild(divLikes);
       divLikes.appendChild(buttonLikes);
       buttonLikes.appendChild(imgButtonLikes);
       divLikes.appendChild(likesElement);
 
       // verifica que el usuario que está logeado sea el dueño del post
-      if (element.userId === auth.currentUser.uid) {
+      if (doc.userId === auth.currentUser.uid) {
         // si es el dueño crea el boton de eliminar
         const deleteButton = document.createElement('button');
         deleteButton.setAttribute('class', 'deletePost');
         deleteButton.textContent = 'Eliminar';
-        deleteButton.value = element.id;
-        console.log(element.id);
+        deleteButton.value = doc.id;
+        console.log(doc.id);
         postElement.appendChild(deleteButton);
         const deleteBtn = loginDiv.querySelector('.postsContainer').querySelector('.divPosts').querySelector('.deletePost');
-        deleteBtn.addEventListener('click', async () => {
-          try {
-            const byePost = await deleteDocData(element.id);
-            console.log(byePost);
-          } catch (e) {
-            console.error('Error delete post: ', e);
+        deleteBtn.addEventListener('click', () => {
+          const confirmDelete = window.confirm('¿Seguro quieres eliminar el post?');
+          if (confirmDelete) {
+            deleteDocData(doc.id);
           }
+        });
+
+        // si es el dueño crea el boton de editar
+        const editButton = document.createElement('button');
+        editButton.setAttribute('class', 'editPost');
+        editButton.textContent = 'Editar';
+        editButton.value = doc.id;
+        console.log(doc.id);
+        console.log(doc.text);
+        postElement.appendChild(editButton);
+        editButton.addEventListener('click', () => {
+          windowsModal.innerHTML = `
+        <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
+        <label class="labelModal">Texto:</label>
+        <input type="text" class="inputModalPostEdit" placeholder="Escribe aquí">
+        <label class="labelModal">Coordenadas:</label>
+        <input type="text" class="inputModalEdit" placeholder="Escribe aquí">
+        <div class="divImgModal"> 
+          <label class="labelModal">Imagen:</label>
+          <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png" multiple></input>
+        </div>
+        <label class="labelErrorsModal" id="labelErrorsModal"></label>
+        <br>
+        <button class="buttonModalEdit" id="buttonModalEdit">Listo!</button>`;
+          const postTextEdit = windowsModal.querySelector('.inputModalPostEdit');
+          const coordsEdit = windowsModal.querySelector('.inputModalEdit');
+          const imgEdit = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImgEdit');
+          postTextEdit.value = doc.text;
+          coordsEdit.value = doc.coords;
+          imgEdit.value = doc.image;
+          postTextEdit.id = doc.text;
+          coordsEdit.id = doc.coords;
+          imgEdit.id = doc.image;
+          windowsModal.showModal();
+          windowsModal.style.display = 'block';
+          windowsModal.style.display = 'flex';
+
+          // publicar posts
+          const btnEditDone = loginDiv.querySelector('#divModal').querySelector('#buttonModalEdit');
+
+          btnEditDone.addEventListener('click', async () => {
+            const newText = document.getElementById(doc.text);
+            const newCoords = document.getElementById(doc.coords);
+            const newImg = document.getElementById(doc.image);
+            const refPostId = doc.id;
+            /* console.log(refPostId); */
+            // eslint-disable-next-line max-len
+            await updatePost(refPostId, { text: newText.value, coords: newCoords.value, image: newImg.value })
+              .then(() => {
+                windowsModal.close();
+                windowsModal.style.display = 'none';
+              });
+          });
+
+          // cerrar la ventana modal
+          const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+
+          btnClose.addEventListener('click', () => {
+            windowsModal.close();
+            windowsModal.style.display = 'none';
+          });
         });
       }
     });

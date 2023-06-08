@@ -39,26 +39,22 @@ export const loginWithGoogle = () => signInWithPopup(auth, provider);
 
 // GUARDAR POST EN FIRESTORE
 export const post = async (postText, userCords, userImage) => {
-  try {
-    const docRef = await addDoc(collection(db, 'posts'), {
-      text: postText,
-      coords: userCords,
-      image: userImage,
-      userEmail: auth.currentUser.email,
-      userId: auth.currentUser.uid,
-      userName: auth.currentUser.displayName,
-      dateCreate: Timestamp.now(),
-      likes: [],
-      id: '',
-    });
-    console.log(docRef.id);
-    const idPost = await updateDoc(docRef, {
-      id: docRef.id,
-    });
-    console.log(idPost);
-  } catch (e) {
-    console.error('Error adding document: ', e);
-  }
+  const docRef = await addDoc(collection(db, 'posts'), {
+    text: postText,
+    coords: userCords,
+    image: userImage,
+    userEmail: auth.currentUser.email,
+    userId: auth.currentUser.uid,
+    userName: auth.currentUser.displayName,
+    dateCreate: Timestamp.now(),
+    likes: [],
+    id: '',
+  });
+  console.log(docRef.id);
+  const idPost = await updateDoc(docRef, {
+    id: docRef.id,
+  });
+  console.log(idPost);
 };
 
 // OBTENER DATA DE POSTS FIRESTORE
@@ -67,17 +63,17 @@ console.log(colRef.id);
 console.log(colRef);
 
 // ORDENAR POST EN FORMA DESCENDENTE POR FECHA
-export const readPosts = () => query(colRef, orderBy('dateCreate', 'desc'));
+export const orderPosts = () => query(colRef, orderBy('dateCreate', 'desc'));
 
 // ACTUALIZACIONES EN TIEMPO REAL DE POSTS "ESCUCHADOR"
 export const addPost = (callback) => {
-  onSnapshot(readPosts(colRef), (querySnapshot) => {
+  onSnapshot(orderPosts(colRef), (querySnapshot) => {
     const allPosts = []; // nuevo array a formar con los posts
     console.log(querySnapshot);
-    querySnapshot.forEach((docPost) => { // recorre el objeto de objetos de posts
-      allPosts.push({ ...docPost.data() }); // copia de cada objeto y se le da el id del post
-      console.log(docPost.data());
-      console.log(doc.id);
+    querySnapshot.docs.forEach((docPost) => { // recorre el objeto de objetos de posts
+      allPosts.push(docPost.data()); // copia de cada objeto y se le da el id del post
+      console.log({ ...docPost.data() });
+      console.log(docPost.id);
     });
     console.log(allPosts);
     callback(allPosts); // llamar al nuevo array formado
