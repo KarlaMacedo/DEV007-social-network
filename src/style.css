@@ -520,6 +520,7 @@ header img {
     align-self: center;
     margin-right: 10px;
 }
+ /*---------------------------------------------------FORMATO MODAL POST----------------------------------------------*/
  
 .divModal{
     border-radius: 20px;
@@ -631,6 +632,7 @@ header img {
     overflow-y: scroll;
     height: 465px;
 }
+ /*---------------------------------------------------FORMATO POSTS----------------------------------------------*/
 
 .divPosts{
     border-radius: 20px;
@@ -668,6 +670,112 @@ header img {
 .likesElement{
     margin-left: -19px;
 }
+ /*---------------------------------------------------FORMATO MODAL POST EDIT----------------------------------------------*/
+
+ .divModal{
+    border-radius: 20px;
+    border: solid rgba(164, 89, 209, 1);
+    height: max-content;
+    align-self: center;
+    width: 70%;
+    gap: 10px;
+    display: flex;
+    flex-direction: column;
+}
+
+.divModal::backdrop{
+    background-color: rgba(0, 0, 0, 0.4);
+}
+
+.labelModal{
+    font-size: 1.3em;
+    font-weight: bold;
+}
+
+.inputModalPostEdit{
+    background-color: rgba(44, 211, 225, 1);
+    color: rgba(95, 95, 95, 1);
+    font-size: 1.1em;
+    font-family: 'Glacial Indifference', sans-serif;
+    border: none;
+    height: 4em;
+    width: -webkit-fill-available;
+    margin-top: .5em;
+    padding-left: 15px;
+    border-radius: 20px;
+    align-self: center;
+}
+
+.inputModalEdit{
+    background-color: rgba(44, 211, 225, 1);
+    color: rgba(95, 95, 95, 1);
+    font-size: 1.1em;
+    font-family: 'Glacial Indifference', sans-serif;
+    border: none;
+    height: 4em;
+    width: -webkit-fill-available;
+    margin-top: .5em;
+    padding-left: 15px;
+    border-radius: 20px;
+    align-self: center;
+}
+
+#closeModal{
+    background-color: transparent;
+    border: transparent;
+    outline: none;
+    width: 2em;
+    height: 2em;
+    padding: 0;
+    border-radius: 50%;
+    margin-top: -25px;
+    position: fixed;
+    margin-left: -27px;
+}
+
+.closeModal img{
+    margin: 0;
+    margin-left: 0;
+    width: 2em;
+    height: 2em;
+    border: solid 1px rgba(164, 89, 209, 1);
+    border-radius: 50%;
+}
+
+.buttonModalImg{
+    background-color: rgba(255, 197, 25, 1);
+    border-radius: 20px;
+    font-size: 1em;
+    border-color: #ffffff;
+    width: max-content;
+    height: max-content;
+    align-self: self-end;
+    margin: 10px;
+    padding: 10px;
+    font-family: 'Glacial Indifference', sans-serif;
+}
+
+.buttonModalEdit{
+    background-color: rgba(242, 102, 171, 1);
+    border-radius: 20px;
+    font-size: 1.3em;
+    font-weight: bold;
+    border-color: white;
+    width: 9.5em;
+    height: 2.2em;
+    margin: 1em;
+    align-self: center;
+}
+
+#labelErrorsModal{
+    color: red;
+    font-size: 1em;
+    font-weight: bolder;
+    align-self: center;
+    text-align: center;
+}
+
+
 /*---------------------------------------------------FORMATO FOOTER----------------------------------------------*/
 footer {
     position: fixed; /*que la posicion sea fija independiente del contenido*/
