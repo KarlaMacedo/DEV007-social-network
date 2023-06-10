@@ -527,7 +527,7 @@ header img {
     border: solid rgba(164, 89, 209, 1);
     height: max-content;
     align-self: center;
-    width: 70%;
+    width: 81%;
     gap: 10px;
     display: flex;
     flex-direction: column;
@@ -648,27 +648,30 @@ header img {
 
 .divLikes{ 
     background-color: rgba(44, 211, 225, 1);
-    border-radius: 6%;
+    border-radius: 8%;
     margin: 10px;
+    padding: 6px;
     display: flex;
     flex-direction: row;
     align-items: center;
-    width: 55px;
+    width: 50px;
+    justify-content: space-between;
 }
 
 .buttonLikes{
     border: 0;
     padding: 0;
-    width: 53px;
+    width: 30px;
     background-color: transparent;
 }
 
 .imgButtonLikes{
-    width: 53px;
+    width: 30px;
 }
 
 .likesElement{
-    margin-left: -19px;
+    text-align: center;
+    width: 20px;
 }
  /*---------------------------------------------------FORMATO MODAL POST EDIT----------------------------------------------*/
 
@@ -677,7 +680,7 @@ header img {
     border: solid rgba(164, 89, 209, 1);
     height: max-content;
     align-self: center;
-    width: 70%;
+    width: 81%;
     gap: 10px;
     display: flex;
     flex-direction: column;
