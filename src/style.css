@@ -433,6 +433,10 @@ header img {
     margin-bottom: 4px;
     margin-right: 4px;
 }
+.buttonMenu:hover {
+    box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
+    transition: all 0.2s ease;
+  }
 
 .buttonMenu img{
     width: 4em;
@@ -520,6 +524,11 @@ header img {
     align-self: center;
     margin-right: 10px;
 }
+.inputLogin:hover {
+    box-shadow: 0 4px 16px rgba(255, 197, 25, 1);
+    transition: all 0.2s ease;
+  }
+
  /*---------------------------------------------------FORMATO MODAL POST----------------------------------------------*/
  
 .divModal{
@@ -565,6 +574,7 @@ header img {
     height: 4em;
     width: -webkit-fill-available;
     margin-top: .5em;
+    margin-bottom: .7em;
     padding-left: 15px;
     border-radius: 20px;
     align-self: center;
@@ -592,7 +602,18 @@ header img {
     border-radius: 50%;
 }
 
-.buttonModalImg{
+
+
+.buttonModalImg {
+    width: 0.1px;
+    height: 0.1px;
+    opacity: 0;
+    overflow: hidden;
+    position: absolute;
+    z-index: -1;
+    }
+
+.labelButtonModalImg{
     background-color: rgba(255, 197, 25, 1);
     border-radius: 20px;
     font-size: 1em;
@@ -605,6 +626,11 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
 }
 
+.labelButtonModalImg:hover {
+    box-shadow: 0 4px 16px rgba(255, 197, 25, 1);
+    transition: all 0.2s ease;
+  }
+
 .buttonModalPublish{
     background-color: rgba(242, 102, 171, 1);
     border-radius: 20px;
@@ -616,6 +642,10 @@ header img {
     margin: 1em;
     align-self: center;
 }
+.buttonModalPublish:hover {
+    box-shadow: 0 4px 16px rgba(242, 102, 171, 1);
+    transition: all 0.2s ease;
+  }
 
 #labelErrorsModal{
     color: red;
@@ -670,6 +700,39 @@ header img {
 .likesElement{
     margin-left: -19px;
 }
+
+.deletePost {
+    background-color: rgba(164, 89, 209, 1);
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-color: white;
+    width: 8em;
+    height: 1.5em;
+
+}
+
+.deletePost:hover {
+    box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
+    transition: all 0.2s ease;
+  }
+
+.editPost {
+    background-color: rgba(44, 211, 225, 1);
+    border-radius: 20px;
+    font-size: 0.8em;
+    font-weight: bold;
+    border-color: white;
+    width: 8em;
+    height: 1.5em;
+
+}
+
+.editPost:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
+
  /*---------------------------------------------------FORMATO MODAL POST EDIT----------------------------------------------*/
 
  .divModal{
@@ -691,6 +754,7 @@ header img {
     font-size: 1.3em;
     font-weight: bold;
 }
+
 
 .inputModalPostEdit{
     background-color: rgba(44, 211, 225, 1);
@@ -715,6 +779,7 @@ header img {
     height: 4em;
     width: -webkit-fill-available;
     margin-top: .5em;
+    margin-bottom: .7em;
     padding-left: 15px;
     border-radius: 20px;
     align-self: center;
@@ -742,7 +807,7 @@ header img {
     border-radius: 50%;
 }
 
-.buttonModalImg{
+.labelModalImgEdit{
     background-color: rgba(255, 197, 25, 1);
     border-radius: 20px;
     font-size: 1em;
@@ -755,6 +820,11 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
 }
 
+.labelModalImgEdit:hover {
+    box-shadow: 0 4px 16px rgba(255, 197, 25, 1);
+    transition: all 0.2s ease;
+  }
+
 .buttonModalEdit{
     background-color: rgba(242, 102, 171, 1);
     border-radius: 20px;
@@ -766,6 +836,10 @@ header img {
     margin: 1em;
     align-self: center;
 }
+.buttonModalEdit:hover {
+    box-shadow: 0 4px 16px rgba(242, 102, 171, 1);
+    transition: all 0.2s ease;
+  }
 
 #labelErrorsModal{
     color: red;

@@ -86,8 +86,9 @@ export const Login = (onNavigate) => {
         <label class="labelModal">Coordenadas:</label>
         <input type="text" class="inputModal" placeholder="Escribe aquí">
         <div class="divImgModal"> 
-          <label class="labelModal">Imagen:</label>
+          <label class="labelButtonModalImg">Subir Imagen
           <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png" multiple></input>
+          </label>
         </div>
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
@@ -180,6 +181,10 @@ export const Login = (onNavigate) => {
       buttonLikes.appendChild(imgButtonLikes);
       divLikes.appendChild(likesElement);
 
+      const divButtons = document.createElement('div');
+      divButtons.setAttribute = ('class', 'divButtons');
+      postElement.appendChild(divButtons);
+
       // verifica que el usuario que está logeado sea el dueño del post
       if (doc.userId === auth.currentUser.uid) {
         // si es el dueño crea el boton de eliminar
@@ -197,7 +202,7 @@ export const Login = (onNavigate) => {
           }
         };
 
-        postElement.appendChild(deleteButton);
+        divButtons.appendChild(deleteButton);
 
         // si es el dueño crea el boton de editar
         const editButton = document.createElement('button');
@@ -217,8 +222,9 @@ export const Login = (onNavigate) => {
         <label class="labelModal">Coordenadas:</label>
         <input type="text" class="inputModalEdit" placeholder="Escribe aquí">
         <div class="divImgModal"> 
-          <label class="labelModal">Imagen:</label>
+          <label class="labelModalImgEdit">Subir Imagen
           <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png" multiple></input>
+          </label>
         </div>
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
@@ -263,7 +269,7 @@ export const Login = (onNavigate) => {
           };
         };
 
-        postElement.appendChild(editButton);
+        divButtons.appendChild(editButton);
       }
     });
   });
