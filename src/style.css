@@ -670,6 +670,29 @@ header img {
     overflow-y: scroll;
     height: 465px;
 }
+
+/*FORMATO SCROLL DEL POST*/
+.postsContainer::-webkit-scrollbar { /*formato scroll en general*/
+    height: 1.5em;
+  }
+
+/* Ponemos un color de fondo y redondeamos las esquinas del thumb */
+.postsContainer::-webkit-scrollbar-thumb {
+    background: rgba(44, 211, 225, 1);
+    border-radius: 5px;
+}
+
+/* Ponemos un color de fondo y redondeamos las esquinas del track */
+.postsContainer::-webkit-scrollbar-track {
+    background: transparent;
+}
+
+/* Cambiamos el fondo cuando esté en active */
+.postsContainer::-webkit-scrollbar-track:active {
+    background: transparent;
+      border: solid 1px rgba(44, 211, 225, 1);
+      border-radius: 10px;
+  }
  /*---------------------------------------------------FORMATO POSTS----------------------------------------------*/
 
 .divPosts{
