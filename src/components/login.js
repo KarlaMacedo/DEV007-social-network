@@ -1,11 +1,12 @@
 // import { onNavigate } from '../main';
 import {
-  currentUserInfo, post, addPost, deleteDocData, auth, updatePost,
+  currentUserInfo, post, addPost, deleteDocData, auth, updatePost, like, disLike,
 } from '../firebase/index.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
 import nueve from '../Images/9.png';
-import diez from '../Images/10.png';
+import diez from '../Images/10.1.png';
+import diez2 from '../Images/10.2.png';
 
 export const Login = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
@@ -164,22 +165,6 @@ export const Login = (onNavigate) => {
       coordsElement.textContent = doc.coords;
       postElement.appendChild(coordsElement);
 
-      const divLikes = document.createElement('div');
-      divLikes.setAttribute('class', 'divLikes');
-      const buttonLikes = document.createElement('button');
-      buttonLikes.setAttribute('class', 'buttonLikes');
-      buttonLikes.id = 'buttonLikes';
-      const imgButtonLikes = document.createElement('img');
-      imgButtonLikes.setAttribute('class', 'imgButtonLikes');
-      imgButtonLikes.src = `${diez}`;
-      const likesElement = document.createElement('label');
-      likesElement.setAttribute('class', 'likesElement');
-      likesElement.textContent = doc.likes.length;
-      postElement.appendChild(divLikes);
-      divLikes.appendChild(buttonLikes);
-      buttonLikes.appendChild(imgButtonLikes);
-      divLikes.appendChild(likesElement);
-
       // verifica que el usuario que está logeado sea el dueño del post
       if (doc.userId === auth.currentUser.uid) {
         // si es el dueño crea el boton de eliminar
@@ -237,17 +222,15 @@ export const Login = (onNavigate) => {
           windowsModal.style.display = 'block';
           windowsModal.style.display = 'flex';
 
-          // publicar posts
+          // Terminar de editar posts
           const btnEditDone = loginDiv.querySelector('#divModal').querySelector('#buttonModalEdit');
 
           btnEditDone.onclick = async () => {
             const newText = document.getElementById(doc.text);
             const newCoords = document.getElementById(doc.coords);
             // const newImg = document.getElementById(doc.image);
-            const refPostId = doc.id;
-            /* console.log(refPostId); */
             // eslint-disable-next-line max-len
-            await updatePost(refPostId, { text: newText.value, coords: newCoords.value })
+            await updatePost(doc.id, { text: newText.value, coords: newCoords.value })
               .then(() => {
                 windowsModal.close();
                 windowsModal.style.display = 'none';
@@ -265,6 +248,38 @@ export const Login = (onNavigate) => {
 
         postElement.appendChild(editButton);
       }
+
+      // creación de boton like
+      const divLikes = document.createElement('div');
+      divLikes.setAttribute('class', 'divLikes');
+      const buttonLikes = document.createElement('button');
+      buttonLikes.setAttribute('class', 'buttonLikes');
+      buttonLikes.id = 'buttonLikes';
+      const imgButtonLikes = document.createElement('img');
+      imgButtonLikes.setAttribute('class', 'imgButtonLikes');
+      // si ya tiene like aparece rosa, si no blanco
+      const likeImg = doc.likes.includes(auth.currentUser.uid) ? diez : diez2;
+      imgButtonLikes.src = `${likeImg}`;
+      const likesElement = document.createElement('label');
+      likesElement.setAttribute('class', 'likesElement');
+      // da el largo del array de likes para hacer la contabilidad de likes
+      likesElement.textContent = doc.likes.length;
+      postElement.appendChild(divLikes);
+      divLikes.appendChild(buttonLikes);
+      buttonLikes.appendChild(imgButtonLikes);
+      divLikes.appendChild(likesElement);
+
+      // funcionalidad boton like
+      buttonLikes.onclick = async () => {
+        // si ya tiene like, se borra el like de la data al dar click
+        if (doc.likes.includes(auth.currentUser.uid)) {
+          await disLike(doc.id, auth.currentUser.uid);
+          console.log('dislike');
+        } else { // si no tiene like, se agrega el like a la data
+          await like(doc.id, auth.currentUser.uid);
+          console.log('like');
+        }
+      };
     });
   });
 

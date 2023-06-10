@@ -1,7 +1,7 @@
 /* eslint-disable max-len */
 /* eslint-disable import/no-extraneous-dependencies */
 import {
-  getFirestore, setDoc, doc, collection, addDoc, query, orderBy, onSnapshot, updateDoc, deleteDoc, Timestamp,
+  getFirestore, setDoc, doc, collection, addDoc, query, orderBy, onSnapshot, updateDoc, deleteDoc, Timestamp, arrayRemove, arrayUnion,
 } from 'firebase/firestore';
 import {
   getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
@@ -87,3 +87,9 @@ export const deleteDocData = async (id) => {
 
 // EDITAR POST
 export const updatePost = (id, newPost) => updateDoc(doc(db, 'posts', id), newPost);
+
+// DAR LIKE
+export const like = async (id, uid) => updateDoc(doc(db, 'posts', id), { likes: arrayUnion(uid) });
+
+// QUITAR LIKE
+export const disLike = async (id, uid) => updateDoc(doc(db, 'posts', id), { likes: arrayRemove(uid) });
