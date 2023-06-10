@@ -564,6 +564,10 @@ header img {
     border-radius: 20px;
     align-self: center;
 }
+.inputModalPost:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
 
 .inputModal{
     background-color: rgba(44, 211, 225, 1);
@@ -579,6 +583,10 @@ header img {
     border-radius: 20px;
     align-self: center;
 }
+.inputModal:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
 
 #closeModal{
     background-color: transparent;
@@ -687,6 +695,11 @@ header img {
     width: 50px;
     justify-content: space-between;
 }
+.divLikes:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
+
 
 .buttonLikes{
     border: 0;
@@ -772,6 +785,10 @@ header img {
     border-radius: 20px;
     align-self: center;
 }
+.inputModalPostEdit:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
 
 .inputModalEdit{
     background-color: rgba(44, 211, 225, 1);
@@ -787,6 +804,10 @@ header img {
     border-radius: 20px;
     align-self: center;
 }
+.inputModalEdit:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
 
 #closeModal{
     background-color: transparent;

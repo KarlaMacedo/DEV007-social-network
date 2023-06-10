@@ -87,9 +87,9 @@ export const Login = (onNavigate) => {
         <label class="labelModal">Coordenadas:</label>
         <input type="text" class="inputModal" placeholder="Escribe aquí">
         <div class="divImgModal"> 
-          <label class="labelButtonModalImg">Subir Imagen
-          <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png" multiple></input>
-          </label>
+        <label class="labelButtonModalImg">Subir Imagen
+        <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png" multiple></input>
+        </label>
         </div>
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
@@ -165,26 +165,6 @@ export const Login = (onNavigate) => {
       coordsElement.setAttribute('class', 'coordsPosts');
       coordsElement.textContent = doc.coords;
       postElement.appendChild(coordsElement);
-      
-      const divButtons = document.createElement('div');
-      divButtons.setAttribute = ('class', 'divButtons');
-      postElement.appendChild(divButtons);
-
-      const divLikes = document.createElement('div');
-      divLikes.setAttribute('class', 'divLikes');
-      const buttonLikes = document.createElement('button');
-      buttonLikes.setAttribute('class', 'buttonLikes');
-      buttonLikes.id = 'buttonLikes';
-      const imgButtonLikes = document.createElement('img');
-      imgButtonLikes.setAttribute('class', 'imgButtonLikes');
-      imgButtonLikes.src = `${diez}`;
-      const likesElement = document.createElement('label');
-      likesElement.setAttribute('class', 'likesElement');
-      likesElement.textContent = doc.likes.length;
-      postElement.appendChild(divLikes);
-      divLikes.appendChild(buttonLikes);
-      buttonLikes.appendChild(imgButtonLikes);
-      divLikes.appendChild(likesElement);
 
       // verifica que el usuario que está logeado sea el dueño del post
       if (doc.userId === auth.currentUser.uid) {
@@ -202,8 +182,12 @@ export const Login = (onNavigate) => {
             deleteDocData(doc.id);
           }
         };
-
+        const divButtons = document.createElement('div');
+        divButtons.setAttribute = ('class', 'divButtons');
+        postElement.appendChild(divButtons);
+  
         divButtons.appendChild(deleteButton);
+
 
         // si es el dueño crea el boton de editar
         const editButton = document.createElement('button');
@@ -223,9 +207,9 @@ export const Login = (onNavigate) => {
         <label class="labelModal">Coordenadas:</label>
         <input type="text" class="inputModalEdit" placeholder="Escribe aquí">
         <div class="divImgModal"> 
-          <label class="labelModalImgEdit">Subir Imagen
-          <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png" multiple></input>
-          </label>
+        <label class="labelModalImgEdit">Subir Imagen
+        <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png" multiple></input>
+        </label>
         </div>
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
