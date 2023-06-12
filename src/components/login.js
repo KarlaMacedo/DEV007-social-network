@@ -40,11 +40,8 @@ export const Login = (onNavigate) => {
 
   loginDiv.innerHTML += `
   <button class="inputLogin" id="inputLogin">Crear publicación</button>
-  <br>
   <dialog class="divModal" id="divModal"></dialog>
-  <br>
-  <div class="postsContainer">Aquí irán las publicaciones</div>
-  <br>`;
+  <div class="postsContainer">Aquí irán las publicaciones</div>`;
 
   // FUNCIONALIDAD ETIQUETA DE BIENVENIDA AL USUARIO
   console.log(currentUserInfo());
@@ -140,31 +137,39 @@ export const Login = (onNavigate) => {
       postElement.setAttribute('class', 'divPosts');
       postsContainer.appendChild(postElement);
 
+      const content1Posts = document.createElement('div');
+      content1Posts.setAttribute('class', 'div1Posts');
+      postElement.appendChild(content1Posts);
+
+      const content2Posts = document.createElement('div');
+      content2Posts.setAttribute('class', 'div2Posts');
+      postElement.appendChild(content2Posts);
+
       const userNameElement = document.createElement('label');
       userNameElement.setAttribute('class', 'namePosts');
       userNameElement.textContent = doc.userName;
-      postElement.appendChild(userNameElement);
+      content1Posts.appendChild(userNameElement);
 
       const dateElement = document.createElement('label');
       dateElement.setAttribute('class', 'datePosts');
       // convierte la fecha de firebase a un string de js
       dateElement.textContent = `${doc.dateCreate.toDate().toDateString()} ${doc.dateCreate.toDate().toLocaleTimeString()}`;
-      postElement.appendChild(dateElement);
+      content1Posts.appendChild(dateElement);
 
       const textElement = document.createElement('p');
       textElement.setAttribute('class', 'textPosts');
       textElement.textContent = doc.text;
-      postElement.appendChild(textElement);
+      content2Posts.appendChild(textElement);
 
       const imgElement = document.createElement('img');
       imgElement.setAttribute('class', 'imgPosts');
       imgElement.src = doc.image;
-      postElement.appendChild(imgElement);
+      content2Posts.appendChild(imgElement);
 
       const coordsElement = document.createElement('label');
       coordsElement.setAttribute('class', 'coordsPosts');
       coordsElement.textContent = doc.coords;
-      postElement.appendChild(coordsElement);
+      content1Posts.appendChild(coordsElement);
 
       // verifica que el usuario que está logeado sea el dueño del post
       if (doc.userId === auth.currentUser.uid) {
@@ -183,11 +188,10 @@ export const Login = (onNavigate) => {
           }
         };
         const divButtons = document.createElement('div');
-        divButtons.setAttribute = ('class', 'divButtons');
-        postElement.appendChild(divButtons);
-  
-        divButtons.appendChild(deleteButton);
+        divButtons.setAttribute('class', 'divButt');
+        content2Posts.appendChild(divButtons);
 
+        divButtons.appendChild(deleteButton);
 
         // si es el dueño crea el boton de editar
         const editButton = document.createElement('button');
@@ -270,7 +274,7 @@ export const Login = (onNavigate) => {
       likesElement.setAttribute('class', 'likesElement');
       // da el largo del array de likes para hacer la contabilidad de likes
       likesElement.textContent = doc.likes.length;
-      postElement.appendChild(divLikes);
+      content1Posts.appendChild(divLikes);
       divLikes.appendChild(buttonLikes);
       buttonLikes.appendChild(imgButtonLikes);
       divLikes.appendChild(likesElement);
