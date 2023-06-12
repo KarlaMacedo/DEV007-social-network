@@ -4,7 +4,7 @@ import {
   getFirestore, setDoc, doc, collection, addDoc, query, orderBy, onSnapshot, updateDoc, deleteDoc, Timestamp, arrayRemove, arrayUnion,
 } from 'firebase/firestore';
 import {
-  getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup,
+  getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider,
 } from 'firebase/auth';
 import { app } from './init.js';
 
@@ -93,3 +93,7 @@ export const like = async (id, uid) => updateDoc(doc(db, 'posts', id), { likes: 
 
 // QUITAR LIKE
 export const disLike = async (id, uid) => updateDoc(doc(db, 'posts', id), { likes: arrayRemove(uid) });
+
+// INICIAR SESION CON FB
+const providerFB = new FacebookAuthProvider();
+export const loginWithFB = () => signInWithPopup(auth, providerFB);
