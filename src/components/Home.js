@@ -5,7 +5,9 @@ import trece from '../Images/13.png';
 import ocho from '../Images/8.png';
 import siete from '../Images/7.png';
 
-import { signIn, loginWithGoogle, loginWithFB } from '../firebase/index.js';
+import {
+  signIn, loginWithGoogle, loginWithFB, currentUserInfo, savedUser,
+} from '../firebase/index.js';
 
 export const Home = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
@@ -119,6 +121,9 @@ export const Home = (onNavigate) => {
   homeDiv.querySelector('#iniciarSesionDiv').querySelector('#socialNetworksDiv').querySelector('.gmail').addEventListener('click', async () => {
     try {
       await loginWithGoogle().then(() => {
+        console.log(currentUserInfo());
+        // eslint-disable-next-line max-len
+        savedUser(currentUserInfo().displayName, currentUserInfo().email, null, currentUserInfo().uid);
         onNavigate('/login');
       });
     } catch (error) {
