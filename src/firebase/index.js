@@ -101,3 +101,21 @@ export const loginWithFB = () => signInWithPopup(auth, providerFB);
 
 // EDITAR PERFIL
 export const updateProfileEdit = (id, newProfile) => updateDoc(doc(db, 'users', id), newProfile);
+
+// OBTENER DATA DE USUARIOS FIRESTORE
+const colUsers = collection(db, 'users');
+
+// ACTUALIZACIONES EN TIEMPO REAL DE USUARIOS "ESCUCHADOR"
+export const addUsers = (callback) => {
+  onSnapshot(colUsers, (querySnapshot) => {
+    const userInfo = []; // nuevo array a formar con los posts
+    console.log(querySnapshot);
+    querySnapshot.forEach((docUsers) => { // recorre el objeto de objetos de posts
+      userInfo.push(docUsers.data()); // copia de cada objeto y se le da el id del post
+      console.log({ ...docUsers.data() });
+      console.log(docUsers.displayName);
+    });
+    callback(userInfo);
+    console.log(userInfo); // llamar al nuevo array formado
+  });
+};
