@@ -318,13 +318,13 @@ export const Login = (onNavigate) => {
           const postTextEdit = windowsModal.querySelector('.inputModalPostEdit');
           const coordsEdit = windowsModal.querySelector('.inputModalEdit');
           // eslint-disable-next-line max-len
-          // const imgEdit = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImgEdit');
+          const imgEdit = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImgEdit');
           postTextEdit.value = doc.text;
           coordsEdit.value = doc.coords;
-          // imgEdit.value = doc.image;
+          imgEdit.value = doc.image;
           postTextEdit.id = doc.text;
           coordsEdit.id = doc.coords;
-          // imgEdit.id = doc.image;
+          imgEdit.id = doc.image;
           windowsModal.showModal();
           windowsModal.style.display = 'block';
           windowsModal.style.display = 'flex';
@@ -333,15 +333,17 @@ export const Login = (onNavigate) => {
           const btnEditDone = loginDiv.querySelector('#divModal').querySelector('#buttonModalEdit');
 
           btnEditDone.onclick = async () => {
-            const newText = document.getElementById(doc.text);
-            const newCoords = document.getElementById(doc.coords);
-            // const newImg = document.getElementById(doc.image);
-            // eslint-disable-next-line max-len
-            await updatePost(doc.id, { text: newText.value, coords: newCoords.value })
-              .then(() => {
-                windowsModal.close();
-                windowsModal.style.display = 'none';
-              });
+            console.log(imgEdit);
+            if (postTextEdit.value === '' && coordsEdit.value === '' && imgEdit.value === '') {
+              windowsModal.querySelector('.labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder editar la publicación';
+            } else {
+              // eslint-disable-next-line max-len
+              await updatePost(doc.id, { text: postTextEdit.value, coords: coordsEdit.value })
+                .then(() => {
+                  windowsModal.close();
+                  windowsModal.style.display = 'none';
+                });
+            }
           };
 
           // cerrar la ventana modal
