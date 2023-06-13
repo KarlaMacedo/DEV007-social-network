@@ -28,6 +28,7 @@ export const savedUser = (displayName, email, password, uid) => setDoc(doc(db, '
   email,
   password,
   uid,
+  photoURL: '',
 });
 
 // FUNCIÓN MOSTRAR DATOS DE USUARIO
@@ -97,3 +98,6 @@ export const disLike = async (id, uid) => updateDoc(doc(db, 'posts', id), { like
 // INICIAR SESION CON FB
 const providerFB = new FacebookAuthProvider();
 export const loginWithFB = () => signInWithPopup(auth, providerFB);
+
+// EDITAR PERFIL
+export const updateProfileEdit = (id, newProfile) => updateDoc(doc(db, 'users', id), newProfile);
