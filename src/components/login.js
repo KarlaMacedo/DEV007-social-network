@@ -97,8 +97,9 @@ export const Login = (onNavigate) => {
       <div class="divImgModal"> 
       <label class="labelModalImg">Subir foto de perfil
       <input type="file" class="ModalImg" id="ModalImgProfile" accept=".jpg, .jpeg, .png" multiple></input>
-      <img class="imgProfile">
       </label>
+      <br>
+      <img class="imgProfile">
       </div>
       <label class="labelErrorsModal" id="labelErrorsModal"></label>
       <br>
@@ -178,8 +179,8 @@ export const Login = (onNavigate) => {
         <label class="labelButtonModalImg">Subir Imagen
         <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png" multiple></input>
         </label>
-        <label class="urlLocalImg">
-        </label>
+        <br>
+        <img class="urlLocalImg">
         </div>
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
@@ -198,8 +199,7 @@ export const Login = (onNavigate) => {
       selecImg.addEventListener('change', () => {
         const urlSelecImg = selecImg.files[0];
         const urlLocal = URL.createObjectURL(urlSelecImg);
-        urlLocalImg.innerHTML = selecImg.files[0].name;
-        selecImg.src = urlLocal;
+        urlLocalImg.src = urlLocal;
       });
 
       btnPublish.onclick = async () => {
@@ -353,6 +353,7 @@ export const Login = (onNavigate) => {
         <label class="labelModalImgEdit">Subir Imagen
         <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png" multiple></input>
         </label>
+        <img class="imgEditUrl">
         </div>
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
@@ -361,31 +362,50 @@ export const Login = (onNavigate) => {
           const postTextEdit = windowsModal.querySelector('.inputModalPostEdit');
           const coordsEdit = windowsModal.querySelector('.inputModalEdit');
           // eslint-disable-next-line max-len
-          const imgEdit = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImgEdit');
+          const imgEditUrl = windowsModal.querySelector('.divImgModal').querySelector('.imgEditUrl');
+          const buttonImgEdit = windowsModal.querySelector('.divImgModal').querySelector('.buttonModalImg');
           postTextEdit.value = doc.text;
           coordsEdit.value = doc.coords;
-          imgEdit.value = doc.image;
+          imgEditUrl.src = doc.image;
           postTextEdit.id = doc.text;
           coordsEdit.id = doc.coords;
-          imgEdit.id = doc.image;
           windowsModal.showModal();
           windowsModal.style.display = 'block';
           windowsModal.style.display = 'flex';
+
+          buttonImgEdit.addEventListener('change', () => {
+            const urlButtonImgEdit = buttonImgEdit.files[0];
+            const urlImgLocal = URL.createObjectURL(urlButtonImgEdit);
+            imgEditUrl.src = urlImgLocal;
+          });
 
           // TERMINAR DE EDITAR POSTS
           const btnEditDone = loginDiv.querySelector('#divModal').querySelector('#buttonModalEdit');
 
           btnEditDone.onclick = async () => {
-            console.log(imgEdit);
-            if (postTextEdit.value === '' && coordsEdit.value === '' && imgEdit.value === '') {
+            const buttonImg = windowsModal.querySelector('.divImgModal').querySelector('.buttonModalImg');
+            const buttonImgFile = buttonImg.files[0];
+            const nameButton = buttonImgFile ? buttonImgFile.name : 0;
+            console.log(nameButton);
+            if (postTextEdit.value === '' && coordsEdit.value === '') {
               windowsModal.querySelector('.labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder editar la publicación';
             } else {
               // eslint-disable-next-line max-len
-              await updatePost(doc.id, { text: postTextEdit.value, coords: coordsEdit.value })
-                .then(() => {
-                  windowsModal.close();
-                  windowsModal.style.display = 'none';
+              if (buttonImgFile) {
+                uploadImg(nameButton, buttonImgFile)
+                  .then((snapshot) => {
+                    const fullPath = snapshot.metadata.fullPath;
+                    getUrl(fullPath).then((url) => updatePost(doc.id, {
+                      text: postTextEdit.value, coords: coordsEdit.value, image: url,
+                    }));
+                  });
+              } else {
+                updatePost(doc.id, {
+                  text: postTextEdit.value, coords: coordsEdit.value,
                 });
+              }
+              windowsModal.close();
+              windowsModal.style.display = 'none';
             }
           };
 
