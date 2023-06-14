@@ -786,6 +786,13 @@ header img {
     transition: all 0.2s ease;
   }
 
+.urlLocalImg {
+    width: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    margin: 20px;
+}
+
 .buttonModalPublish{
     background-color: rgba(242, 102, 171, 1);
     border-radius: 20px;
@@ -1070,6 +1077,13 @@ header img {
     box-shadow: 0 4px 16px rgba(255, 197, 25, 1);
     transition: all 0.2s ease;
   }
+
+.imgEditUrl {
+    min-width: 100px;
+    max-width: 100px;
+    max-height: 100px;
+    margin: 20px;
+}
 
 .buttonModalEdit{
     background-color: rgba(242, 102, 171, 1);
