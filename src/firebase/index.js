@@ -124,7 +124,6 @@ export const addUsers = (callback) => {
 };
 
 // SUBIR IMAGENES
-
 const storage = getStorage();
 export const uploadImg = (name, file) => {
   const fileName = `${new Date()}-${name}`;

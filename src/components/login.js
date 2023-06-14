@@ -97,6 +97,7 @@ export const Login = (onNavigate) => {
       <div class="divImgModal"> 
       <label class="labelModalImg">Subir foto de perfil
       <input type="file" class="ModalImg" id="ModalImgProfile" accept=".jpg, .jpeg, .png" multiple></input>
+      <img class="imgProfile">
       </label>
       </div>
       <label class="labelErrorsModal" id="labelErrorsModal"></label>
@@ -250,6 +251,10 @@ export const Login = (onNavigate) => {
       content2Posts.setAttribute('class', 'div2Posts');
       postElement.appendChild(content2Posts);
 
+      const contentImgs = document.createElement('div');
+      contentImgs.setAttribute('class', 'contentImgs');
+      content2Posts.appendChild(contentImgs);
+
       const userNameElement = document.createElement('label');
       userNameElement.setAttribute('class', 'namePosts');
       userNameElement.textContent = doc.userName;
@@ -264,12 +269,12 @@ export const Login = (onNavigate) => {
       const textElement = document.createElement('p');
       textElement.setAttribute('class', 'textPosts');
       textElement.textContent = doc.text;
-      content2Posts.appendChild(textElement);
+      content1Posts.appendChild(textElement);
 
       const imgElement = document.createElement('img');
       imgElement.setAttribute('class', 'imgPosts');
       imgElement.src = doc.image;
-      content2Posts.appendChild(imgElement);
+      contentImgs.appendChild(imgElement);
 
       const coordsElement = document.createElement('iframe');
       coordsElement.setAttribute('class', 'coordsPosts');
@@ -277,7 +282,33 @@ export const Login = (onNavigate) => {
       coordsElement.referrerPolicy = 'no-referrer-when-downgrade';
       coordsElement.allowFullscreen = '';
       coordsElement.loading = 'lazy';
-      content1Posts.appendChild(coordsElement);
+      contentImgs.appendChild(coordsElement);
+
+      const divButtons = document.createElement('div');
+      divButtons.setAttribute('class', 'divButt');
+      content2Posts.appendChild(divButtons);
+
+      // CREACION DE BOTON LIKE
+      const divLikes = document.createElement('div');
+      divLikes.setAttribute('class', 'divLikes');
+      const buttonLikes = document.createElement('button');
+      buttonLikes.setAttribute('class', 'buttonLikes');
+      buttonLikes.id = 'buttonLikes';
+      const imgButtonLikes = document.createElement('img');
+      imgButtonLikes.setAttribute('class', 'imgButtonLikes');
+
+      // si ya tiene like aparece rosa, si no blanco
+      const likeImg = doc.likes.includes(auth.currentUser.uid) ? diez : diez2;
+      imgButtonLikes.src = `${likeImg}`;
+      const likesElement = document.createElement('label');
+      likesElement.setAttribute('class', 'likesElement');
+
+      // da el largo del array de likes para hacer la contabilidad de likes
+      likesElement.textContent = doc.likes.length;
+      divButtons.appendChild(divLikes);
+      divLikes.appendChild(buttonLikes);
+      buttonLikes.appendChild(imgButtonLikes);
+      divLikes.appendChild(likesElement);
 
       // verifica que el usuario que está logeado sea el dueño del post
       if (doc.userId === auth.currentUser.uid) {
@@ -291,14 +322,11 @@ export const Login = (onNavigate) => {
         // FUNCIONALIDAD BOTON BORRAR
         deleteButton.onclick = function () {
           console.log(doc.id);
-          const confirmDelete = window.confirm('¿Seguro quieres eliminar el post?');
+          const confirmDelete = window.confirm('¿Segur@ quieres eliminar el post?');
           if (confirmDelete) { // si el usuario confirma la eliminación del post
             deleteDocData(doc.id);
           }
         };
-        const divButtons = document.createElement('div');
-        divButtons.setAttribute('class', 'divButt');
-        content2Posts.appendChild(divButtons);
 
         divButtons.appendChild(deleteButton);
 
@@ -372,28 +400,6 @@ export const Login = (onNavigate) => {
 
         divButtons.appendChild(editButton);
       }
-
-      // CREACION DE BOTON LIKE
-      const divLikes = document.createElement('div');
-      divLikes.setAttribute('class', 'divLikes');
-      const buttonLikes = document.createElement('button');
-      buttonLikes.setAttribute('class', 'buttonLikes');
-      buttonLikes.id = 'buttonLikes';
-      const imgButtonLikes = document.createElement('img');
-      imgButtonLikes.setAttribute('class', 'imgButtonLikes');
-
-      // si ya tiene like aparece rosa, si no blanco
-      const likeImg = doc.likes.includes(auth.currentUser.uid) ? diez : diez2;
-      imgButtonLikes.src = `${likeImg}`;
-      const likesElement = document.createElement('label');
-      likesElement.setAttribute('class', 'likesElement');
-
-      // da el largo del array de likes para hacer la contabilidad de likes
-      likesElement.textContent = doc.likes.length;
-      content1Posts.appendChild(divLikes);
-      divLikes.appendChild(buttonLikes);
-      buttonLikes.appendChild(imgButtonLikes);
-      divLikes.appendChild(likesElement);
 
       // FUNCIONALIDAD DEL BOTÓN LIKE
       buttonLikes.onclick = async () => {
