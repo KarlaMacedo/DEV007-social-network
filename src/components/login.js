@@ -1,6 +1,7 @@
 // import { onNavigate } from '../main';
 import {
-  currentUserInfo, post, addPost, deleteDocData, auth, updatePost, like, disLike, updateProfileEdit,
+  currentUserInfo, post, addPost, deleteDocData, auth, updatePost,
+  like, disLike, updateProfileEdit, uploadImg, getUrl,
 } from '../firebase/index.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
@@ -168,6 +169,8 @@ export const Login = (onNavigate) => {
         <label class="labelButtonModalImg">Subir Imagen
         <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png" multiple></input>
         </label>
+        <label class="urlLocalImg">
+        </label>
         </div>
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
@@ -178,18 +181,30 @@ export const Login = (onNavigate) => {
 
       // publicar posts
       const btnPublish = loginDiv.querySelector('#divModal').querySelector('#buttonModalPublish');
+      const selecImg = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImg');
+      const urlLocalImg = windowsModal.querySelector('.divImgModal').querySelector('.urlLocalImg');
+
+      // mostrar el nombre de la imagen que se va a subir al lado del boton subir imagen
+      selecImg.addEventListener('change', () => {
+        const urlSelecImg = selecImg.files[0];
+        const urlLocal = URL.createObjectURL(urlSelecImg);
+        urlLocalImg.innerHTML = selecImg.files[0].name;
+        selecImg.src = urlLocal;
+      });
 
       btnPublish.onclick = async () => {
         const inputModalPost = windowsModal.querySelector('.inputModalPost').value;
         const coordenadas = windowsModal.querySelector('.inputModal').value;
-        const selecImg = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImg').value;
-        console.log(inputModalPost);
-        console.log(coordenadas);
-        console.log(selecImg);
+        const selecImgFile = selecImg.files[0];
+        const name = selecImgFile.name;
         if (inputModalPost === '' && coordenadas === '' && selecImg === '') {
           windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder publicar';
         } else {
-          post(inputModalPost, coordenadas, selecImg);
+          uploadImg(name, selecImgFile)
+            .then((snapshot) => {
+              const fullPath = snapshot.metadata.fullPath;
+              getUrl(fullPath).then((url) => post(inputModalPost, coordenadas, url));
+            });
           windowsModal.close();
           windowsModal.style.display = 'none';
           console.log(inputModalPost, coordenadas, selecImg);
