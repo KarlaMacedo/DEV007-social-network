@@ -1,7 +1,8 @@
 // import { onNavigate } from '../main';
 import {
+  // eslint-disable-next-line max-len
   currentUserInfo, post, addPost, deleteDocData, auth, updatePost,
-  like, disLike, updateProfileEdit, uploadImg, getUrl,
+  like, disLike, updateProfileEdit, uploadImg, getUrl, addUsers,
 } from '../firebase/index.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
@@ -32,9 +33,6 @@ export const Login = (onNavigate) => {
   buttonMenu.setAttribute('id', 'buttonMenu');
   buttonMenu.innerHTML = `
   <img src="${menuImg}" alt="buttonMenu">`;
-  const menuOptionsDiv = document.createElement('div');
-  menuOptionsDiv.setAttribute('class', 'menuOptionsDiv');
-  menuOptionsDiv.setAttribute('id', 'menuOptionsDiv');
   const onlyMenu = document.createElement('div');
   onlyMenu.setAttribute('class', 'onlyMenu');
 
@@ -52,112 +50,123 @@ export const Login = (onNavigate) => {
   const windowsModal = loginDiv.querySelector('#divModal');
   windowsModal.style.display = 'none';
 
-  // FUNCIONALIDAD MENU
-  menuOptionsDiv.innerHTML = `
-        <button class="close" id="close"><img src="${nueve}" alt="buttonMenu"></button>
-        <a href="" class="optionMenu" id="acercaDe" style="text-decoration:none">Acerca de</a>
-        <button class="optionMenu" id="perfil">Editar perfil</button>
-        <a href="" class="optionMenu" id="cerrarSesion" style="text-decoration:none">Cerrar sesión</a>`;
+  // ID DEL USUARIO ACTUAL
+  const currentUserId = currentUserInfo() ? currentUserInfo().uid : JSON.parse(localStorage.getItem('user')).uid;
+  console.log(currentUserId);
 
-  loginDiv.querySelector('#buttonMenu').addEventListener('click', () => { // abrir menu
-    menuOptionsDiv.style.display = 'block';
-    menuOptionsDiv.style.display = 'flex';
-    loginDiv.querySelector('#menu').querySelector('.onlyMenu').insertAdjacentElement('beforeend', menuOptionsDiv);
-    loginDiv.querySelector('#menu').querySelector('#close').addEventListener('click', () => { // cerrar menú
-      menuOptionsDiv.style.display = 'none';
-    });
+  // MOSTRAR INFO USUARIOS EN TIEMPO REAL ("ESCUCHADOR")
+  addUsers((querySnapshot) => {
+    windowsModal.close();
+    console.log(querySnapshot);
+    // filtra la info del usuario actual
+    const info = querySnapshot.filter((user) => user.uid === currentUserId);
+    console.log(info[0]);
 
-    // modal editar perfil
-    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#perfil').onclick = function () {
-      windowsModal.innerHTML = `
+    // FUNCIONALIDAD MENU
+    const menuOptionsDiv = document.createElement('div');
+    menuOptionsDiv.setAttribute('class', 'menuOptionsDiv');
+    menuOptionsDiv.setAttribute('id', 'menuOptionsDiv');
+
+    menuOptionsDiv.innerHTML = `
+          <button class="close" id="close"><img src="${nueve}" alt="buttonMenu"></button>
+          <a href="" class="optionMenu" id="acercaDe" style="text-decoration:none">Acerca de</a>
+          <button class="optionMenu" id="perfil">Editar perfil</button>
+          <a href="" class="optionMenu" id="cerrarSesion" style="text-decoration:none">Cerrar sesión</a>`;
+
+    loginDiv.querySelector('#buttonMenu').addEventListener('click', () => { // abrir menu
+      menuOptionsDiv.style.display = 'block';
+      menuOptionsDiv.style.display = 'flex';
+      loginDiv.querySelector('#menu').querySelector('.onlyMenu').insertAdjacentElement('beforeend', menuOptionsDiv);
+      loginDiv.querySelector('#menu').querySelector('#close').addEventListener('click', () => { // cerrar menú
+        menuOptionsDiv.style.display = 'none';
+      });
+
+      // CERRAR SESION
+      loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => {
+        localStorage.removeItem('user'); // si cierra sesión, la info del usuario se elimina del localstorage
+        onNavigate('/');
+      });
+
+      // FUNCIONALIDAD MODAL PARA EDITAR PERFIL
+      loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#perfil').addEventListener('click', () => {
+        windowsModal.innerHTML = '';
+        windowsModal.innerHTML = `
       <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
       <label class="labelModal">Nombre:</label>
       <input type="text" class="inputModalProfile" placeholder="Escribe aquí">
       <div class="divImgModal"> 
       <label class="labelModalImg">Subir foto de perfil
       <input type="file" class="ModalImg" id="ModalImgProfile" accept=".jpg, .jpeg, .png" multiple></input>
+      <img class="imgProfile">
       </label>
       </div>
       <label class="labelErrorsModal" id="labelErrorsModal"></label>
       <br>
       <button class="buttonModalProfile" id="buttonModalProfile">Actualizar perfil</button>`;
-      const nameProfileEdit = windowsModal.querySelector('.inputModalProfile');
-      nameProfileEdit.value = currentUserInfo().displayName;
 
-      windowsModal.showModal();
-      windowsModal.style.display = 'block';
-      windowsModal.style.display = 'flex';
+        const nameProfileEdit = windowsModal.querySelector('.inputModalProfile');
+        nameProfileEdit.value = info[0].displayName;
+        const btnEditProfile = loginDiv.querySelector('#divModal').querySelector('#buttonModalProfile');
+        const imgProfileEdit = windowsModal.querySelector('#ModalImgProfile');
 
-      // Terminar de editar perfil
-      const btnEditProfile = loginDiv.querySelector('#divModal').querySelector('#buttonModalProfile');
-      const imgProfileEdit = windowsModal.querySelector('#ModalImgProfile');
+        windowsModal.close();
+        windowsModal.showModal();
+        windowsModal.style.display = 'block';
+        windowsModal.style.display = 'flex';
 
-      const userId = currentUserInfo() ? currentUserInfo().uid : JSON.parse(localStorage.getItem('user')).uid;
-      console.log(currentUserInfo().uid);
-      console.log(userId);
-
-      const userEmail = currentUserInfo() ? currentUserInfo().email : JSON.parse(localStorage.getItem('user')).email;
-      console.log(currentUserInfo().email);
-      console.log(userId);
-
-      const userPaswd = currentUserInfo() ? currentUserInfo().password : JSON.parse(localStorage.getItem('user')).password;
-      console.log(currentUserInfo().password);
-      console.log(userId);
-
-      const infoLocalStorage = {
-        // eslint-disable-next-line max-len
-        uid: userId, email: userEmail, displayName: nameProfileEdit.value, photoURL: imgProfileEdit.value, password: userPaswd,
-      };
-
-      btnEditProfile.onclick = async () => {
-        localStorage.clear();
-        localStorage.setItem('user', JSON.stringify(infoLocalStorage));
-        // eslint-disable-next-line max-len
-        await updateProfileEdit(userId, { displayName: nameProfileEdit.value, photoURL: imgProfileEdit.value })
-          .then(() => {
+        // Terminar de editar perfil
+        btnEditProfile.onclick = async () => {
+          menuOptionsDiv.style.display = 'none';
+          // eslint-disable-next-line max-len
+          await updateProfileEdit(info[0].uid, { displayName: nameProfileEdit.value, photoURL: imgProfileEdit.value }).then(() => {
             windowsModal.close();
             windowsModal.style.display = 'none';
+
+            console.log(loginDiv.querySelector('#menu').querySelector('#labelLogin'));
           });
-      };
+        };
 
-      // cerrar la ventana modal
-      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+        // ----ACTUALIZAR DATA DE POST TAMBIEN
+        /* addPost((querySnapshots) => {
+              querySnapshots.forEach((doc) => {
+                if (doc.userId === info[0].uid) {
+                  const edit = async () => {
+                    await updatePost(doc, { userName: nameProfileEdit.value });
+                  };
+                  edit();
+                }
+              });
+            }); */
 
-      btnClose.onclick = function () {
-        windowsModal.close();
-        windowsModal.style.display = 'none';
-      };
-    };
+        // cerrar la ventana modal
+        const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
 
-    // cerrar sesión del menu
-    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => {
-      localStorage.removeItem('user'); // si cierra sesión, la info del usuario se elimina del localstorage
-      onNavigate('/');
+        btnClose.onclick = function () {
+          windowsModal.close();
+          windowsModal.style.display = 'none';
+          menuOptionsDiv.style.display = 'none';
+        };
+      });
     });
+
+    // FUNCIONALIDAD FOTO DE PERFIL
+    const imagenProfile = loginDiv.querySelector('.menu').querySelector('.imgProfile');
+    if (info[0].photoURL === '' || info[0].photoURL === null || info[0].photoURL === undefined || info[0].photoURL === '""') {
+      imagenProfile.src = profilePick;
+    } else {
+      imagenProfile.src = info[0].photoURL;
+    }
+
+    // FUNCIONALIDAD ETIQUETA DE BIENVENIDA AL USUARIO
+    loginDiv.querySelector('#menu').querySelector('#labelLogin').textContent = `Bienvenid@ ${info[0].displayName}!`;
+    loginDiv.querySelector('#menu').querySelector('#labelLogin').id = info[0].displayName;
   });
 
-  // FUNCIONALIDAD FOTO DE PERFIL
-  const userImg = currentUserInfo() ? currentUserInfo().photoURL : JSON.parse(localStorage.getItem('user')).photoURL;
-  console.log(userImg);
-  const imagenProfile = loginDiv.querySelector('.menu').querySelector('.imgProfile');
-  if (userImg === '' || userImg === null || userImg === undefined || userImg === '""') {
-    imagenProfile.src = profilePick;
-  } else {
-    imagenProfile.src = userImg;
-  }
-
-  // FUNCIONALIDAD ETIQUETA DE BIENVENIDA AL USUARIO
-  console.log(currentUserInfo());
-  // si hay información del usuario por parte de la app obtiene de ahí el nombre del usuario, si no
-  // la obtiene de la data de localstorage usando .parse para convertir la data a un objeto js
-  const userName = currentUserInfo() ? currentUserInfo().displayName : JSON.parse(localStorage.getItem('user')).displayName;
-  console.log(userName);
-  loginDiv.querySelector('#menu').querySelector('#labelLogin').textContent = `Bienvenid@ ${userName}!`;
-
-  // FUNCIONALIDAD MODAL POSTS
+  // FUNCIONALIDAD MODAL CREAR POSTS
   loginDiv.querySelector('#inputLogin').addEventListener(
     'click',
     () => {
+      windowsModal.innerHTML = '';
       windowsModal.innerHTML = `
         <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
         <label class="labelModal">Texto:</label>
@@ -175,11 +184,12 @@ export const Login = (onNavigate) => {
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
         <button class="buttonModalPublish" id="buttonModalPublish">Publicar</button>`;
+
       windowsModal.showModal();
       windowsModal.style.display = 'block';
       windowsModal.style.display = 'flex';
 
-      // publicar posts
+      // Terminar de publicar posts
       const btnPublish = loginDiv.querySelector('#divModal').querySelector('#buttonModalPublish');
       const selecImg = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImg');
       const urlLocalImg = windowsModal.querySelector('.divImgModal').querySelector('.urlLocalImg');
@@ -241,6 +251,10 @@ export const Login = (onNavigate) => {
       content2Posts.setAttribute('class', 'div2Posts');
       postElement.appendChild(content2Posts);
 
+      const contentImgs = document.createElement('div');
+      contentImgs.setAttribute('class', 'contentImgs');
+      content2Posts.appendChild(contentImgs);
+
       const userNameElement = document.createElement('label');
       userNameElement.setAttribute('class', 'namePosts');
       userNameElement.textContent = doc.userName;
@@ -255,12 +269,12 @@ export const Login = (onNavigate) => {
       const textElement = document.createElement('p');
       textElement.setAttribute('class', 'textPosts');
       textElement.textContent = doc.text;
-      content2Posts.appendChild(textElement);
+      content1Posts.appendChild(textElement);
 
       const imgElement = document.createElement('img');
       imgElement.setAttribute('class', 'imgPosts');
       imgElement.src = doc.image;
-      content2Posts.appendChild(imgElement);
+      contentImgs.appendChild(imgElement);
 
       const coordsElement = document.createElement('iframe');
       coordsElement.setAttribute('class', 'coordsPosts');
@@ -268,7 +282,33 @@ export const Login = (onNavigate) => {
       coordsElement.referrerPolicy = 'no-referrer-when-downgrade';
       coordsElement.allowFullscreen = '';
       coordsElement.loading = 'lazy';
-      content1Posts.appendChild(coordsElement);
+      contentImgs.appendChild(coordsElement);
+
+      const divButtons = document.createElement('div');
+      divButtons.setAttribute('class', 'divButt');
+      content2Posts.appendChild(divButtons);
+
+      // CREACION DE BOTON LIKE
+      const divLikes = document.createElement('div');
+      divLikes.setAttribute('class', 'divLikes');
+      const buttonLikes = document.createElement('button');
+      buttonLikes.setAttribute('class', 'buttonLikes');
+      buttonLikes.id = 'buttonLikes';
+      const imgButtonLikes = document.createElement('img');
+      imgButtonLikes.setAttribute('class', 'imgButtonLikes');
+
+      // si ya tiene like aparece rosa, si no blanco
+      const likeImg = doc.likes.includes(auth.currentUser.uid) ? diez : diez2;
+      imgButtonLikes.src = `${likeImg}`;
+      const likesElement = document.createElement('label');
+      likesElement.setAttribute('class', 'likesElement');
+
+      // da el largo del array de likes para hacer la contabilidad de likes
+      likesElement.textContent = doc.likes.length;
+      divButtons.appendChild(divLikes);
+      divLikes.appendChild(buttonLikes);
+      buttonLikes.appendChild(imgButtonLikes);
+      divLikes.appendChild(likesElement);
 
       // verifica que el usuario que está logeado sea el dueño del post
       if (doc.userId === auth.currentUser.uid) {
@@ -279,16 +319,14 @@ export const Login = (onNavigate) => {
         deleteButton.value = doc.id;
         deleteButton.id = doc.id;
 
+        // FUNCIONALIDAD BOTON BORRAR
         deleteButton.onclick = function () {
           console.log(doc.id);
-          const confirmDelete = window.confirm('¿Seguro quieres eliminar el post?');
+          const confirmDelete = window.confirm('¿Segur@ quieres eliminar el post?');
           if (confirmDelete) { // si el usuario confirma la eliminación del post
             deleteDocData(doc.id);
           }
         };
-        const divButtons = document.createElement('div');
-        divButtons.setAttribute('class', 'divButt');
-        content2Posts.appendChild(divButtons);
 
         divButtons.appendChild(deleteButton);
 
@@ -301,8 +339,10 @@ export const Login = (onNavigate) => {
         console.log(doc.id);
         console.log(doc.text);
 
+        // FUNCIONALIDAD BOTON EDITAR DE LA VENTANA MODAL
         editButton.onclick = function () {
           // abre modal si quiere editar y le da el valor de cada espacio
+          windowsModal.innerHTML = '';
           windowsModal.innerHTML = `
         <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
         <label class="labelModal">Texto:</label>
@@ -317,33 +357,36 @@ export const Login = (onNavigate) => {
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
         <button class="buttonModalEdit" id="buttonModalEdit">Listo!</button>`;
+
           const postTextEdit = windowsModal.querySelector('.inputModalPostEdit');
           const coordsEdit = windowsModal.querySelector('.inputModalEdit');
           // eslint-disable-next-line max-len
-          // const imgEdit = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImgEdit');
+          const imgEdit = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImgEdit');
           postTextEdit.value = doc.text;
           coordsEdit.value = doc.coords;
-          // imgEdit.value = doc.image;
+          imgEdit.value = doc.image;
           postTextEdit.id = doc.text;
           coordsEdit.id = doc.coords;
-          // imgEdit.id = doc.image;
+          imgEdit.id = doc.image;
           windowsModal.showModal();
           windowsModal.style.display = 'block';
           windowsModal.style.display = 'flex';
 
-          // Terminar de editar posts
+          // TERMINAR DE EDITAR POSTS
           const btnEditDone = loginDiv.querySelector('#divModal').querySelector('#buttonModalEdit');
 
           btnEditDone.onclick = async () => {
-            const newText = document.getElementById(doc.text);
-            const newCoords = document.getElementById(doc.coords);
-            // const newImg = document.getElementById(doc.image);
-            // eslint-disable-next-line max-len
-            await updatePost(doc.id, { text: newText.value, coords: newCoords.value })
-              .then(() => {
-                windowsModal.close();
-                windowsModal.style.display = 'none';
-              });
+            console.log(imgEdit);
+            if (postTextEdit.value === '' && coordsEdit.value === '' && imgEdit.value === '') {
+              windowsModal.querySelector('.labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder editar la publicación';
+            } else {
+              // eslint-disable-next-line max-len
+              await updatePost(doc.id, { text: postTextEdit.value, coords: coordsEdit.value })
+                .then(() => {
+                  windowsModal.close();
+                  windowsModal.style.display = 'none';
+                });
+            }
           };
 
           // cerrar la ventana modal
@@ -358,27 +401,7 @@ export const Login = (onNavigate) => {
         divButtons.appendChild(editButton);
       }
 
-      // creación de boton like
-      const divLikes = document.createElement('div');
-      divLikes.setAttribute('class', 'divLikes');
-      const buttonLikes = document.createElement('button');
-      buttonLikes.setAttribute('class', 'buttonLikes');
-      buttonLikes.id = 'buttonLikes';
-      const imgButtonLikes = document.createElement('img');
-      imgButtonLikes.setAttribute('class', 'imgButtonLikes');
-      // si ya tiene like aparece rosa, si no blanco
-      const likeImg = doc.likes.includes(auth.currentUser.uid) ? diez : diez2;
-      imgButtonLikes.src = `${likeImg}`;
-      const likesElement = document.createElement('label');
-      likesElement.setAttribute('class', 'likesElement');
-      // da el largo del array de likes para hacer la contabilidad de likes
-      likesElement.textContent = doc.likes.length;
-      content1Posts.appendChild(divLikes);
-      divLikes.appendChild(buttonLikes);
-      buttonLikes.appendChild(imgButtonLikes);
-      divLikes.appendChild(likesElement);
-
-      // funcionalidad boton like
+      // FUNCIONALIDAD DEL BOTÓN LIKE
       buttonLikes.onclick = async () => {
         // si ya tiene like, se borra el like de la data al dar click
         if (doc.likes.includes(auth.currentUser.uid)) {
