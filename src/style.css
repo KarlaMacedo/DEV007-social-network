@@ -147,7 +147,7 @@ button{
         margin-bottom: 0em !important;
     }
     #socialNetworksDiv {
-        margin-top: 0px !important;
+        margin-top: 1em !important;
     }
     /*--REGISTER--*/
     .registerContainer{
@@ -295,23 +295,24 @@ header img {
 }
 
 #socialNetworksDiv {
-    margin-top: 15px;
     width: 12em;
     display: flex;
     justify-content: space-between;
     align-items: center;
+    flex-direction: column;
 }
 
 .gmail{
-    width: 5.2em;
-    height: 4em;
+    width: 16em;
+    height: 3em;
     cursor: pointer;
 }
 
 .fb{
-    width: 5em;
-    height: 5.1em;
+    width: 16em;
+    height: 3.1em;
     cursor: pointer;
+    margin-bottom: .8em;
 }
 
 /*--------------------------REGISTER------------------------*/
@@ -355,6 +356,7 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 2em;
+    width: -webkit-fill-available;
 }
 
 .passwordDiv{
@@ -365,7 +367,7 @@ header img {
 }
 
 #inputPasswordRegister{
-    width: 12.5em;
+    width: -webkit-fill-available;
 }
 
 .hidePassword{
@@ -874,11 +876,28 @@ header img {
     height: 100%;
 }
 
+.div3Posts{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    height: 100%;
+    justify-content: space-between;
+}
+
+.optionsPosts{
+    text-align: start;
+}
+
+.optionsPosts:hover{
+    cursor: pointer;
+}
+
 .contentImgs{
     display: flex;
     flex-direction: row;
     justify-content: center;
     gap: 5px;
+    align-self: center;
 }
 
 .namePosts{
@@ -904,7 +923,8 @@ header img {
 
 .imgPosts{
     align-self: center;
-    width: 50%;
+    width: auto;
+    height: 50%;
 }
 
 .divLikes{ 
@@ -944,6 +964,7 @@ header img {
     display: flex;
     flex-direction: row;
     gap: 10px;
+    margin: 5px;
 }
 
 .editPost {

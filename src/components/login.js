@@ -206,7 +206,7 @@ export const Login = (onNavigate) => {
         const inputModalPost = windowsModal.querySelector('.inputModalPost').value;
         const coordenadas = windowsModal.querySelector('.inputModal').value;
         const selecImgFile = selecImg.files[0];
-        const name = selecImgFile.name;
+        const name = selecImgFile ? selecImgFile.name : 0;
         if (inputModalPost === '' && coordenadas === '' && selecImg === '') {
           windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder publicar';
         } else {
@@ -243,6 +243,10 @@ export const Login = (onNavigate) => {
       postElement.setAttribute('class', 'divPosts');
       postsContainer.appendChild(postElement);
 
+      const content3Posts = document.createElement('div');
+      content3Posts.setAttribute('class', 'div3Posts');
+      postElement.appendChild(content3Posts);
+
       const content1Posts = document.createElement('div');
       content1Posts.setAttribute('class', 'div1Posts');
       postElement.appendChild(content1Posts);
@@ -258,7 +262,7 @@ export const Login = (onNavigate) => {
       const userNameElement = document.createElement('label');
       userNameElement.setAttribute('class', 'namePosts');
       userNameElement.textContent = doc.userName;
-      content1Posts.appendChild(userNameElement);
+      content3Posts.appendChild(userNameElement);
 
       const dateElement = document.createElement('label');
       dateElement.setAttribute('class', 'datePosts');
@@ -266,27 +270,42 @@ export const Login = (onNavigate) => {
       dateElement.textContent = `${doc.dateCreate.toDate().toDateString()} ${doc.dateCreate.toDate().toLocaleTimeString()}`;
       content1Posts.appendChild(dateElement);
 
-      const textElement = document.createElement('p');
-      textElement.setAttribute('class', 'textPosts');
-      textElement.textContent = doc.text;
-      content1Posts.appendChild(textElement);
+      if (doc.text !== '') {
+        const textElement = document.createElement('p');
+        textElement.setAttribute('class', 'textPosts');
+        textElement.textContent = doc.text;
+        content1Posts.appendChild(textElement);
+      }
 
-      const imgElement = document.createElement('img');
-      imgElement.setAttribute('class', 'imgPosts');
-      imgElement.src = doc.image;
-      contentImgs.appendChild(imgElement);
+      if (doc.image !== '') {
+        const imgElement = document.createElement('img');
+        imgElement.setAttribute('class', 'imgPosts');
+        imgElement.src = doc.image;
+        contentImgs.appendChild(imgElement);
+      }
 
-      const coordsElement = document.createElement('iframe');
-      coordsElement.setAttribute('class', 'coordsPosts');
-      coordsElement.src = doc.coords;
-      coordsElement.referrerPolicy = 'no-referrer-when-downgrade';
-      coordsElement.allowFullscreen = '';
-      coordsElement.loading = 'lazy';
-      contentImgs.appendChild(coordsElement);
+      if (doc.coords !== '') {
+        const coordsElement = document.createElement('iframe');
+        coordsElement.setAttribute('class', 'coordsPosts');
+        coordsElement.src = doc.coords;
+        coordsElement.referrerPolicy = 'no-referrer-when-downgrade';
+        coordsElement.allowFullscreen = '';
+        coordsElement.loading = 'lazy';
+        contentImgs.appendChild(coordsElement);
+      }
 
       const divButtons = document.createElement('div');
       divButtons.setAttribute('class', 'divButt');
-      content2Posts.appendChild(divButtons);
+      content3Posts.appendChild(divButtons);
+
+      const optionsPosts = document.createElement('label');
+      optionsPosts.setAttribute('class', 'optionsPosts');
+      optionsPosts.innerText = '...';
+      content3Posts.appendChild(optionsPosts);
+
+      const divButtonLike = document.createElement('div');
+      divButtonLike.setAttribute('class', 'divButt');
+      content2Posts.appendChild(divButtonLike);
 
       // CREACION DE BOTON LIKE
       const divLikes = document.createElement('div');
@@ -305,7 +324,7 @@ export const Login = (onNavigate) => {
 
       // da el largo del array de likes para hacer la contabilidad de likes
       likesElement.textContent = doc.likes.length;
-      divButtons.appendChild(divLikes);
+      divButtonLike.appendChild(divLikes);
       divLikes.appendChild(buttonLikes);
       buttonLikes.appendChild(imgButtonLikes);
       divLikes.appendChild(likesElement);
