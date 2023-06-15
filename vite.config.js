@@ -17,7 +17,8 @@ export default defineConfig(({ command }) => {
       // ejemplo base: '/social-network/',
       base: '/DEV007-social-network/',
       build: {
-        minify: false,
+        minify: 'esbuild',
+        target: 'esnext',
         rollupOptions: {
           output: {
             dir: './dist',
