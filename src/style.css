@@ -959,7 +959,22 @@ header img {
     width: 20px;
 }
 
-.divButt {
+.divButt{
+    display: flex;
+    flex-direction: column;
+    background-color: #ffffff;
+    border: solid rgba(164, 89, 209, 1);
+    border-radius: 20px;
+    padding: 10px;
+    font-weight: bolder;
+    font-size: 1.2em;
+    height: max-content;
+    width: max-content;
+    position: fixed;
+    margin-top: 58px;
+}
+
+.divButtLike {
     align-self: flex-end;
     display: flex;
     flex-direction: row;

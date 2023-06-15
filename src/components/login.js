@@ -301,18 +301,14 @@ export const Login = (onNavigate) => {
         contentImgs.appendChild(coordsElement);
       }
 
+      const divButtonLike = document.createElement('div');
+      divButtonLike.setAttribute('class', 'divButtLike');
+      content2Posts.appendChild(divButtonLike);
+
       const divButtons = document.createElement('div');
       divButtons.setAttribute('class', 'divButt');
+      divButtons.style.display = 'none';
       content3Posts.appendChild(divButtons);
-
-      const optionsPosts = document.createElement('label');
-      optionsPosts.setAttribute('class', 'optionsPosts');
-      optionsPosts.innerText = '...';
-      content3Posts.appendChild(optionsPosts);
-
-      const divButtonLike = document.createElement('div');
-      divButtonLike.setAttribute('class', 'divButt');
-      content2Posts.appendChild(divButtonLike);
 
       // CREACION DE BOTON LIKE
       const divLikes = document.createElement('div');
@@ -338,38 +334,47 @@ export const Login = (onNavigate) => {
 
       // verifica que el usuario que está logeado sea el dueño del post
       if (doc.userId === auth.currentUser.uid) {
-        // si es el dueño crea el boton de eliminar
-        const deleteButton = document.createElement('button');
-        deleteButton.setAttribute('class', 'deletePost');
-        deleteButton.textContent = 'Eliminar';
-        deleteButton.value = doc.id;
-        deleteButton.id = doc.id;
+        // si es el dueño crea el menu de botones de post
+        const optionsPosts = document.createElement('label');
+        optionsPosts.setAttribute('class', 'optionsPosts');
+        optionsPosts.innerText = '...';
+        content3Posts.appendChild(optionsPosts);
 
-        // FUNCIONALIDAD BOTON BORRAR
-        deleteButton.onclick = function () {
+        optionsPosts.onclick = function () {
+          divButtons.style.display = 'block';
+          divButtons.style.display = 'flex';
+          // si es el dueño crea el boton de eliminar
+          const deleteButton = document.createElement('button');
+          deleteButton.setAttribute('class', 'deletePost');
+          deleteButton.textContent = 'Eliminar';
+          deleteButton.value = doc.id;
+          deleteButton.id = doc.id;
+
+          // FUNCIONALIDAD BOTON BORRAR
+          deleteButton.onclick = function () {
+            console.log(doc.id);
+            const confirmDelete = window.confirm('¿Segur@ quieres eliminar el post?');
+            if (confirmDelete) { // si el usuario confirma la eliminación del post
+              deleteDocData(doc.id);
+            }
+          };
+
+          divButtons.appendChild(deleteButton);
+
+          // si es el dueño crea el boton de editar
+          const editButton = document.createElement('button');
+          editButton.setAttribute('class', 'editPost');
+          editButton.textContent = 'Editar';
+          editButton.value = doc.id;
+          editButton.id = doc.id;
           console.log(doc.id);
-          const confirmDelete = window.confirm('¿Segur@ quieres eliminar el post?');
-          if (confirmDelete) { // si el usuario confirma la eliminación del post
-            deleteDocData(doc.id);
-          }
-        };
+          console.log(doc.text);
 
-        divButtons.appendChild(deleteButton);
-
-        // si es el dueño crea el boton de editar
-        const editButton = document.createElement('button');
-        editButton.setAttribute('class', 'editPost');
-        editButton.textContent = 'Editar';
-        editButton.value = doc.id;
-        editButton.id = doc.id;
-        console.log(doc.id);
-        console.log(doc.text);
-
-        // FUNCIONALIDAD BOTON EDITAR DE LA VENTANA MODAL
-        editButton.onclick = function () {
+          // FUNCIONALIDAD BOTON EDITAR DE LA VENTANA MODAL
+          editButton.onclick = function () {
           // abre modal si quiere editar y le da el valor de cada espacio
-          windowsModal.innerHTML = '';
-          windowsModal.innerHTML = `
+            windowsModal.innerHTML = '';
+            windowsModal.innerHTML = `
         <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
         <label class="labelModal">Texto:</label>
         <input type="text" class="inputModalPostEdit" placeholder="Escribe aquí">
@@ -379,72 +384,74 @@ export const Login = (onNavigate) => {
         <label class="labelModalImgEdit">Subir Imagen
         <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png" multiple></input>
         </label>
+        <br>
         <img class="imgEditUrl">
         </div>
         <label class="labelErrorsModal" id="labelErrorsModal"></label>
         <br>
         <button class="buttonModalEdit" id="buttonModalEdit">Listo!</button>`;
 
-          const postTextEdit = windowsModal.querySelector('.inputModalPostEdit');
-          const coordsEdit = windowsModal.querySelector('.inputModalEdit');
-          // eslint-disable-next-line max-len
-          const imgEditUrl = windowsModal.querySelector('.divImgModal').querySelector('.imgEditUrl');
-          const buttonImgEdit = windowsModal.querySelector('.divImgModal').querySelector('.buttonModalImg');
-          postTextEdit.value = doc.text;
-          coordsEdit.value = doc.coords;
-          imgEditUrl.src = doc.image;
-          postTextEdit.id = doc.text;
-          coordsEdit.id = doc.coords;
-          windowsModal.showModal();
-          windowsModal.style.display = 'block';
-          windowsModal.style.display = 'flex';
+            const postTextEdit = windowsModal.querySelector('.inputModalPostEdit');
+            const coordsEdit = windowsModal.querySelector('.inputModalEdit');
+            // eslint-disable-next-line max-len
+            const imgEditUrl = windowsModal.querySelector('.divImgModal').querySelector('.imgEditUrl');
+            const buttonImgEdit = windowsModal.querySelector('.divImgModal').querySelector('.buttonModalImg');
+            postTextEdit.value = doc.text;
+            coordsEdit.value = doc.coords;
+            imgEditUrl.src = doc.image;
+            postTextEdit.id = doc.text;
+            coordsEdit.id = doc.coords;
+            windowsModal.showModal();
+            windowsModal.style.display = 'block';
+            windowsModal.style.display = 'flex';
 
-          buttonImgEdit.addEventListener('change', () => {
-            const urlButtonImgEdit = buttonImgEdit.files[0];
-            const urlImgLocal = URL.createObjectURL(urlButtonImgEdit);
-            imgEditUrl.src = urlImgLocal;
-          });
+            buttonImgEdit.addEventListener('change', () => {
+              const urlButtonImgEdit = buttonImgEdit.files[0];
+              const urlImgLocal = URL.createObjectURL(urlButtonImgEdit);
+              imgEditUrl.src = urlImgLocal;
+            });
 
-          // TERMINAR DE EDITAR POSTS
-          const btnEditDone = loginDiv.querySelector('#divModal').querySelector('#buttonModalEdit');
+            // TERMINAR DE EDITAR POSTS
+            const btnEditDone = loginDiv.querySelector('#divModal').querySelector('#buttonModalEdit');
 
-          btnEditDone.onclick = async () => {
-            const buttonImg = windowsModal.querySelector('.divImgModal').querySelector('.buttonModalImg');
-            const buttonImgFile = buttonImg.files[0];
-            const nameButton = buttonImgFile ? buttonImgFile.name : 0;
-            console.log(nameButton);
-            if (postTextEdit.value === '' && coordsEdit.value === '') {
-              windowsModal.querySelector('.labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder editar la publicación';
-            } else {
-              // eslint-disable-next-line max-len
-              if (buttonImgFile) {
-                uploadImg(nameButton, buttonImgFile)
-                  .then((snapshot) => {
-                    const fullPath = snapshot.metadata.fullPath;
-                    getUrl(fullPath).then((url) => updatePost(doc.id, {
-                      text: postTextEdit.value, coords: coordsEdit.value, image: url,
-                    }));
-                  });
+            btnEditDone.onclick = async () => {
+              const buttonImg = windowsModal.querySelector('.divImgModal').querySelector('.buttonModalImg');
+              const buttonImgFile = buttonImg.files[0];
+              const nameButton = buttonImgFile ? buttonImgFile.name : 0;
+              console.log(nameButton);
+              if (postTextEdit.value === '' && coordsEdit.value === '') {
+                windowsModal.querySelector('.labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder editar la publicación';
               } else {
-                updatePost(doc.id, {
-                  text: postTextEdit.value, coords: coordsEdit.value,
-                });
+              // eslint-disable-next-line max-len
+                if (buttonImgFile) {
+                  uploadImg(nameButton, buttonImgFile)
+                    .then((snapshot) => {
+                      const fullPath = snapshot.metadata.fullPath;
+                      getUrl(fullPath).then((url) => updatePost(doc.id, {
+                        text: postTextEdit.value, coords: coordsEdit.value, image: url,
+                      }));
+                    });
+                } else {
+                  updatePost(doc.id, {
+                    text: postTextEdit.value, coords: coordsEdit.value,
+                  });
+                }
+                windowsModal.close();
+                windowsModal.style.display = 'none';
               }
+            };
+
+            // cerrar la ventana modal
+            const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+
+            btnClose.onclick = function () {
               windowsModal.close();
               windowsModal.style.display = 'none';
-            }
+            };
           };
 
-          // cerrar la ventana modal
-          const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
-
-          btnClose.onclick = function () {
-            windowsModal.close();
-            windowsModal.style.display = 'none';
-          };
+          divButtons.appendChild(editButton);
         };
-
-        divButtons.appendChild(editButton);
       }
 
       // FUNCIONALIDAD DEL BOTÓN LIKE
