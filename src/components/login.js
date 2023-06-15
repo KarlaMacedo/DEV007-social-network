@@ -207,34 +207,39 @@ export const Login = (onNavigate) => {
         const coordenadas = windowsModal.querySelector('.inputModal').value;
         const selecImgFile = selecImg.files[0];
         const name = selecImgFile ? selecImgFile.name : 0;
+        const size = selecImgFile ? selecImgFile.size : 0;
         if (inputModalPost === '' && coordenadas === '' && !selecImgFile) {
           windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder publicar';
-        } else {
-          if (!selecImgFile || selecImgFile === undefined) {
-            const urlImg = '';
-            console.log(selecImgFile);
-            post(inputModalPost, coordenadas, urlImg);
-          } else {
-            console.log(selecImgFile);
-            uploadImg(name, selecImgFile)
-              .then((snapshot) => {
-                const fullPath = snapshot.metadata.fullPath;
-                getUrl(fullPath).then((url) => post(inputModalPost, coordenadas, url));
-              });
-          }
+        } else if (selecImgFile && size > 100000) {
+          windowsModal.querySelector('#labelErrorsModal').textContent = 'La imagen supera el limite de 100kb';
+        } else if (selecImgFile && size < 100000) {
+          console.log(size);
+          uploadImg(name, selecImgFile)
+            .then((snapshot) => {
+              const fullPath = snapshot.metadata.fullPath;
+              getUrl(fullPath).then((url) => post(inputModalPost, coordenadas, url));
+            });
           windowsModal.close();
           windowsModal.style.display = 'none';
           console.log(inputModalPost, coordenadas, selecImg);
-          // loginDiv.querySelector('.containerPublications').appendChild();
+        } else if (!selecImgFile) {
+          const urlImg = '';
+          console.log(selecImgFile);
+          post(inputModalPost, coordenadas, urlImg);
+
+          windowsModal.close();
+          windowsModal.style.display = 'none';
+          console.log(inputModalPost, coordenadas, selecImg);
+
+        // loginDiv.querySelector('.containerPublications').appendChild();
         }
-      };
+        // cerrar la ventana modal
+        const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
 
-      // cerrar la ventana modal
-      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
-
-      btnClose.onclick = function () {
-        windowsModal.close();
-        windowsModal.style.display = 'none';
+        btnClose.onclick = function () {
+          windowsModal.close();
+          windowsModal.style.display = 'none';
+        };
       };
     },
   );
