@@ -207,14 +207,21 @@ export const Login = (onNavigate) => {
         const coordenadas = windowsModal.querySelector('.inputModal').value;
         const selecImgFile = selecImg.files[0];
         const name = selecImgFile ? selecImgFile.name : 0;
-        if (inputModalPost === '' && coordenadas === '' && selecImg === '') {
+        if (inputModalPost === '' && coordenadas === '' && !selecImgFile) {
           windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder publicar';
         } else {
-          uploadImg(name, selecImgFile)
-            .then((snapshot) => {
-              const fullPath = snapshot.metadata.fullPath;
-              getUrl(fullPath).then((url) => post(inputModalPost, coordenadas, url));
-            });
+          if (!selecImgFile || selecImgFile === undefined) {
+            const urlImg = '';
+            console.log(selecImgFile);
+            post(inputModalPost, coordenadas, urlImg);
+          } else {
+            console.log(selecImgFile);
+            uploadImg(name, selecImgFile)
+              .then((snapshot) => {
+                const fullPath = snapshot.metadata.fullPath;
+                getUrl(fullPath).then((url) => post(inputModalPost, coordenadas, url));
+              });
+          }
           windowsModal.close();
           windowsModal.style.display = 'none';
           console.log(inputModalPost, coordenadas, selecImg);
