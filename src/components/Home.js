@@ -2,8 +2,8 @@
 import fongoHome from '../Images/fongoHome.png';
 import doce from '../Images/12.png';
 import trece from '../Images/13.png';
-import ocho from '../Images/8.png';
-import siete from '../Images/7.png';
+import ocho from '../Images/18.png';
+import siete from '../Images/17.png';
 
 import {
   signIn, loginWithGoogle, loginWithFB, currentUserInfo, savedUser,
@@ -33,11 +33,6 @@ export const Home = (onNavigate) => {
     <img src="${trece}" class="showPassword">
   </div>
   <label id="labelErrors" class="labelErrors"></label>`;
-  const ingresarConDiv = document.createElement('div');
-  ingresarConDiv.id = 'ingresarConDiv';
-  const ingresarConlabel = document.createElement('h2');
-  ingresarConlabel.setAttribute('class', 'ingresarConlabel');
-  ingresarConlabel.textContent = 'Ingresar con';
   const socialNetworksDiv = document.createElement('div');
   socialNetworksDiv.id = 'socialNetworksDiv';
   const gmail = document.createElement('img');
@@ -61,8 +56,6 @@ export const Home = (onNavigate) => {
   iniciarSesionDiv.appendChild(iniciarSesionDiv2);
   iniciarSesionDiv.appendChild(buttonLogin);
   iniciarSesionDiv.appendChild(buttonRegister);
-  ingresarConDiv.appendChild(ingresarConlabel);
-  iniciarSesionDiv.appendChild(ingresarConDiv);
   iniciarSesionDiv.appendChild(socialNetworksDiv);
 
   homeDiv.appendChild(iniciarSesionDiv);

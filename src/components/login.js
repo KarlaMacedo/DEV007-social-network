@@ -206,7 +206,7 @@ export const Login = (onNavigate) => {
         const inputModalPost = windowsModal.querySelector('.inputModalPost').value;
         const coordenadas = windowsModal.querySelector('.inputModal').value;
         const selecImgFile = selecImg.files[0];
-        const name = selecImgFile.name;
+        const name = selecImgFile ? selecImgFile.name : 0;
         if (inputModalPost === '' && coordenadas === '' && selecImg === '') {
           windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder publicar';
         } else {
