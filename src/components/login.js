@@ -216,13 +216,13 @@ export const Login = (onNavigate) => {
 
           // loginDiv.querySelector('.containerPublications').appendChild();
         }
-        // cerrar la ventana modal
-        const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+      };
+      // cerrar la ventana modal
+      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
 
-        btnClose.onclick = function () {
-          windowsModal.close();
-          windowsModal.style.display = 'none';
-        };
+      btnClose.onclick = function () {
+        windowsModal.close();
+        windowsModal.style.display = 'none';
       };
     },
   );

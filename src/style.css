@@ -232,6 +232,11 @@ header img {
     width: -webkit-fill-available;
 }
 
+#iniciarSesionDiv2 input:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
+
 #iniciarSesionDiv2 p {
     font-size: 1.3em;
     font-weight: bold;
@@ -267,6 +272,11 @@ header img {
     align-self: center;
 }
 
+#buttonLogin:hover {
+    box-shadow: 0 4px 16px rgba(242, 102, 171, 1);
+    transition: all 0.2s ease;
+  }
+
 #buttonRegisterHome {
     width: 9.5em;
     height: 2.2em;
@@ -279,6 +289,11 @@ header img {
     margin-bottom: .8em;
     align-self: center;
 }
+
+#buttonRegisterHome:hover {
+    box-shadow: 0 4px 16px rgba(255, 197, 25, 1);
+    transition: all 0.2s ease;
+  }
 
 #ingresarConDiv {
     font-weight:bolder;
@@ -307,12 +322,22 @@ header img {
     cursor: pointer;
 }
 
+.gmail:hover {
+    box-shadow: 0 4px 16px rgb(0, 0, 0);
+    transition: all 0.2s ease;
+  }
+
 .fb{
     width: 16em;
     height: 3.1em;
     cursor: pointer;
     margin-bottom: .8em;
 }
+
+.fb:hover {
+    box-shadow: 0 4px 16px rgb(0, 0, 0);
+    transition: all 0.2s ease;
+  }
 
 /*--------------------------REGISTER------------------------*/
 .registerContainer{
@@ -358,12 +383,22 @@ header img {
     width: -webkit-fill-available;
 }
 
+.inputRegister:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
+
 .passwordDiv{
     width: -webkit-fill-available;
     background-color: rgba(44, 211, 225, 1);
     display: flex;
     justify-content: space-between;
 }
+
+.passwordDiv:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
 
 #inputPasswordRegister{
     width: -webkit-fill-available;
@@ -377,6 +412,11 @@ header img {
     margin-right: 10px;
 }
 
+.hidePassword:hover {
+    filter: drop-shadow(0 4px 4px rgb(12, 12, 12));
+    transition: all 0.2s ease;
+  }
+
 .showPassword{
     width: 30px;
     height: 21px;
@@ -384,6 +424,11 @@ header img {
     align-self: center;
     margin-right: 10px;
 }
+
+.showPassword:hover {
+    filter: drop-shadow(0 4px 4px rgb(12, 12, 12));
+    transition: all 0.2s ease;
+  }
 
 .labelErrors{
     color: red;
@@ -404,6 +449,12 @@ header img {
     margin: 1em;
     align-self: center;
 }
+
+.buttonRegister:hover {
+    box-shadow: 0 4px 16px rgb(242, 102, 171, 1);
+    transition: all 0.2s ease;
+  }
+
 .buttonBackHomeRegister{
     background-color: rgba(255, 197, 25, 1);
     border-radius: 20px;
@@ -415,6 +466,11 @@ header img {
     margin: 1em;
     align-self: center;
 }
+
+.buttonBackHomeRegister:hover {
+    box-shadow: 0 4px 16px rgb(255, 197, 25, 1);
+    transition: all 0.2s ease;
+  }
 
 /*---------------------------------------------------FORMATO LOGIN----------------------------------------------*/
 .loginDiv{
@@ -465,6 +521,8 @@ header img {
 
 .buttonMenu img:hover{
     cursor: pointer;
+    box-shadow: 0 4px 16px rgb(164, 89, 209, 1);
+    transition: all 0.2s ease;
 }
 
 .close{
@@ -492,6 +550,8 @@ header img {
 
 .close img:hover{
     cursor: pointer;
+    box-shadow: 0 4px 16px rgb(164, 89, 209, 1);
+    transition: all 0.2s ease;
 }
 
 .menuOptionsDiv{
@@ -595,33 +655,11 @@ header img {
     border-radius: 50%;
 }
 
-.ModalImg {
-    width: 0.1px;
-    height: 0.1px;
-    opacity: 0;
-    overflow: hidden;
-    position: absolute;
-    z-index: -1;
-    }
-
-
-.labelModalImg{
-    background-color: rgba(255, 197, 25, 1);
-    border-radius: 20px;
-    font-size: 1em;
-    border-color: #ffffff;
-    width: max-content;
-    height: max-content;
-    align-self: self-end;
-    margin: 10px;
-    padding: 10px;
-    font-family: 'Glacial Indifference', sans-serif;
-}
-
-.labelModalImg:hover {
-    box-shadow: 0 4px 16px rgba(255, 197, 25, 1);
+.closeModal img:hover{
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgb(164, 89, 209, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .buttonModalProfile{
     background-color: rgba(242, 102, 171, 1);
@@ -634,6 +672,7 @@ header img {
     margin: 1em;
     align-self: center;
 }
+
 .buttonModalProfile:hover {
     box-shadow: 0 4px 16px rgba(242, 102, 171, 1);
     transition: all 0.2s ease;
@@ -755,6 +794,12 @@ header img {
     border-radius: 50%;
 }
 
+.closeModal img:hover {
+    cursor: pointer;
+    box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
+    transition: all 0.2s ease;
+  }
+
 .buttonModalImg {
     width: 0.1px;
     height: 0.1px;
@@ -866,6 +911,7 @@ header img {
 
 .optionsPosts:hover{
     cursor: pointer;
+    text-shadow: 1px 1px 2px black, 0 0 1em black, 0 0 0.2em black;
 }
 
 .contentImgs{
@@ -1001,6 +1047,11 @@ header img {
     border-radius: 50%;
 }
 
+.closeMenuPosts img:hover {
+    box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
+    transition: all 0.2s ease;
+  }
+
 .closeMenuPosts img:hover{
     cursor: pointer;
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
@@ -1093,6 +1144,11 @@ header img {
     border: solid 1px rgba(164, 89, 209, 1);
     border-radius: 50%;
 }
+
+.closeModal img:hover {
+    box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
+    transition: all 0.2s ease;
+  }
 
 .labelModalImgEdit{
     background-color: rgba(255, 197, 25, 1);
