@@ -9,6 +9,7 @@ import menuImg from '../Images/menu.png';
 import nueve from '../Images/9.png';
 import diez from '../Images/10.1.png';
 import diez2 from '../Images/10.2.png';
+import rock from '../Images/rock.png';
 
 export const Login = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
@@ -64,7 +65,7 @@ export const Login = (onNavigate) => {
 
     menuOptionsDiv.innerHTML = `
           <button class="close" id="close"><img src="${nueve}" alt="buttonMenu"></button>
-          <a href="" class="optionMenu" id="acercaDe" style="text-decoration:none">Acerca de</a>
+          <button class="optionMenu" id="acercaDe">Acerca de</button>
           <button class="optionMenu" id="perfil">Editar perfil</button>
           <a href="" class="optionMenu" id="cerrarSesion" style="text-decoration:none">Cerrar sesión</a>`;
 
@@ -80,6 +81,34 @@ export const Login = (onNavigate) => {
       loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => {
         localStorage.removeItem('user'); // si cierra sesión, la info del usuario se elimina del localstorage
         onNavigate('/');
+      });
+
+      // FUNCIONALIDAD MODAL ACERCA DE
+      loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#acercaDe').addEventListener('click', () => {
+        windowsModal.innerHTML = '';
+        windowsModal.innerHTML = `
+      <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
+      <label class="labelModal">Acerca de Rockbook:</label>
+      <p class="about">Esta es una red social en la que podrán ingresar usuarios con interés por la dinámica de las <b>piedras viajeras</b>. La piedra viajera es una piedra decorada, que pude contener un mensaje de aliento, esperanza o una reflexión. Éstas tienen el fin de dar un mensaje o mayor alegría al día de una persona.</p>
+      <p class="about1">Existen dos formas de <b>contribuir a la dinámica</b>:</p>
+      <p class="aboutOptions">  - Si encuentras una en tu camino, la idea es que captures una foto de ésta y el lugar donde la encontraste y la lleves a otro sitio turístico para que continúen su viaje por el mundo cumpliendo su propósito de enviar mensajes y alegría a más personas.</p>
+      <p class="aboutOptions1"> - También puedes contribuir decorando piedras y mandándolas a viajar.</p>
+      <p class="about"><b>Cualquiera que sea la forma, tu contribución es bienvenida! 🤗 </b></p>
+      <img src='${rock}' class='imgAbout'></img>`;
+
+        windowsModal.close();
+        windowsModal.showModal();
+        windowsModal.style.display = 'block';
+        windowsModal.style.display = 'flex';
+
+        // cerrar la ventana modal
+        const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+
+        btnClose.onclick = function () {
+          windowsModal.close();
+          windowsModal.style.display = 'none';
+          menuOptionsDiv.style.display = 'none';
+        };
       });
 
       // FUNCIONALIDAD MODAL PARA EDITAR PERFIL

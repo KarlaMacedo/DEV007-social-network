@@ -588,8 +588,46 @@ header img {
     cursor: pointer;
 }
 
+#acercaDe{
+    background-color: transparent;
+    text-align: start;
+    border: 0px;
+    padding: 0px;
+    font-weight: bolder;
+    font-size: 1em;
+}
+
+#acercaDe:hover{
+    background-color: rgba(242, 102, 171, 0.47);
+    cursor: pointer;
+}
+
 .optionMenu{
     color: black;
+}
+
+/*--Formato modal acerca de--*/
+.about1{
+    margin-top: 20px;
+    margin-bottom: 10px;
+}
+
+.aboutOptions1{
+    margin-top: 0px;
+    margin-bottom: 20px;
+    margin-left: 15px;
+}
+
+.aboutOptions{
+    margin-top: 0px;
+    margin-left: 15px;
+}
+
+.imgAbout{
+    width: 104px;
+    align-self: end;
+    margin-top: -97px;
+    margin-right: -10px;
 }
 
 /*--Formato modal editar perfil--*/
