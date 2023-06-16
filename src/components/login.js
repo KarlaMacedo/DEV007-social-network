@@ -96,7 +96,7 @@ export const Login = (onNavigate) => {
       <input type="text" class="inputModalProfile" placeholder="Escribe aquí">
       <div class="divImgModal"> 
       <label class="labelModalImg">Subir foto de perfil
-      <input type="file" class="ModalImg" id="ModalImgProfile" accept=".jpg, .jpeg, .png" multiple></input>
+      <input type="file" class="ModalImg" id="ModalImgProfile" accept=".jpg, .jpeg, .png"></input>
       </label>
       <br>
       <img class="imgProfile">
@@ -119,25 +119,25 @@ export const Login = (onNavigate) => {
         btnEditProfile.onclick = async () => {
           menuOptionsDiv.style.display = 'none';
           // eslint-disable-next-line max-len
-          await updateProfileEdit(info[0].uid, { displayName: nameProfileEdit.value, photoURL: imgProfileEdit.value }).then(() => {
-            windowsModal.close();
-            windowsModal.style.display = 'none';
+          await updateProfileEdit(info[0].uid, { displayName: nameProfileEdit.value, photoURL: imgProfileEdit.value });
 
-            console.log(loginDiv.querySelector('#menu').querySelector('#labelLogin'));
+          // ----ACTUALIZAR DATA DE POST TAMBIEN
+          addPost((querySnapshots) => {
+            querySnapshots.forEach((doc) => {
+              if (doc.userId === info[0].uid) {
+                const edit = async () => {
+                  await updatePost(doc, { userName: nameProfileEdit.value });
+                };
+                edit();
+              }
+            });
           });
-        };
 
-        // ----ACTUALIZAR DATA DE POST TAMBIEN
-        /* addPost((querySnapshots) => {
-              querySnapshots.forEach((doc) => {
-                if (doc.userId === info[0].uid) {
-                  const edit = async () => {
-                    await updatePost(doc, { userName: nameProfileEdit.value });
-                  };
-                  edit();
-                }
-              });
-            }); */
+          windowsModal.close();
+          windowsModal.style.display = 'none';
+
+          console.log(loginDiv.querySelector('#menu').querySelector('#labelLogin'));
+        };
 
         // cerrar la ventana modal
         const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
@@ -177,7 +177,7 @@ export const Login = (onNavigate) => {
 
         <div class="divImgModal"> 
         <label class="labelButtonModalImg">Subir Imagen
-        <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png" multiple></input>
+        <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png"></input>
         </label>
         <br>
         <img class="urlLocalImg">
@@ -207,34 +207,39 @@ export const Login = (onNavigate) => {
         const coordenadas = windowsModal.querySelector('.inputModal').value;
         const selecImgFile = selecImg.files[0];
         const name = selecImgFile ? selecImgFile.name : 0;
+        const size = selecImgFile ? selecImgFile.size : 0;
         if (inputModalPost === '' && coordenadas === '' && !selecImgFile) {
           windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder publicar';
-        } else {
-          if (!selecImgFile || selecImgFile === undefined) {
-            const urlImg = '';
-            console.log(selecImgFile);
-            post(inputModalPost, coordenadas, urlImg);
-          } else {
-            console.log(selecImgFile);
-            uploadImg(name, selecImgFile)
-              .then((snapshot) => {
-                const fullPath = snapshot.metadata.fullPath;
-                getUrl(fullPath).then((url) => post(inputModalPost, coordenadas, url));
-              });
-          }
+        } else if (selecImgFile && size > 100000) {
+          windowsModal.querySelector('#labelErrorsModal').textContent = 'La imagen supera el limite de 100kb';
+        } else if (selecImgFile && size < 100000) {
+          console.log(size);
+          uploadImg(name, selecImgFile)
+            .then((snapshot) => {
+              const fullPath = snapshot.metadata.fullPath;
+              getUrl(fullPath).then((url) => post(inputModalPost, coordenadas, url));
+            });
           windowsModal.close();
           windowsModal.style.display = 'none';
           console.log(inputModalPost, coordenadas, selecImg);
+        } else if (!selecImgFile) {
+          const urlImg = '';
+          console.log(selecImgFile);
+          post(inputModalPost, coordenadas, urlImg);
+
+          windowsModal.close();
+          windowsModal.style.display = 'none';
+          console.log(inputModalPost, coordenadas, selecImg);
+
           // loginDiv.querySelector('.containerPublications').appendChild();
         }
-      };
+        // cerrar la ventana modal
+        const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
 
-      // cerrar la ventana modal
-      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
-
-      btnClose.onclick = function () {
-        windowsModal.close();
-        windowsModal.style.display = 'none';
+        btnClose.onclick = function () {
+          windowsModal.close();
+          windowsModal.style.display = 'none';
+        };
       };
     },
   );
@@ -340,18 +345,44 @@ export const Login = (onNavigate) => {
         optionsPosts.innerText = '...';
         content3Posts.appendChild(optionsPosts);
 
+        // si es el dueño crea el boton de eliminar
+        const closeMenuPosts = document.createElement('button');
+        closeMenuPosts.setAttribute('class', 'closeMenuPosts');
+        closeMenuPosts.value = doc.id;
+        closeMenuPosts.id = doc.id;
+
+        closeMenuPosts.innerHTML = `<img src="${nueve}" alt="buttonMenu">`;
+
+        // si es el dueño crea el boton de eliminar
+        const deleteButton = document.createElement('button');
+        deleteButton.setAttribute('class', 'deletePost');
+        deleteButton.textContent = 'Eliminar';
+        deleteButton.value = doc.id;
+        deleteButton.id = doc.id;
+
+        // si es el dueño crea el boton de editar
+        const editButton = document.createElement('button');
+        editButton.setAttribute('class', 'editPost');
+        editButton.textContent = 'Editar';
+        editButton.value = doc.id;
+        editButton.id = doc.id;
+        console.log(doc.id);
+        console.log(doc.text);
+
         optionsPosts.onclick = function () {
+          optionsPosts.style.display = 'none';
           divButtons.style.display = 'block';
           divButtons.style.display = 'flex';
-          // si es el dueño crea el boton de eliminar
-          const deleteButton = document.createElement('button');
-          deleteButton.setAttribute('class', 'deletePost');
-          deleteButton.textContent = 'Eliminar';
-          deleteButton.value = doc.id;
-          deleteButton.id = doc.id;
+          divButtons.appendChild(closeMenuPosts);
+
+          closeMenuPosts.onclick = function () { // cerrar menú
+            divButtons.style.display = 'none';
+            optionsPosts.style.display = 'block';
+          };
 
           // FUNCIONALIDAD BOTON BORRAR
           deleteButton.onclick = function () {
+            divButtons.style.display = 'none';
             console.log(doc.id);
             const confirmDelete = window.confirm('¿Segur@ quieres eliminar el post?');
             if (confirmDelete) { // si el usuario confirma la eliminación del post
@@ -361,18 +392,11 @@ export const Login = (onNavigate) => {
 
           divButtons.appendChild(deleteButton);
 
-          // si es el dueño crea el boton de editar
-          const editButton = document.createElement('button');
-          editButton.setAttribute('class', 'editPost');
-          editButton.textContent = 'Editar';
-          editButton.value = doc.id;
-          editButton.id = doc.id;
-          console.log(doc.id);
-          console.log(doc.text);
-
           // FUNCIONALIDAD BOTON EDITAR DE LA VENTANA MODAL
           editButton.onclick = function () {
-          // abre modal si quiere editar y le da el valor de cada espacio
+            divButtons.style.display = 'none';
+            optionsPosts.style.display = 'block';
+            // abre modal si quiere editar y le da el valor de cada espacio
             windowsModal.innerHTML = '';
             windowsModal.innerHTML = `
         <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
@@ -382,7 +406,7 @@ export const Login = (onNavigate) => {
         <input type="text" class="inputModalEdit" placeholder="Escribe aquí">
         <div class="divImgModal"> 
         <label class="labelModalImgEdit">Subir Imagen
-        <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png" multiple></input>
+        <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png"></input>
         </label>
         <br>
         <img class="imgEditUrl">
@@ -415,6 +439,7 @@ export const Login = (onNavigate) => {
             const btnEditDone = loginDiv.querySelector('#divModal').querySelector('#buttonModalEdit');
 
             btnEditDone.onclick = async () => {
+              optionsPosts.style.display = 'block';
               const buttonImg = windowsModal.querySelector('.divImgModal').querySelector('.buttonModalImg');
               const buttonImgFile = buttonImg.files[0];
               const nameButton = buttonImgFile ? buttonImgFile.name : 0;
@@ -445,6 +470,7 @@ export const Login = (onNavigate) => {
             const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
 
             btnClose.onclick = function () {
+              optionsPosts.style.display = 'block';
               windowsModal.close();
               windowsModal.style.display = 'none';
             };
