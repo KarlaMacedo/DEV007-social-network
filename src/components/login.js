@@ -243,15 +243,15 @@ export const Login = (onNavigate) => {
           windowsModal.style.display = 'none';
           console.log(inputModalPost, coordenadas, selecImg);
 
-          // loginDiv.querySelector('.containerPublications').appendChild();
+        // loginDiv.querySelector('.containerPublications').appendChild();
         }
-      };
-      // cerrar la ventana modal
-      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+        // cerrar la ventana modal
+        const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
 
-      btnClose.onclick = function () {
-        windowsModal.close();
-        windowsModal.style.display = 'none';
+        btnClose.onclick = function () {
+          windowsModal.close();
+          windowsModal.style.display = 'none';
+        };
       };
     },
   );
@@ -291,7 +291,15 @@ export const Login = (onNavigate) => {
       const dateElement = document.createElement('label');
       dateElement.setAttribute('class', 'datePosts');
       // convierte la fecha de firebase a un string de js
-      dateElement.textContent = `${doc.dateCreate.toDate().toDateString()} ${doc.dateCreate.toDate().toLocaleTimeString()}`;
+      const options = {
+        weekday: 'long',
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric',
+      };
+
+      // lunes, 26 de diciembre de 2050 9 a. m.
+      dateElement.textContent = `${doc.dateCreate.toDate().toLocaleDateString('es-CH', options)} - ${doc.dateCreate.toDate().toLocaleTimeString()} `;
       content1Posts.appendChild(dateElement);
 
       if (doc.text !== '') {
