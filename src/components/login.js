@@ -9,7 +9,6 @@ import menuImg from '../Images/menu.png';
 import nueve from '../Images/9.png';
 import diez from '../Images/10.1.png';
 import diez2 from '../Images/10.2.png';
-import profilePick from '../Images/profile.png';
 
 export const Login = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
@@ -22,9 +21,6 @@ export const Login = (onNavigate) => {
   const menu = document.createElement('div');
   menu.setAttribute('id', 'menu');
   menu.setAttribute('class', 'menu');
-  const impProfile = document.createElement('img');
-  impProfile.setAttribute('class', 'imgProfile');
-  impProfile.setAttribute('id', 'imgProfile');
   const labelLogin = document.createElement('label');
   labelLogin.setAttribute('class', 'labelLogin');
   labelLogin.setAttribute('id', 'labelLogin');
@@ -37,7 +33,6 @@ export const Login = (onNavigate) => {
   onlyMenu.setAttribute('class', 'onlyMenu');
 
   loginDiv.appendChild(menu);
-  menu.appendChild(impProfile);
   menu.appendChild(labelLogin);
   menu.appendChild(onlyMenu);
   onlyMenu.appendChild(buttonMenu);
@@ -94,13 +89,6 @@ export const Login = (onNavigate) => {
       <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
       <label class="labelModal">Nombre:</label>
       <input type="text" class="inputModalProfile" placeholder="Escribe aquí">
-      <div class="divImgModal"> 
-      <label class="labelModalImg">Subir foto de perfil
-      <input type="file" class="ModalImg" id="ModalImgProfile" accept=".jpg, .jpeg, .png"></input>
-      </label>
-      <br>
-      <img class="imgProfile">
-      </div>
       <label class="labelErrorsModal" id="labelErrorsModal"></label>
       <br>
       <button class="buttonModalProfile" id="buttonModalProfile">Actualizar perfil</button>`;
@@ -108,7 +96,6 @@ export const Login = (onNavigate) => {
         const nameProfileEdit = windowsModal.querySelector('.inputModalProfile');
         nameProfileEdit.value = info[0].displayName;
         const btnEditProfile = loginDiv.querySelector('#divModal').querySelector('#buttonModalProfile');
-        const imgProfileEdit = windowsModal.querySelector('#ModalImgProfile');
 
         windowsModal.close();
         windowsModal.showModal();
@@ -118,25 +105,29 @@ export const Login = (onNavigate) => {
         // Terminar de editar perfil
         btnEditProfile.onclick = async () => {
           menuOptionsDiv.style.display = 'none';
+          if (nameProfileEdit.value === '') {
+            windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar el campo para poder editar su nombre';
+          } else {
           // eslint-disable-next-line max-len
-          await updateProfileEdit(info[0].uid, { displayName: nameProfileEdit.value, photoURL: imgProfileEdit.value });
+            await updateProfileEdit(info[0].uid, { displayName: nameProfileEdit.value });
 
-          // ----ACTUALIZAR DATA DE POST TAMBIEN
-          addPost((querySnapshots) => {
-            querySnapshots.forEach((doc) => {
-              if (doc.userId === info[0].uid) {
-                const edit = async () => {
-                  await updatePost(doc, { userName: nameProfileEdit.value });
-                };
-                edit();
-              }
+            // ----ACTUALIZAR DATA DE POST TAMBIEN
+            addPost((querySnapshots) => {
+              querySnapshots.forEach((doc) => {
+                if (doc.userId === info[0].uid) {
+                  const edit = async () => {
+                    await updatePost(doc, { userName: nameProfileEdit.value });
+                  };
+                  edit();
+                }
+              });
             });
-          });
 
-          windowsModal.close();
-          windowsModal.style.display = 'none';
+            windowsModal.close();
+            windowsModal.style.display = 'none';
 
-          console.log(loginDiv.querySelector('#menu').querySelector('#labelLogin'));
+            console.log(loginDiv.querySelector('#menu').querySelector('#labelLogin'));
+          }
         };
 
         // cerrar la ventana modal
@@ -149,14 +140,6 @@ export const Login = (onNavigate) => {
         };
       });
     });
-
-    // FUNCIONALIDAD FOTO DE PERFIL
-    const imagenProfile = loginDiv.querySelector('.menu').querySelector('.imgProfile');
-    if (info[0].photoURL === '' || info[0].photoURL === null || info[0].photoURL === undefined || info[0].photoURL === '""') {
-      imagenProfile.src = profilePick;
-    } else {
-      imagenProfile.src = info[0].photoURL;
-    }
 
     // FUNCIONALIDAD ETIQUETA DE BIENVENIDA AL USUARIO
     loginDiv.querySelector('#menu').querySelector('#labelLogin').textContent = `Bienvenid@ ${info[0].displayName}!`;

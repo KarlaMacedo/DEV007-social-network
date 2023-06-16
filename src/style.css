@@ -424,12 +424,6 @@ header img {
     justify-content: center;
 }
 
-.imgProfile{
-    width: 60px;
-    height: 67px;
-    border-radius: 50%;
-}
-
 /*--Formato menu--*/
 .menu{
     display: flex;
@@ -655,7 +649,6 @@ header img {
 
 /*--Mensaje bienvenida--*/
 .labelLogin{
-    text-align: center;
     font-size: x-large;
     font-weight: bold;
     margin-top: 10px;
