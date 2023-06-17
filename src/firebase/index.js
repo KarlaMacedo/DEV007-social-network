@@ -4,15 +4,12 @@ import {
   getStorage, ref, uploadBytes, getDownloadURL,
 } from 'firebase/storage';
 import {
-  getFirestore, doc, collection, addDoc, query, orderBy, onSnapshot, updateDoc, deleteDoc, Timestamp, arrayRemove, arrayUnion,
+  doc, collection, addDoc, query, orderBy, onSnapshot, updateDoc, deleteDoc, Timestamp, arrayRemove, arrayUnion,
 } from 'firebase/firestore';
 import {
-  getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider,
+  createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider,
 } from 'firebase/auth';
-import { app } from './init.js';
-
-export const auth = getAuth(app);
-export const db = getFirestore(app);
+import { auth, db } from './init.js';
 
 // FUNCIÓN ENTRAR CON CORREO Y CONTRASEÑA
 export const signIn = (email, password) => signInWithEmailAndPassword(auth, email, password);
