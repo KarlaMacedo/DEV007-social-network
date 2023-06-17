@@ -1,5 +1,5 @@
 // import { onNavigate } from '../main';
-import { createUser, savedUser, updateName } from '../firebase/index.js';
+import { createUser, updateName, currentUserInfo } from '../firebase/index.js';
 import uno from '../Images/1.png';
 import doce from '../Images/12.png';
 import trece from '../Images/13.png';
@@ -65,27 +65,25 @@ export const Register = (onNavigate) => {
   // REGISTRO DE USUARIOS Y GUARDARLOS EN BASE DE DATOS STORE
   registerDiv.querySelector('#buttonRegister').addEventListener('click', async () => {
     try {
-      const displayName = registerDiv.querySelector('#containerFormRegister').querySelector('#inputNameRegister').value;
+      const displayNames = registerDiv.querySelector('#containerFormRegister').querySelector('#inputNameRegister').value;
       const signUpEmail = registerDiv.querySelector('#containerFormRegister').querySelector('#inputMailRegister').value;
       const signUpPassword = registerDiv.querySelector('#containerFormRegister').querySelector('#inputPasswordRegister').value;
-      console.log(displayName, signUpEmail, signUpPassword);
-      if (displayName === '' || signUpEmail === '' || signUpPassword === '') {
+      console.log(displayNames, signUpEmail, signUpPassword);
+      if (displayNames === '' || signUpEmail === '' || signUpPassword === '') {
         registerDiv.querySelector('#containerFormRegister').querySelector('#labelErrors').textContent = 'Debe rellenar todos los campos';
         return;
       }
       await createUser(signUpEmail, signUpPassword) // crea usuario en auth con su info
-        .then(async (userCredentials) => {
-          const user = userCredentials.user;
-          if (displayName) {
-            console.log(displayName);
-            await updateName(displayName); // guarda su info en auth firebase
-            console.log(updateName(displayName));
+        .then(async () => {
+          if (displayNames) {
+            console.log(displayNames);
+            await updateName(displayNames); // guarda su info en auth firebase
+            console.log(updateName(displayNames));
           }
-          console.log(savedUser(displayName, signUpEmail, signUpPassword, user.uid));
-          // guarda info en data firestore
-          return savedUser(displayName, signUpEmail, signUpPassword, user.uid);
         })
         .then(() => {
+          console.log(currentUserInfo());
+          localStorage.setItem('user', JSON.stringify({ uid: currentUserInfo().uid, email: signUpEmail, displayName: displayNames }));
           onNavigate('/login');
         });
     } catch (error) {
