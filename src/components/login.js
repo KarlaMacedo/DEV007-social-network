@@ -141,7 +141,7 @@ export const Login = (onNavigate) => {
             await updateProfileEdit(info[0].uid, { displayName: nameProfileEdit.value });
 
             // ----ACTUALIZAR DATA DE POST TAMBIEN
-            addPost((querySnapshots) => {
+            /* addPost((querySnapshots) => {
               querySnapshots.forEach((doc) => {
                 if (doc.userId === info[0].uid) {
                   const edit = async () => {
@@ -150,7 +150,7 @@ export const Login = (onNavigate) => {
                   edit();
                 }
               });
-            });
+            }); */
 
             windowsModal.close();
             windowsModal.style.display = 'none';

@@ -4,7 +4,7 @@ import {
   getStorage, ref, uploadBytes, getDownloadURL,
 } from 'firebase/storage';
 import {
-  getFirestore, setDoc, doc, collection, addDoc, query, orderBy, onSnapshot, updateDoc, deleteDoc, Timestamp, arrayRemove, arrayUnion,
+  getFirestore, setDoc, doc, collection, addDoc, query, orderBy, onSnapshot, updateDoc, deleteDoc, Timestamp, arrayRemove, arrayUnion, getDocs,
 } from 'firebase/firestore';
 import {
   getAuth, createUserWithEmailAndPassword, updateProfile, signInWithEmailAndPassword, GoogleAuthProvider, signInWithPopup, FacebookAuthProvider,
@@ -103,7 +103,12 @@ const providerFB = new FacebookAuthProvider();
 export const loginWithFB = () => signInWithPopup(auth, providerFB);
 
 // EDITAR PERFIL
-export const updateProfileEdit = (id, newProfile) => updateDoc(doc(db, 'users', id), newProfile);
+export const updateProfileEdit = async (id, newProfile) => {
+  const usersQuerySnapshot = await getDocs(collection(db, 'users'));
+  // eslint-disable-next-line no-shadow
+  const userDoc = usersQuerySnapshot.docs.find((doc) => doc.id === id);
+  return updateDoc(userDoc.ref, newProfile);
+};
 
 // OBTENER DATA DE USUARIOS FIRESTORE
 const colUsers = collection(db, 'users');
