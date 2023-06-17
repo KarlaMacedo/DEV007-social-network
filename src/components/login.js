@@ -350,6 +350,9 @@ export const Login = (onNavigate) => {
       if (doc.userId === auth.currentUser.uid) {
         // ACTUALIZAR NOMRE
         userNameElement.textContent = currentUserName;
+        updatePost(doc.id, {
+          userName: currentUserName,
+        });
 
         // si es el dueño crea el menu de botones de post
         const optionsPosts = document.createElement('label');
