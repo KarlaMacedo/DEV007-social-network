@@ -1,6 +1,8 @@
 /* eslint-disable max-len */
 /* eslint-disable import/no-extraneous-dependencies */
 import { initializeApp } from 'firebase/app';
+import { getAuth } from 'firebase/auth';
+import { getFirestore } from 'firebase/firestore';
 
 const firebaseConfig = {
   apiKey: 'AIzaSyCQM1c-S_xesXYnQCp8NQXpWSk_yvfAZE0',
@@ -13,3 +15,5 @@ const firebaseConfig = {
 };
 
 export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
