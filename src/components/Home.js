@@ -6,7 +6,7 @@ import ocho from '../Images/18.png';
 import siete from '../Images/17.png';
 
 import {
-  signIn, loginWithGoogle, loginWithFB, currentUserInfo, savedUser,
+  signIn, loginWithGoogle, loginWithFB, currentUserInfo,
 } from '../firebase/index.js';
 
 export const Home = (onNavigate) => {
@@ -115,8 +115,8 @@ export const Home = (onNavigate) => {
     try {
       await loginWithGoogle().then(() => {
         console.log(currentUserInfo());
+        localStorage.setItem('user', JSON.stringify(currentUserInfo()));
         // eslint-disable-next-line max-len
-        savedUser(currentUserInfo().displayName, currentUserInfo().email, null, currentUserInfo().uid);
         onNavigate('/login');
       });
     } catch (error) {
@@ -128,6 +128,8 @@ export const Home = (onNavigate) => {
   homeDiv.querySelector('#iniciarSesionDiv').querySelector('#socialNetworksDiv').querySelector('.fb').addEventListener('click', async () => {
     try {
       await loginWithFB().then(() => {
+        console.log(currentUserInfo());
+        localStorage.setItem('user', JSON.stringify(currentUserInfo()));
         onNavigate('/login');
       });
     } catch (error) {

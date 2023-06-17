@@ -2,7 +2,7 @@
 import {
   // eslint-disable-next-line max-len
   currentUserInfo, post, addPost, deleteDocData, auth, updatePost,
-  like, disLike, updateProfileEdit, uploadImg, getUrl, addUsers,
+  like, disLike, uploadImg, getUrl, updateNameProfile,
 } from '../firebase/index.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
@@ -12,6 +12,19 @@ import diez2 from '../Images/10.2.png';
 import rock from '../Images/rock.png';
 
 export const Login = (onNavigate) => {
+  // INFORMACIÓN DEL USUARIO ACTUAL
+  const currentUserInformation = currentUserInfo() ? currentUserInfo() : JSON.parse(localStorage.getItem('user'));
+  console.log(currentUserInformation);
+  const currentUserId = currentUserInfo() ? currentUserInfo().uid : JSON.parse(localStorage.getItem('user')).uid;
+  console.log(currentUserId);
+  const currentUserName = currentUserInfo() ? currentUserInfo().displayName : JSON.parse(localStorage.getItem('user')).displayName;
+  console.log(currentUserName);
+  if (currentUserName === null || currentUserName === undefined) {
+    window.location.reload();
+  }
+  const currentUserEmail = currentUserInfo() ? currentUserInfo().email : JSON.parse(localStorage.getItem('user')).email;
+  console.log(currentUserId);
+
   // CREACIÓN DE INTERFAZ
   document.body.style.backgroundImage = 'none';
   document.body.style.backgroundColor = '#ffffff';
@@ -46,47 +59,35 @@ export const Login = (onNavigate) => {
   const windowsModal = loginDiv.querySelector('#divModal');
   windowsModal.style.display = 'none';
 
-  // ID DEL USUARIO ACTUAL
-  const currentUserId = currentUserInfo() ? currentUserInfo().uid : JSON.parse(localStorage.getItem('user')).uid;
-  console.log(currentUserId);
+  // FUNCIONALIDAD MENU
+  const menuOptionsDiv = document.createElement('div');
+  menuOptionsDiv.setAttribute('class', 'menuOptionsDiv');
+  menuOptionsDiv.setAttribute('id', 'menuOptionsDiv');
 
-  // MOSTRAR INFO USUARIOS EN TIEMPO REAL ("ESCUCHADOR")
-  addUsers((querySnapshot) => {
-    windowsModal.close();
-    console.log(querySnapshot);
-    // filtra la info del usuario actual
-    const info = querySnapshot.filter((user) => user.uid === currentUserId);
-    console.log(info[0]);
-
-    // FUNCIONALIDAD MENU
-    const menuOptionsDiv = document.createElement('div');
-    menuOptionsDiv.setAttribute('class', 'menuOptionsDiv');
-    menuOptionsDiv.setAttribute('id', 'menuOptionsDiv');
-
-    menuOptionsDiv.innerHTML = `
+  menuOptionsDiv.innerHTML = `
           <button class="close" id="close"><img src="${nueve}" alt="buttonMenu"></button>
           <button class="optionMenu" id="acercaDe">Acerca de</button>
           <button class="optionMenu" id="perfil">Editar perfil</button>
           <a href="" class="optionMenu" id="cerrarSesion" style="text-decoration:none">Cerrar sesión</a>`;
 
-    loginDiv.querySelector('#buttonMenu').addEventListener('click', () => { // abrir menu
-      menuOptionsDiv.style.display = 'block';
-      menuOptionsDiv.style.display = 'flex';
-      loginDiv.querySelector('#menu').querySelector('.onlyMenu').insertAdjacentElement('beforeend', menuOptionsDiv);
-      loginDiv.querySelector('#menu').querySelector('#close').addEventListener('click', () => { // cerrar menú
-        menuOptionsDiv.style.display = 'none';
-      });
+  loginDiv.querySelector('#buttonMenu').addEventListener('click', () => { // abrir menu
+    menuOptionsDiv.style.display = 'block';
+    menuOptionsDiv.style.display = 'flex';
+    loginDiv.querySelector('#menu').querySelector('.onlyMenu').insertAdjacentElement('beforeend', menuOptionsDiv);
+    loginDiv.querySelector('#menu').querySelector('#close').addEventListener('click', () => { // cerrar menú
+      menuOptionsDiv.style.display = 'none';
+    });
 
-      // CERRAR SESION
-      loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => {
-        localStorage.removeItem('user'); // si cierra sesión, la info del usuario se elimina del localstorage
-        onNavigate('/');
-      });
+    // CERRAR SESION
+    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => {
+      localStorage.removeItem('user'); // si cierra sesión, la info del usuario se elimina del localstorage
+      onNavigate('/');
+    });
 
-      // FUNCIONALIDAD MODAL ACERCA DE
-      loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#acercaDe').addEventListener('click', () => {
-        windowsModal.innerHTML = '';
-        windowsModal.innerHTML = `
+    // FUNCIONALIDAD MODAL ACERCA DE
+    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#acercaDe').addEventListener('click', () => {
+      windowsModal.innerHTML = '';
+      windowsModal.innerHTML = `
       <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
       <label class="labelModal">Acerca de Rockbook:</label>
       <p class="about">Esta es una red social en la que podrán ingresar usuarios con interés por la dinámica de las <b>piedras viajeras</b>. La piedra viajera es una piedra decorada, que pude contener un mensaje de aliento, esperanza o una reflexión. Éstas tienen el fin de dar un mensaje o mayor alegría al día de una persona.</p>
@@ -96,25 +97,25 @@ export const Login = (onNavigate) => {
       <p class="about"><b>Cualquiera que sea la forma, tu contribución es bienvenida! 🤗 </b></p>
       <img src='${rock}' class='imgAbout'></img>`;
 
+      windowsModal.close();
+      windowsModal.showModal();
+      windowsModal.style.display = 'block';
+      windowsModal.style.display = 'flex';
+
+      // cerrar la ventana modal
+      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+
+      btnClose.onclick = function () {
         windowsModal.close();
-        windowsModal.showModal();
-        windowsModal.style.display = 'block';
-        windowsModal.style.display = 'flex';
+        windowsModal.style.display = 'none';
+        menuOptionsDiv.style.display = 'none';
+      };
+    });
 
-        // cerrar la ventana modal
-        const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
-
-        btnClose.onclick = function () {
-          windowsModal.close();
-          windowsModal.style.display = 'none';
-          menuOptionsDiv.style.display = 'none';
-        };
-      });
-
-      // FUNCIONALIDAD MODAL PARA EDITAR PERFIL
-      loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#perfil').addEventListener('click', () => {
-        windowsModal.innerHTML = '';
-        windowsModal.innerHTML = `
+    // FUNCIONALIDAD MODAL PARA EDITAR PERFIL
+    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#perfil').addEventListener('click', () => {
+      windowsModal.innerHTML = '';
+      windowsModal.innerHTML = `
       <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
       <label class="labelModal">Nombre:</label>
       <input type="text" class="inputModalProfile" placeholder="Escribe aquí">
@@ -122,58 +123,46 @@ export const Login = (onNavigate) => {
       <br>
       <button class="buttonModalProfile" id="buttonModalProfile">Actualizar perfil</button>`;
 
-        const nameProfileEdit = windowsModal.querySelector('.inputModalProfile');
-        nameProfileEdit.value = info[0].displayName;
-        const btnEditProfile = loginDiv.querySelector('#divModal').querySelector('#buttonModalProfile');
+      const nameProfileEdit = windowsModal.querySelector('.inputModalProfile');
+      nameProfileEdit.value = currentUserName;
+      const btnEditProfile = loginDiv.querySelector('#divModal').querySelector('#buttonModalProfile');
 
-        windowsModal.close();
-        windowsModal.showModal();
-        windowsModal.style.display = 'block';
-        windowsModal.style.display = 'flex';
+      windowsModal.close();
+      windowsModal.showModal();
+      windowsModal.style.display = 'block';
+      windowsModal.style.display = 'flex';
 
-        // Terminar de editar perfil
-        btnEditProfile.onclick = async () => {
-          menuOptionsDiv.style.display = 'none';
-          if (nameProfileEdit.value === '') {
-            windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar el campo para poder editar su nombre';
-          } else {
+      // Terminar de editar perfil
+      btnEditProfile.onclick = async () => {
+        menuOptionsDiv.style.display = 'none';
+        if (nameProfileEdit.value === '') {
+          windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar el campo para poder editar su nombre';
+        } else {
           // eslint-disable-next-line max-len
-            await updateProfileEdit(info[0].uid, { displayName: nameProfileEdit.value });
+          await updateNameProfile(nameProfileEdit.value);
+          localStorage.removeItem('user'); // la info del usuario se elimina del localstorage
+          localStorage.setItem('user', JSON.stringify({ uid: currentUserId, email: currentUserEmail, displayName: nameProfileEdit.value }));
 
-            // ----ACTUALIZAR DATA DE POST TAMBIEN
-            addPost((querySnapshots) => {
-              querySnapshots.forEach((doc) => {
-                if (doc.userId === info[0].uid) {
-                  const edit = async () => {
-                    await updatePost(doc, { userName: nameProfileEdit.value });
-                  };
-                  edit();
-                }
-              });
-            });
-
-            windowsModal.close();
-            windowsModal.style.display = 'none';
-
-            console.log(loginDiv.querySelector('#menu').querySelector('#labelLogin'));
-          }
-        };
-
-        // cerrar la ventana modal
-        const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
-
-        btnClose.onclick = function () {
           windowsModal.close();
           windowsModal.style.display = 'none';
-          menuOptionsDiv.style.display = 'none';
-        };
-      });
-    });
+          window.location.reload();
+        }
+      };
 
-    // FUNCIONALIDAD ETIQUETA DE BIENVENIDA AL USUARIO
-    loginDiv.querySelector('#menu').querySelector('#labelLogin').textContent = `Bienvenid@ ${info[0].displayName}!`;
-    loginDiv.querySelector('#menu').querySelector('#labelLogin').id = info[0].displayName;
+      // cerrar la ventana modal
+      const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
+
+      btnClose.onclick = function () {
+        windowsModal.close();
+        windowsModal.style.display = 'none';
+        menuOptionsDiv.style.display = 'none';
+      };
+    });
   });
+
+  // FUNCIONALIDAD ETIQUETA DE BIENVENIDA AL USUARIO
+  loginDiv.querySelector('#menu').querySelector('#labelLogin').textContent = `Bienvenid@ ${currentUserName}!`;
+  loginDiv.querySelector('#menu').querySelector('#labelLogin').id = currentUserName;
 
   // FUNCIONALIDAD MODAL CREAR POSTS
   loginDiv.querySelector('#inputLogin').addEventListener(
@@ -359,6 +348,9 @@ export const Login = (onNavigate) => {
 
       // verifica que el usuario que está logeado sea el dueño del post
       if (doc.userId === auth.currentUser.uid) {
+        // ACTUALIZAR NOMRE
+        userNameElement.textContent = currentUserName;
+
         // si es el dueño crea el menu de botones de post
         const optionsPosts = document.createElement('label');
         optionsPosts.setAttribute('class', 'optionsPosts');
