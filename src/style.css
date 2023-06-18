@@ -8,6 +8,7 @@ html {
 
 button{
     font-family: "Open Sans", sans-serif;
+    cursor: pointer;
 }
 
 body {
@@ -27,10 +28,6 @@ body {
     height: 80%;
 }
 
-button{
-    cursor: pointer;
-}
-
 *::-webkit-scrollbar{
     width: 5px;
 }
@@ -43,6 +40,12 @@ button{
 *::-webkit-scrollbar-thumb{
     background: rgba(44, 211, 225, 1);
     border-radius: 5px;
+}
+
+footer p {
+    font-family: 'Glacial Indifference', sans-serif;
+    font-size: smaller;
+    margin: 8px;
 }
 
 
@@ -241,22 +244,6 @@ header img {
     font-size: 1.3em;
     font-weight: bold;
     margin: 0px;
-}
-
-.hidePassword{
-    width: 30px;
-    height: 21px;
-    cursor: pointer;
-    align-self: center;
-    margin-right: 10px;
-}
-
-.showPassword{
-    width: 30px;
-    height: 21px;
-    cursor: pointer;
-    align-self: center;
-    margin-right: 10px;
 }
 
 #buttonLogin {
@@ -519,6 +506,33 @@ header img {
     border-radius: 50%;
 }
 
+.close img{
+    margin: 0;
+    margin-left: 0;
+    width: 2em;
+    height: 2em;
+    border: solid 1px rgba(164, 89, 209, 1);
+    border-radius: 50%;
+}
+
+.closeModal img{
+    margin: 0;
+    margin-left: 0;
+    width: 2em;
+    height: 2em;
+    border: solid 1px rgba(164, 89, 209, 1);
+    border-radius: 50%;
+}
+
+.closeMenuPosts img{
+    margin: 0;
+    margin-left: 0;
+    width: 2em;
+    height: 2em;
+    border: solid 1px rgba(164, 89, 209, 1);
+    border-radius: 50%;
+}
+
 .buttonMenu img:hover{
     cursor: pointer;
     box-shadow: 0 4px 16px rgb(164, 89, 209, 1);
@@ -537,15 +551,6 @@ header img {
     margin-top: -21px;
     position: fixed;
     margin-right: 148px;
-}
-
-.close img{
-    margin: 0;
-    margin-left: 0;
-    width: 2em;
-    height: 2em;
-    border: solid 1px rgba(164, 89, 209, 1);
-    border-radius: 50%;
 }
 
 .close img:hover{
@@ -684,15 +689,6 @@ header img {
     margin-left: -27px;
 }
 
-.closeModal img{
-    margin: 0;
-    margin-left: 0;
-    width: 2em;
-    height: 2em;
-    border: solid 1px rgba(164, 89, 209, 1);
-    border-radius: 50%;
-}
-
 .closeModal img:hover{
     cursor: pointer;
     box-shadow: 0 4px 16px rgb(164, 89, 209, 1);
@@ -750,27 +746,6 @@ header img {
     transition: all 0.2s ease;
   }
 
- /*--Formato modal post--*/
-.divModal{
-    border-radius: 20px;
-    border: solid rgba(164, 89, 209, 1);
-    height: max-content;
-    align-self: center;
-    width: 81%;
-    gap: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-.divModal::backdrop{
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.labelModal{
-    font-size: 1.3em;
-    font-weight: bold;
-}
-
 .inputModalPost{
     background-color: rgba(44, 211, 225, 1);
     color: rgba(95, 95, 95, 1);
@@ -807,34 +782,6 @@ header img {
 
 .inputModal:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
-    transition: all 0.2s ease;
-  }
-
-#closeModal{
-    background-color: transparent;
-    border: transparent;
-    outline: none;
-    width: 2em;
-    height: 2em;
-    padding: 0;
-    border-radius: 50%;
-    margin-top: -25px;
-    position: fixed;
-    margin-left: -27px;
-}
-
-.closeModal img{
-    margin: 0;
-    margin-left: 0;
-    width: 2em;
-    height: 2em;
-    border: solid 1px rgba(164, 89, 209, 1);
-    border-radius: 50%;
-}
-
-.closeModal img:hover {
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
     transition: all 0.2s ease;
   }
 
@@ -887,14 +834,6 @@ header img {
     box-shadow: 0 4px 16px rgba(242, 102, 171, 1);
     transition: all 0.2s ease;
   }
-
-#labelErrorsModal{
-    color: red;
-    font-size: 1em;
-    font-weight: bolder;
-    align-self: center;
-    text-align: center;
-}
 
 /*--Formato posts--*/
 .postsContainer{
@@ -1076,25 +1015,10 @@ header img {
     border-radius: 50%;
 }
 
-.closeMenuPosts img{
-    margin: 0;
-    margin-left: 0;
-    width: 2em;
-    height: 2em;
-    border: solid 1px rgba(164, 89, 209, 1);
-    border-radius: 50%;
-}
-
 .closeMenuPosts img:hover {
     box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
     transition: all 0.2s ease;
   }
-
-.closeMenuPosts img:hover{
-    cursor: pointer;
-    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
-    transition: all 0.2s ease;
-}
 
 .deletePost:hover {
     background-color: rgba(242, 102, 171, 0.47);
@@ -1102,26 +1026,6 @@ header img {
   }
 
  /*--Formato modal editar posts--*/
- .divModal{
-    border-radius: 20px;
-    border: solid rgba(164, 89, 209, 1);
-    height: max-content;
-    align-self: center;
-    width: 81%;
-    gap: 10px;
-    display: flex;
-    flex-direction: column;
-}
-
-.divModal::backdrop{
-    background-color: rgba(0, 0, 0, 0.4);
-}
-
-.labelModal{
-    font-size: 1.3em;
-    font-weight: bold;
-}
-
 .inputModalPostEdit{
     background-color: rgba(44, 211, 225, 1);
     color: rgba(95, 95, 95, 1);
@@ -1158,33 +1062,6 @@ header img {
 
 .inputModalEdit:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
-    transition: all 0.2s ease;
-  }
-
-#closeModal{
-    background-color: transparent;
-    border: transparent;
-    outline: none;
-    width: 2em;
-    height: 2em;
-    padding: 0;
-    border-radius: 50%;
-    margin-top: -25px;
-    position: fixed;
-    margin-left: -27px;
-}
-
-.closeModal img{
-    margin: 0;
-    margin-left: 0;
-    width: 2em;
-    height: 2em;
-    border: solid 1px rgba(164, 89, 209, 1);
-    border-radius: 50%;
-}
-
-.closeModal img:hover {
-    box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
     transition: all 0.2s ease;
   }
 
@@ -1229,14 +1106,6 @@ header img {
     transition: all 0.2s ease;
   }
 
-#labelErrorsModal{
-    color: red;
-    font-size: 1em;
-    font-weight: bolder;
-    align-self: center;
-    text-align: center;
-}
-
 /*---------------------------------------------------FORMATO FOOTER----------------------------------------------*/
 footer {
     position: fixed; /*que la posicion sea fija independiente del contenido*/
@@ -1247,10 +1116,4 @@ footer {
     text-align: center;
     height: 30px;
     padding: 0px;
-}
-
-footer p {
-    font-family: 'Glacial Indifference', sans-serif;
-    font-size: smaller;
-    margin: 8px;
 }
