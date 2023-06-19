@@ -766,24 +766,72 @@ header img {
   }
 
 .inputModal{
+    background-color: transparent;
+    color: rgba(95, 95, 95, 1);
+    border: none;
+    height: 4em;
+    width: 5em;
+
+}
+
+.inputModal {
+    transition: transform .2s; 
+}
+.inputModal:hover {
+    transform: scale(1.5); 
+}
+.coords {
+    display: flex;
+    justify-content: start;
+
+}
+
+.buttonCoords{
+    max-width: 100%;
+    max-height: 100%;
+}
+.latitud {
     background-color: rgba(44, 211, 225, 1);
     color: rgba(95, 95, 95, 1);
     font-size: 1.1em;
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
-    height: 4em;
-    width: -webkit-fill-available;
+    height: 2em;
+    width: 3.em;
     margin-top: .5em;
     margin-bottom: .7em;
     padding-left: 15px;
     border-radius: 20px;
     align-self: center;
 }
-
-.inputModal:hover {
+.latitud:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
   }
+.longitud {
+    background-color: rgba(44, 211, 225, 1);
+    color: rgba(95, 95, 95, 1);
+    font-size: 1.1em;
+    font-family: 'Glacial Indifference', sans-serif;
+    border: none;
+    height: 2em;
+    width: 3.em;
+    margin-top: .5em;
+    margin-bottom: .7em;
+    padding-left: 15px;
+    border-radius: 20px;
+    align-self: center;
+}
+.longitud:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
+
+.map {
+    width: 200px;
+    height: 150px;
+    background-color: grey;
+}
 
 .buttonModalImg {
     width: 0.1px;
@@ -1046,21 +1094,61 @@ header img {
   }
 
 .inputModalEdit{
+    background-color: transparent;
+    color: rgba(95, 95, 95, 1);
+    border: none;
+    height: 4em;
+    width: 5em;
+}
+
+.inputModalEdit {
+    transition: transform .2s; 
+}
+.inputModalEdit:hover {
+    transform: scale(1.5); 
+}
+.coordsEdit {
+    display: flex;
+    justify-content: start;
+}
+
+.buttonCoordsEdit{
+    max-width: 100%;
+    max-height: 100%;
+}
+.latitudEdit {
     background-color: rgba(44, 211, 225, 1);
     color: rgba(95, 95, 95, 1);
     font-size: 1.1em;
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
-    height: 4em;
-    width: -webkit-fill-available;
+    height: 2em;
+    width: 3.em;
     margin-top: .5em;
     margin-bottom: .7em;
     padding-left: 15px;
     border-radius: 20px;
     align-self: center;
 }
-
-.inputModalEdit:hover {
+.latitudEdit:hover {
+    box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
+    transition: all 0.2s ease;
+  }
+.longitudEdit {
+    background-color: rgba(44, 211, 225, 1);
+    color: rgba(95, 95, 95, 1);
+    font-size: 1.1em;
+    font-family: 'Glacial Indifference', sans-serif;
+    border: none;
+    height: 2em;
+    width: 3.em;
+    margin-top: .5em;
+    margin-bottom: .7em;
+    padding-left: 15px;
+    border-radius: 20px;
+    align-self: center;
+}
+.longitudEdit:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
   }
