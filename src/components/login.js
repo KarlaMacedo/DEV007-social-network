@@ -1,7 +1,10 @@
 // import { onNavigate } from '../main';
 import {
+  auth,
+} from '../firebase/init.js';
+import {
   // eslint-disable-next-line max-len
-  currentUserInfo, post, addPost, deleteDocData, auth, updatePost,
+  currentUserInfo, post, addPost, deleteDocData, updatePost,
   like, disLike, uploadImg, getUrl, updateNameProfile,
 } from '../firebase/index.js';
 import headerImg from '../Images/headers.jpg';
@@ -234,14 +237,15 @@ export const Login = (onNavigate) => {
 
         // loginDiv.querySelector('.containerPublications').appendChild();
         }
-        // cerrar la ventana modal
-        const btnClose = loginDiv.querySelector('#divModal').querySelector('#closeModal');
-
-        btnClose.onclick = function () {
-          windowsModal.close();
-          windowsModal.style.display = 'none';
-        };
       };
+      // cerrar la ventana modal
+      const btnCloses = loginDiv.querySelector('.divModal').querySelector('.closeModal');
+      console.log(btnCloses);
+
+      btnCloses.addEventListener('click', () => {
+        windowsModal.close();
+        windowsModal.style.display = 'none';
+      });
     },
   );
 
