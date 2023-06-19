@@ -5,7 +5,7 @@ import {
 import {
   // eslint-disable-next-line max-len
   currentUserInfo, post, addPost, deleteDocData, updatePost,
-  like, disLike, uploadImg, getUrl, updateNameProfile,
+  like, disLike, uploadImg, getUrl, updateNameProfile, initMap,
 } from '../firebase/index.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
@@ -13,6 +13,7 @@ import nueve from '../Images/9.png';
 import diez from '../Images/10.1.png';
 import diez2 from '../Images/10.2.png';
 import rock from '../Images/rock.png';
+import geo from '../Images/geo.png';
 
 export const Login = (onNavigate) => {
   // INFORMACIÓN DEL USUARIO ACTUAL
@@ -176,9 +177,12 @@ export const Login = (onNavigate) => {
         <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
         <label class="labelModal">Texto:</label>
         <input type="text" class="inputModalPost" placeholder="Escribe aquí">
-        <label class="labelModal">Link de maps obtenido de "incorporar un mapa":</label>
-        <input type="text" class="inputModal" placeholder="Escribe aquí">
-
+        <label class="labelModal">Ingresar coordenadas:</label>
+        <div class="coords">
+        <input type="text" class="latitud" placeholder="ingresa latitud">
+        <input type="text" class="longitud" placeholder="ingresa longitud">
+        <button class="inputModal"><img src="${geo}" class="buttonCoords" title="Obtener Coordenadas" alt="buttonMenu"></button>
+        </div>
         <div class="divImgModal"> 
         <label class="labelButtonModalImg">Subir Imagen
         <input type="file" class="buttonModalImg" id="buttonModalImg" accept=".jpg, .jpeg, .png"></input>
@@ -206,9 +210,38 @@ export const Login = (onNavigate) => {
         urlLocalImg.src = urlLocal;
       });
 
+      // Agregar Coordenadas
+      const buttonCoords = windowsModal.querySelector('.inputModal');
+      buttonCoords.addEventListener('click', () => {
+        const lat = windowsModal.querySelector('.latitud');
+        const lng = windowsModal.querySelector('.longitud');
+
+        if (navigator.geolocation) {
+          // Pedimos los datos de geolocalizacion al navegador
+          navigator.geolocation.getCurrentPosition(
+            (position) => {
+              const coords = {
+                lat: `${position.coords.latitude}`,
+                lng: `${position.coords.longitude}`,
+              };
+              lat.value = coords.lat;
+              lng.value = coords.lng;
+              console.log(coords);
+            },
+            // Si no los entrega manda una alerta de error
+            () => {
+              window.alert('No has dado permiso para acceder a tu localizacion');
+            },
+          );
+        }
+      });
+
       btnPublish.onclick = async () => {
         const inputModalPost = windowsModal.querySelector('.inputModalPost').value;
-        const coordenadas = windowsModal.querySelector('.inputModal').value;
+        const coordenadas = {
+          lat: parseFloat(windowsModal.querySelector('.latitud').value),
+          lng: parseFloat(windowsModal.querySelector('.longitud').value),
+        };
         const selecImgFile = selecImg.files[0];
         const name = selecImgFile ? selecImgFile.name : 0;
         const size = selecImgFile ? selecImgFile.size : 0;
@@ -310,13 +343,14 @@ export const Login = (onNavigate) => {
       }
 
       if (doc.coords !== '') {
-        const coordsElement = document.createElement('iframe');
-        coordsElement.setAttribute('class', 'coordsPosts');
-        coordsElement.src = doc.coords;
-        coordsElement.referrerPolicy = 'no-referrer-when-downgrade';
-        coordsElement.allowFullscreen = '';
-        coordsElement.loading = 'lazy';
+        const coordsElement = document.createElement('div');
+        coordsElement.setAttribute('id', `${doc.id}`);
+        coordsElement.setAttribute('class', 'map');
+        console.log(coordsElement);
+
         contentImgs.appendChild(coordsElement);
+        console.log(doc.id);
+        initMap(doc.coords, doc.id);
       }
 
       const divButtonLike = document.createElement('div');
@@ -421,8 +455,12 @@ export const Login = (onNavigate) => {
         <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
         <label class="labelModal">Texto:</label>
         <input type="text" class="inputModalPostEdit" placeholder="Escribe aquí">
-        <label class="labelModal">Link de maps obtenido de "incorporar un mapa":</label>
-        <input type="text" class="inputModalEdit" placeholder="Escribe aquí">
+        <label class="labelModal">Cambiar Coordenadas:</label>
+        <div class="coordsEdit">
+        <input type="text" class="latitudEdit" placeholder="ingresa latitud">
+        <input type="text" class="longitudEdit" placeholder="ingresa longitud">
+        <button class="inputModalEdit"><img src="${geo}" class="buttonCoords" title="Obtener Coordenadas" alt="buttonMenu"></button>
+        </div>
         <div class="divImgModal"> 
         <label class="labelModalImgEdit">Subir Imagen
         <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png"></input>
@@ -435,15 +473,18 @@ export const Login = (onNavigate) => {
         <button class="buttonModalEdit" id="buttonModalEdit">Listo!</button>`;
 
             const postTextEdit = windowsModal.querySelector('.inputModalPostEdit');
-            const coordsEdit = windowsModal.querySelector('.inputModalEdit');
             // eslint-disable-next-line max-len
             const imgEditUrl = windowsModal.querySelector('.divImgModal').querySelector('.imgEditUrl');
             const buttonImgEdit = windowsModal.querySelector('.divImgModal').querySelector('.buttonModalImg');
+
+            const latitudEdit = windowsModal.querySelector('.coordsEdit').querySelector('.latitudEdit');
+            const longitudEdit = windowsModal.querySelector('.coordsEdit').querySelector('.longitudEdit');
+
             postTextEdit.value = doc.text;
-            coordsEdit.value = doc.coords;
+            latitudEdit.value = doc.coords.lat;
+            longitudEdit.value = doc.coords.lng;
             imgEditUrl.src = doc.image;
             postTextEdit.id = doc.text;
-            coordsEdit.id = doc.coords;
             windowsModal.showModal();
             windowsModal.style.display = 'block';
             windowsModal.style.display = 'flex';
@@ -452,6 +493,31 @@ export const Login = (onNavigate) => {
               const urlButtonImgEdit = buttonImgEdit.files[0];
               const urlImgLocal = URL.createObjectURL(urlButtonImgEdit);
               imgEditUrl.src = urlImgLocal;
+            });
+            // Editar Coordenadas
+            const buttonCoordsEdit = windowsModal.querySelector('.inputModalEdit');
+            buttonCoordsEdit.addEventListener('click', () => {
+              const latEdit = windowsModal.querySelector('.latitudEdit');
+              const lngEdit = windowsModal.querySelector('.longitudEdit');
+
+              if (navigator.geolocation) {
+                // Pedimos los datos de geolocalizacion al navegador
+                navigator.geolocation.getCurrentPosition(
+                  (position) => {
+                    const coords = {
+                      lat: `${position.coords.latitude}`,
+                      lng: `${position.coords.longitude}`,
+                    };
+                    latEdit.value = coords.lat;
+                    lngEdit.value = coords.lng;
+                    console.log(coords);
+                  },
+                  // Si no los entrega manda una alerta de error
+                  () => {
+                    window.alert('No has dado permiso para acceder a tu localizacion');
+                  },
+                );
+              }
             });
 
             // TERMINAR DE EDITAR POSTS
@@ -462,22 +528,29 @@ export const Login = (onNavigate) => {
               const buttonImg = windowsModal.querySelector('.divImgModal').querySelector('.buttonModalImg');
               const buttonImgFile = buttonImg.files[0];
               const nameButton = buttonImgFile ? buttonImgFile.name : 0;
+              const coordenadasEdit = {
+                lat: parseFloat(windowsModal.querySelector('.coordsEdit').querySelector('.latitudEdit').value),
+                lng: parseFloat(windowsModal.querySelector('.coordsEdit').querySelector('.longitudEdit').value),
+              };
+              console.log(coordenadasEdit);
+
               console.log(nameButton);
-              if (postTextEdit.value === '' && coordsEdit.value === '') {
+              if (postTextEdit.value === '' && coordenadasEdit.value === '') {
                 windowsModal.querySelector('.labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder editar la publicación';
               } else {
               // eslint-disable-next-line max-len
                 if (buttonImgFile) {
+                  console.log(coordenadasEdit);
                   uploadImg(nameButton, buttonImgFile)
                     .then((snapshot) => {
                       const fullPath = snapshot.metadata.fullPath;
                       getUrl(fullPath).then((url) => updatePost(doc.id, {
-                        text: postTextEdit.value, coords: coordsEdit.value, image: url,
+                        text: postTextEdit.value, coords: coordenadasEdit, image: url,
                       }));
                     });
                 } else {
                   updatePost(doc.id, {
-                    text: postTextEdit.value, coords: coordsEdit.value,
+                    text: postTextEdit.value, coords: coordenadasEdit,
                   });
                 }
                 windowsModal.close();
