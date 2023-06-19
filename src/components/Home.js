@@ -1,9 +1,9 @@
 // import { onNavigate } from '../main';
-import fongoHome from '../Images/fongoHome.png';
-import doce from '../Images/12.png';
-import trece from '../Images/13.png';
-import ocho from '../Images/18.png';
-import siete from '../Images/17.png';
+import { fongoHome } from '../Images/fongoHome.png';
+import { doce } from '../Images/12.png';
+import { trece } from '../Images/13.png';
+import { ocho } from '../Images/18.png';
+import { siete } from '../Images/17.png';
 
 import {
   signIn, loginWithGoogle, loginWithFB, currentUserInfo,
