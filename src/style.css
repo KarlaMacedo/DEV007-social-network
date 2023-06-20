@@ -771,12 +771,9 @@ header img {
     border: none;
     height: 4em;
     width: 5em;
-
+    transition: transform .2s;
 }
 
-.inputModal {
-    transition: transform .2s; 
-}
 .inputModal:hover {
     transform: scale(1.5); 
 }
@@ -797,7 +794,7 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 2em;
-    width: 3.em;
+    width: 3em;
     margin-top: .5em;
     margin-bottom: .7em;
     padding-left: 15px;
@@ -815,7 +812,7 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 2em;
-    width: 3.em;
+    width: 3em;
     margin-top: .5em;
     margin-bottom: .7em;
     padding-left: 15px;
@@ -1099,11 +1096,9 @@ header img {
     border: none;
     height: 4em;
     width: 5em;
-}
-
-.inputModalEdit {
     transition: transform .2s; 
 }
+
 .inputModalEdit:hover {
     transform: scale(1.5); 
 }
@@ -1123,7 +1118,7 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 2em;
-    width: 3.em;
+    width: 3em;
     margin-top: .5em;
     margin-bottom: .7em;
     padding-left: 15px;
@@ -1141,7 +1136,7 @@ header img {
     font-family: 'Glacial Indifference', sans-serif;
     border: none;
     height: 2em;
-    width: 3.em;
+    width: 3em;
     margin-top: .5em;
     margin-bottom: .7em;
     padding-left: 15px;

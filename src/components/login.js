@@ -5,8 +5,9 @@ import {
 import {
   // eslint-disable-next-line max-len
   currentUserInfo, post, addPost, deleteDocData, updatePost,
-  like, disLike, uploadImg, getUrl, updateNameProfile, initMap,
+  like, disLike, uploadImg, getUrl, updateNameProfile,
 } from '../firebase/index.js';
+import { initMap } from '../firebase/maps.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
 import nueve from '../Images/9.png';
