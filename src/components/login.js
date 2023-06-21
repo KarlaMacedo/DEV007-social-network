@@ -1,10 +1,10 @@
 // import { onNavigate } from '../main';
 import {
-  auth,
+  auth, currentUserInfo,
 } from '../firebase/init.js';
 import {
   // eslint-disable-next-line max-len
-  currentUserInfo, post, addPost, deleteDocData, updatePost,
+  post, addPost, deleteDocData, updatePost,
   like, disLike, uploadImg, getUrl, updateNameProfile,
 } from '../firebase/index.js';
 import { initMap } from '../firebase/maps.js';

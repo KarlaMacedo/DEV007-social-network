@@ -1,5 +1,8 @@
 // import { onNavigate } from '../main';
-import { createUser, updateName, currentUserInfo } from '../firebase/index.js';
+import { createUser, updateName } from '../firebase/index.js';
+import {
+  currentUserInfo,
+} from '../firebase/init';
 import uno from '../Images/1.png';
 import doce from '../Images/12.png';
 import trece from '../Images/13.png';
