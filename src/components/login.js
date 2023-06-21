@@ -246,8 +246,8 @@ export const Login = (onNavigate) => {
         const selecImgFile = selecImg.files[0];
         const name = selecImgFile ? selecImgFile.name : 0;
         const size = selecImgFile ? selecImgFile.size : 0;
-        if (inputModalPost === '' && coordenadas === '' && !selecImgFile) {
-          windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder publicar';
+        if (inputModalPost === '' && !selecImgFile) {
+          windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe agregar al menos un Post o una Imagen';
         } else if (selecImgFile && size > 100000) {
           windowsModal.querySelector('#labelErrorsModal').textContent = 'La imagen supera el limite de 100kb';
         } else if (selecImgFile && size < 100000) {
@@ -343,7 +343,7 @@ export const Login = (onNavigate) => {
         contentImgs.appendChild(imgElement);
       }
 
-      if (doc.coords !== '') {
+      if (doc.coords.lat && doc.coords.lng) {
         const coordsElement = document.createElement('div');
         coordsElement.setAttribute('id', `${doc.id}`);
         coordsElement.setAttribute('class', 'map');
@@ -482,8 +482,8 @@ export const Login = (onNavigate) => {
             const longitudEdit = windowsModal.querySelector('.coordsEdit').querySelector('.longitudEdit');
 
             postTextEdit.value = doc.text;
-            latitudEdit.value = doc.coords.lat;
-            longitudEdit.value = doc.coords.lng;
+            latitudEdit.value = doc.coords.lat || '';
+            longitudEdit.value = doc.coords.lng || '';
             imgEditUrl.src = doc.image;
             postTextEdit.id = doc.text;
             windowsModal.showModal();
