@@ -6,8 +6,11 @@ import ocho from '../Images/18.png';
 import siete from '../Images/17.png';
 
 import {
-  signIn, loginWithGoogle, loginWithFB, currentUserInfo,
+  signIn, loginWithGoogle, loginWithFB,
 } from '../firebase/index.js';
+import {
+  currentUserInfo,
+} from '../firebase/init';
 
 export const Home = (onNavigate) => {
   // CREACIÓN DE INTERFAZ

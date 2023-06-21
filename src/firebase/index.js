@@ -22,9 +22,6 @@ export const updateName = (displayName) => {
   updateProfile(auth.currentUser, { displayName });
 };
 
-// FUNCIÓN MOSTRAR DATOS DE USUARIO
-export const currentUserInfo = () => auth.currentUser;
-
 // LOGIN CON GOOGLE
 const provider = new GoogleAuthProvider();
 export const loginWithGoogle = () => signInWithPopup(auth, provider);
