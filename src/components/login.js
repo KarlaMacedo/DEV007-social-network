@@ -180,9 +180,9 @@ export const Login = (onNavigate) => {
         <input type="text" class="inputModalPost" placeholder="Escribe aquí">
         <label class="labelModal">Ingresar coordenadas:</label>
         <div class="coords">
-        <input type="text" class="latitud" placeholder="ingresa latitud">
-        <input type="text" class="longitud" placeholder="ingresa longitud">
-        <button class="inputModal"><img src="${geo}" class="buttonCoords" title="Obtener Coordenadas" alt="buttonMenu"></button>
+        <input type="text" class="latitud" placeholder="Ingresa latitud">
+        <input type="text" class="longitud" placeholder="Ingresa longitud">
+        <button class="inputModal"><img src="${geo}" class="buttonCoords" title="Obtener coordenadas de tu ubicación actual" alt="buttonMenu"></button>
         </div>
         <div class="divImgModal"> 
         <label class="labelButtonModalImg">Subir Imagen
@@ -458,9 +458,9 @@ export const Login = (onNavigate) => {
         <input type="text" class="inputModalPostEdit" placeholder="Escribe aquí">
         <label class="labelModal">Cambiar Coordenadas:</label>
         <div class="coordsEdit">
-        <input type="text" class="latitudEdit" placeholder="ingresa latitud">
-        <input type="text" class="longitudEdit" placeholder="ingresa longitud">
-        <button class="inputModalEdit"><img src="${geo}" class="buttonCoords" title="Obtener Coordenadas" alt="buttonMenu"></button>
+        <input type="text" class="latitudEdit" placeholder="Ingresa latitud">
+        <input type="text" class="longitudEdit" placeholder="Ingresa longitud">
+        <button class="inputModalEdit"><img src="${geo}" class="buttonCoords" title="Obtener coordenadas de tu ubicación actual" alt="buttonMenu"></button>
         </div>
         <div class="divImgModal"> 
         <label class="labelModalImgEdit">Subir Imagen

@@ -114,6 +114,7 @@ footer p {
         font-size: 1.5em !important;
     }
     /*--LOGIN--*/
+
 }
 
 @media screen and (min-width: 1000px) {
@@ -169,6 +170,35 @@ footer p {
         margin: 0px !important;
     }
     /*--LOGIN--*/
+    .longitud{
+        margin-left: 1em !important;
+    }
+    .longitudEdit{
+        margin-left: 1em !important;
+    }
+    .coordsEdit {
+        display: flex !important;
+        justify-content: start !important;
+        width: -webkit-fill-available !important;
+        flex-direction: row !important;
+    }
+    .coords {
+        display: flex !important;
+        justify-content: start !important;
+        width: -webkit-fill-available !important;
+        flex-direction: row !important;
+    }
+    .latitud{
+        margin-bottom: .7em !important;
+    } 
+    .latitudEdit{
+        margin-bottom: .7em !important;
+    } 
+    .divImgModal {
+        justify-content: flex-start !important;
+        align-items: flex-start !important;
+    }
+    
 }
 
 /*---------------------------------------------------FORMATO HEADER----------------------------------------------*/
@@ -777,16 +807,32 @@ header img {
 .inputModal:hover {
     transform: scale(1.5); 
 }
+
+.divImgModal{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+}
+
 .coords {
     display: flex;
-    justify-content: start;
-
+    justify-content: center;
+    width: -webkit-fill-available;
+    flex-direction: column-reverse;
+    align-items: center;
 }
 
 .buttonCoords{
     max-width: 100%;
     max-height: 100%;
 }
+
+.buttonCoords:hover {
+    filter: drop-shadow(0 4px 4px rgb(12, 12, 12));
+    transition: all 0.2s ease;
+  }
+
 .latitud {
     background-color: rgba(44, 211, 225, 1);
     color: rgba(95, 95, 95, 1);
@@ -796,15 +842,17 @@ header img {
     height: 2em;
     width: 8em;
     margin-top: .5em;
-    margin-bottom: .7em;
+    margin-bottom: 1.5em;
     padding-left: 15px;
-    border-radius: 20px;
+    border-radius: 10px;
     align-self: center;
 }
+
 .latitud:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
   }
+
 .longitud {
     background-color: rgba(44, 211, 225, 1);
     color: rgba(95, 95, 95, 1);
@@ -813,13 +861,14 @@ header img {
     border: none;
     height: 2em;
     width: 8em;
-    margin-left: 1em;
+    margin-left: 0;
     margin-top: .5em;
     margin-bottom: .7em;
     padding-left: 15px;
-    border-radius: 20px;
+    border-radius: 10px;
     align-self: center;
 }
+
 .longitud:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
@@ -847,7 +896,6 @@ header img {
     border-color: #ffffff;
     width: max-content;
     height: max-content;
-    align-self: self-end;
     margin: 10px;
     padding: 10px;
     font-family: 'Glacial Indifference', sans-serif;
@@ -1103,15 +1151,25 @@ header img {
 .inputModalEdit:hover {
     transform: scale(1.5); 
 }
+
 .coordsEdit {
     display: flex;
-    justify-content: start;
+    justify-content: center;
+    width: -webkit-fill-available;
+    flex-direction: column-reverse;
+    align-items: center;
 }
 
 .buttonCoordsEdit{
     max-width: 100%;
     max-height: 100%;
 }
+
+.buttonCoordsEdit:hover {
+    filter: drop-shadow(0 4px 4px rgb(12, 12, 12));
+    transition: all 0.2s ease;
+  }
+
 .latitudEdit {
     background-color: rgba(44, 211, 225, 1);
     color: rgba(95, 95, 95, 1);
@@ -1121,15 +1179,17 @@ header img {
     height: 2em;
     width: 8em;
     margin-top: .5em;
-    margin-bottom: .7em;
+    margin-bottom: 1.5em;
     padding-left: 15px;
-    border-radius: 20px;
+    border-radius: 10px;
     align-self: center;
 }
+
 .latitudEdit:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
   }
+
 .longitudEdit {
     background-color: rgba(44, 211, 225, 1);
     color: rgba(95, 95, 95, 1);
@@ -1138,13 +1198,14 @@ header img {
     border: none;
     height: 2em;
     width: 8em;
-    margin-left: 1em;
+    margin-left: 0;
     margin-top: .5em;
     margin-bottom: .7em;
     padding-left: 15px;
-    border-radius: 20px;
+    border-radius: 10px;
     align-self: center;
 }
+
 .longitudEdit:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
@@ -1157,7 +1218,6 @@ header img {
     border-color: #ffffff;
     width: max-content;
     height: max-content;
-    align-self: self-end;
     margin: 10px;
     padding: 10px;
     font-family: 'Glacial Indifference', sans-serif;
