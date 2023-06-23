@@ -37,7 +37,6 @@ export const post = async (postText, userCords, userImage) => {
     id: '',
   });
 
-  console.log(docRef.id);
   const idPost = await updateDoc(docRef, {
     id: docRef.id,
   });
