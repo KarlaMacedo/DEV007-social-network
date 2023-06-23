@@ -75,6 +75,16 @@ El prototipo de alta fidelidad fue elaborado en [Figma](https://www.figma.com/pr
 
 ![Prototipo baja fidelidad](/src/Images/prototipoalta.png)
 
+#### Responsive
+
+Se buscó un diseño responsive, basándonos en el mobile first.
+
+![Login](/src/Images/responsive1.png)
+
+![Register](/src/Images/responsive2.png)
+
+![Home](/src/Images/responsive3.png)
+
 #### Testeos de usabilidad
 
 Durante el desarrollo de estre proyecto se hicieron _tests_ de usabilidad con
