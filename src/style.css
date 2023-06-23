@@ -135,7 +135,7 @@ footer p {
         margin-left: -50% !important;
         background-color: #ffffff !important;
         position: fixed !important;
-        margin-top: -180px !important;
+        margin-top: -210px !important;
         padding-top: 200px !important;
         padding-bottom: 1000px !important;
     }
@@ -158,7 +158,7 @@ footer p {
         margin-left: -50% !important;
         background-color: #ffffff !important;
         position: fixed !important;
-        margin-top: -170px !important;
+        margin-top: -220px !important;
         padding-top: 200px !important;
         padding-bottom: 1000px !important;
     }
@@ -874,12 +874,6 @@ header img {
     transition: all 0.2s ease;
   }
 
-.map {
-    width: 200px;
-    height: 150px;
-    background-color: grey;
-}
-
 .buttonModalImg {
     width: 0.1px;
     height: 0.1px;
@@ -1008,7 +1002,7 @@ header img {
     margin: 5px;
 }
 
-.coordsPosts{
+.map {
     width: 50%;
     height: inherit;
     border: 0;
