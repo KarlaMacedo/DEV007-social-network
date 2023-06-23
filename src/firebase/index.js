@@ -15,8 +15,8 @@ export const signIn = (email, password) => signInWithEmailAndPassword(auth, emai
 export const createUser = (email, password) => createUserWithEmailAndPassword(auth, email, password);
 
 // FUNCIÓN GUARADR USUARIO
-export const updateName = (displayName) => {
-  updateProfile(auth.currentUser, { displayName });
+export const updateName = (displayName, _) => {
+  updateProfile(auth ? auth.currentUser : _, { displayName });
 };
 
 // LOGIN CON GOOGLE
@@ -24,21 +24,26 @@ const provider = new GoogleAuthProvider();
 export const loginWithGoogle = () => signInWithPopup(auth, provider);
 
 // GUARDAR POST EN FIRESTORE
-export const post = async (postText, userCords, userImage) => {
+export const post = async (postText, userCords, userImage, _) => {
+  const userAuth = auth ? auth.currentUser : _;
+  const userAuthEmail = auth ? userAuth.email : _;
+  const userAuthId = auth ? userAuth.uid : _;
+  const userAuthName = auth ? userAuth.displayName : _;
   const docRef = await addDoc(collection(db, 'posts'), {
     text: postText,
     coords: userCords,
     image: userImage,
-    userEmail: auth.currentUser.email,
-    userId: auth.currentUser.uid,
-    userName: auth.currentUser.displayName,
+    userEmail: userAuthEmail,
+    userId: userAuthId,
+    userName: userAuthName,
     dateCreate: Timestamp.now(),
     likes: [],
     id: '',
   });
 
+  const refId = docRef ? docRef.id : _;
   const idPost = await updateDoc(docRef, {
-    id: docRef.id,
+    id: refId,
   });
   console.log(idPost);
 };
@@ -84,6 +89,6 @@ const providerFB = new FacebookAuthProvider();
 export const loginWithFB = () => signInWithPopup(auth, providerFB);
 
 // FUNCIÓN ACTUALIZAR NOMBRE PERFIL
-export const updateNameProfile = (newName) => {
-  updateProfile(auth.currentUser, { displayName: newName });
+export const updateNameProfile = (newName, _) => {
+  updateProfile(auth ? auth.currentUser : _, { displayName: newName });
 };
