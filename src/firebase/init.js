@@ -17,6 +17,4 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 export const db = getFirestore(app);
-
-// FUNCIÓN MOSTRAR DATOS DE USUARIO
 export const currentUserInfo = () => auth.currentUser;

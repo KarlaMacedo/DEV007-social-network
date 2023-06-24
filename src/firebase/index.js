@@ -50,7 +50,6 @@ export const post = async (postText, userCords, userImage, _) => {
 
 // OBTENER DATA DE POSTS FIRESTORE
 const colRef = collection(db, 'posts');
-console.log(colRef);
 
 // ORDENAR POST EN FORMA DESCENDENTE POR FECHA
 export const orderPosts = () => query(colRef, orderBy('dateCreate', 'desc'));
@@ -59,13 +58,9 @@ export const orderPosts = () => query(colRef, orderBy('dateCreate', 'desc'));
 export const addPost = (callback) => {
   onSnapshot(orderPosts(colRef), (querySnapshot) => {
     const allPosts = []; // nuevo array a formar con los posts
-    console.log(querySnapshot);
     querySnapshot.docs.forEach((docPost) => { // recorre el objeto de objetos de posts
-      allPosts.push(docPost.data()); // copia de cada objeto y se le da el id del post
-      console.log({ ...docPost.data() });
-      console.log(docPost.id);
+      allPosts.push({ ...docPost.data() }); // copia de cada objeto y se le da el id del post
     });
-    console.log(allPosts);
     callback(allPosts); // llamar al nuevo array formado
   });
 };

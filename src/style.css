@@ -48,7 +48,6 @@ footer p {
     margin: 8px;
 }
 
-
 /*---------------------------------------------------MEDIAS QUERIES----------------------------------------------*/
 @media only screen and (min-width: 600px) and (max-width: 900px) {
     /*--GENERALES--*/
@@ -71,10 +70,10 @@ footer p {
     .lineHome{
         width: 19em !important;
     }
-    #iniciarSesionDiv2 input{
+    #signInDiv2 input{
         font-size: 1.3em !important;
     }
-    #iniciarSesionDiv2 p{
+    #signInDiv2 p{
         font-size: 1.5em !important;
     }
     #buttonLogin{
@@ -114,7 +113,6 @@ footer p {
         font-size: 1.5em !important;
     }
     /*--LOGIN--*/
-
 }
 
 @media screen and (min-width: 1000px) {
@@ -139,7 +137,7 @@ footer p {
         padding-top: 200px !important;
         padding-bottom: 1000px !important;
     }
-    #iniciarSesionDiv2{
+    #signInDiv2{
         background-color: rgb(209 209 209 / 70%) !important;
         margin: 20px !important;
     }
@@ -198,7 +196,6 @@ footer p {
         justify-content: flex-start !important;
         align-items: flex-start !important;
     }
-    
 }
 
 /*---------------------------------------------------FORMATO HEADER----------------------------------------------*/
@@ -218,12 +215,12 @@ header img {
     margin-bottom: 25px;
 }
 
-/*--------------------------HOME------------------------*/
+/*---------------------------------------------------FORMATO HOME----------------------------------------------*/
 #homeDiv{
     width: 75%;
 }
 
-#iniciarSesionDiv {
+#signInDiv {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -231,7 +228,7 @@ header img {
     width: -webkit-fill-available;
 }
 
-#iniciarSesionDiv2 {
+#signInDiv2 {
     background-color: rgba(255, 255, 255, 0.70);
     display: flex;
     flex-direction: column; 
@@ -255,7 +252,7 @@ header img {
     margin-top: -9px;
 }
 
-#iniciarSesionDiv2 input {
+#signInDiv2 input {
     background-color: rgba(44, 211, 225, 1);
     color: rgba(95, 95, 95, 1);
     font-size: 1.1em;
@@ -265,12 +262,12 @@ header img {
     width: -webkit-fill-available;
 }
 
-#iniciarSesionDiv2 input:hover {
+#signInDiv2 input:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
   }
 
-#iniciarSesionDiv2 p {
+#signInDiv2 p {
     font-size: 1.3em;
     font-weight: bold;
     margin: 0px;
@@ -415,7 +412,7 @@ header img {
 .passwordDiv:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
-  }
+}
 
 #inputPasswordRegister{
     width: -webkit-fill-available;
@@ -445,7 +442,7 @@ header img {
 .showPassword:hover {
     filter: drop-shadow(0 4px 4px rgb(12, 12, 12));
     transition: all 0.2s ease;
-  }
+}
 
 .labelErrors{
     color: red;
@@ -470,7 +467,7 @@ header img {
 .buttonRegister:hover {
     box-shadow: 0 4px 16px rgb(242, 102, 171, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .buttonBackHomeRegister{
     background-color: rgba(255, 197, 25, 1);
@@ -524,10 +521,11 @@ header img {
     margin-bottom: 4px;
     margin-right: 4px;
 }
+
 .buttonMenu:hover {
     box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .buttonMenu img{
     width: 4em;
@@ -704,7 +702,7 @@ header img {
 .inputModalProfile:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
-  }
+}
 
 #closeModal{
     background-color: transparent;
@@ -740,7 +738,7 @@ header img {
 .buttonModalProfile:hover {
     box-shadow: 0 4px 16px rgba(242, 102, 171, 1);
     transition: all 0.2s ease;
-  }
+}
 
 #labelErrorsModal{
     color: red;
@@ -774,7 +772,7 @@ header img {
 .inputLogin:hover {
     box-shadow: 0 4px 16px rgba(255, 197, 25, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .inputModalPost{
     background-color: rgba(44, 211, 225, 1);
@@ -793,7 +791,7 @@ header img {
 .inputModalPost:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .inputModal{
     background-color: transparent;
@@ -831,7 +829,7 @@ header img {
 .buttonCoords:hover {
     filter: drop-shadow(0 4px 4px rgb(12, 12, 12));
     transition: all 0.2s ease;
-  }
+}
 
 .latitud {
     background-color: rgba(44, 211, 225, 1);
@@ -851,7 +849,7 @@ header img {
 .latitud:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .longitud {
     background-color: rgba(44, 211, 225, 1);
@@ -872,7 +870,7 @@ header img {
 .longitud:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .buttonModalImg {
     width: 0.1px;
@@ -881,7 +879,7 @@ header img {
     overflow: hidden;
     position: absolute;
     z-index: -1;
-    }
+}
 
 .labelButtonModalImg{
     background-color: rgba(255, 197, 25, 1);
@@ -898,7 +896,7 @@ header img {
 .labelButtonModalImg:hover {
     box-shadow: 0 4px 16px rgba(255, 197, 25, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .urlLocalImg {
     width: 100px;
@@ -918,10 +916,11 @@ header img {
     margin: 1em;
     align-self: center;
 }
+
 .buttonModalPublish:hover {
     box-shadow: 0 4px 16px rgba(242, 102, 171, 1);
     transition: all 0.2s ease;
-  }
+}
 
 /*--Formato posts--*/
 .postsContainer{
@@ -1040,7 +1039,7 @@ header img {
 .imgButtonLikes:hover {
     filter: drop-shadow(0 4px 4px white);
     transition: all 0.2s ease;
-  }
+}
 
 .likesElement{
     text-align: center;
@@ -1106,12 +1105,12 @@ header img {
 .closeMenuPosts img:hover {
     box-shadow: 0 4px 16px rgba(164, 89, 209, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .deletePost:hover {
     background-color: rgba(242, 102, 171, 0.47);
     cursor: pointer;
-  }
+}
 
  /*--Formato modal editar posts--*/
 .inputModalPostEdit{
@@ -1131,7 +1130,7 @@ header img {
 .inputModalPostEdit:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .inputModalEdit{
     background-color: transparent;
@@ -1162,7 +1161,7 @@ header img {
 .buttonCoordsEdit:hover {
     filter: drop-shadow(0 4px 4px rgb(12, 12, 12));
     transition: all 0.2s ease;
-  }
+}
 
 .latitudEdit {
     background-color: rgba(44, 211, 225, 1);
@@ -1182,7 +1181,7 @@ header img {
 .latitudEdit:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .longitudEdit {
     background-color: rgba(44, 211, 225, 1);
@@ -1203,7 +1202,7 @@ header img {
 .longitudEdit:hover {
     box-shadow: 0 4px 16px rgba(44, 211, 225, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .labelModalImgEdit{
     background-color: rgba(255, 197, 25, 1);
@@ -1220,7 +1219,7 @@ header img {
 .labelModalImgEdit:hover {
     box-shadow: 0 4px 16px rgba(255, 197, 25, 1);
     transition: all 0.2s ease;
-  }
+}
 
 .imgEditUrl {
     min-width: 100px;
@@ -1240,6 +1239,7 @@ header img {
     margin: 1em;
     align-self: center;
 }
+
 .buttonModalEdit:hover {
     box-shadow: 0 4px 16px rgba(242, 102, 171, 1);
     transition: all 0.2s ease;
