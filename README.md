@@ -258,14 +258,14 @@ librerías o frameworks, solo [vanilla JavaScript](https://medium.com/laboratori
   * [Empezando con Jest - Documentación oficial](https://jestjs.io/docs/es-ES/getting-started)
 </p></details>
 
-- [ ] **Pruebas asíncronas**
+- [✓] **Pruebas asíncronas**
 
   <details><summary>Links</summary><p>
 
   * [Tests de código asincrónico con Jest - Documentación oficial](https://jestjs.io/docs/es-ES/asynchronous)
 </p></details>
 
-- [ ] **Uso de mocks y espías**
+- [✓] **Uso de mocks y espías**
 
   <details><summary>Links</summary><p>
 
