@@ -1,4 +1,3 @@
-// Agregar Mapa
 export const initMap = (coordenadas, id) => {
   const coords = coordenadas;
   // eslint-disable-next-line no-undef

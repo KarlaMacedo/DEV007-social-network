@@ -95,7 +95,6 @@ describe('loginWithGoogle', () => {
   test('debería retornar la información del usuario una vez que se ha logeado con Google', async () => {
     signInWithPopup.mockReturnValueOnce({ user: 'stringGoogle' });
     const provider = GoogleAuthProvider.mockReturnValueOnce({});
-    console.log(provider);
     const response = await loginWithGoogle();
     expect(response.user).toBe('stringGoogle');
   });
@@ -221,7 +220,6 @@ describe('loginWithFB', () => {
   test('debería retornar la información del usuario una vez que se ha logeado con Facebook', async () => {
     signInWithPopup.mockReturnValueOnce({ user: 'stringFacebook' });
     const provider = FacebookAuthProvider.mockReturnValueOnce({});
-    console.log(provider);
     const response = await loginWithFB();
     expect(response.user).toBe('stringFacebook');
   });

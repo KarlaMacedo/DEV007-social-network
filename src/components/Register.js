@@ -1,16 +1,14 @@
-// import { onNavigate } from '../main';
 import { createUser, updateName } from '../firebase/index.js';
 import {
   currentUserInfo,
 } from '../firebase/init';
-import uno from '../Images/1.png';
-import doce from '../Images/12.png';
-import trece from '../Images/13.png';
+import backgroundRegister from '../Images/1.png';
+import hideImg from '../Images/12.png';
+import showImg from '../Images/13.png';
 
 export const Register = (onNavigate) => {
   // CREACIÓN DE INTERFAZ
-
-  document.body.style.backgroundImage = `url(${uno})`;
+  document.body.style.backgroundImage = `url(${backgroundRegister})`;
 
   const header = document.getElementById('header');
   header.style.backgroundImage = 'none';
@@ -28,8 +26,8 @@ export const Register = (onNavigate) => {
     <label class="labelRegister">Contraseña:</label>
     <div class="passwordDiv">
       <input type="password" class="inputRegister" id="inputPasswordRegister" placeholder="*******************">
-        <img src="${doce}" class="hidePassword">
-        <img src="${trece}" class="showPassword">
+        <img src="${hideImg}" class="hidePassword">
+        <img src="${showImg}" class="showPassword">
     </div>
     <label class="labelErrors" id="labelErrors"></label>
     </div>
@@ -41,10 +39,12 @@ export const Register = (onNavigate) => {
   const buttonHome = document.createElement('button');
   buttonHome.setAttribute('class', 'buttonBackHomeRegister');
   buttonHome.textContent = 'Regresar';
-  buttonHome.addEventListener('click', () => onNavigate('/'));
 
   registerDiv.appendChild(buttonRegister);
   registerDiv.appendChild(buttonHome);
+
+  // FUNCIONALIDAD BOTON REGRESAR
+  buttonHome.addEventListener('click', () => onNavigate('/'));
 
   // MOSTRAR CONTRASEÑA
   registerDiv.querySelector('#containerFormRegister').querySelector('.hidePassword').style.display = 'none';
@@ -71,7 +71,6 @@ export const Register = (onNavigate) => {
       const displayNames = registerDiv.querySelector('#containerFormRegister').querySelector('#inputNameRegister').value;
       const signUpEmail = registerDiv.querySelector('#containerFormRegister').querySelector('#inputMailRegister').value;
       const signUpPassword = registerDiv.querySelector('#containerFormRegister').querySelector('#inputPasswordRegister').value;
-      console.log(displayNames, signUpEmail, signUpPassword);
       if (displayNames === '' || signUpEmail === '' || signUpPassword === '') {
         registerDiv.querySelector('#containerFormRegister').querySelector('#labelErrors').textContent = 'Debe rellenar todos los campos';
         return;
@@ -79,13 +78,10 @@ export const Register = (onNavigate) => {
       await createUser(signUpEmail, signUpPassword) // crea usuario en auth con su info
         .then(async () => {
           if (displayNames) {
-            console.log(displayNames);
             await updateName(displayNames); // guarda su info en auth firebase
-            console.log(updateName(displayNames));
           }
         })
-        .then(() => {
-          console.log(currentUserInfo());
+        .then(() => { // guarda info en local storage
           localStorage.setItem('user', JSON.stringify({ uid: currentUserInfo().uid, email: signUpEmail, displayName: displayNames }));
           onNavigate('/login');
         });
@@ -95,6 +91,7 @@ export const Register = (onNavigate) => {
       console.log(errorCode);
       const errorMessage = error.message;
       console.log(errorMessage);
+
       // etiquetas descriptivas en caso de errores
       if (errorCode === 'auth/email-already-in-use') {
         registerDiv.querySelector('#containerFormRegister').querySelector('#labelErrors').textContent = 'Ese usuario ya existe';

@@ -1,4 +1,3 @@
-// import { onNavigate } from '../main';
 import {
   auth, currentUserInfo,
 } from '../firebase/init.js';
@@ -14,14 +13,14 @@ import {
 import { initMap } from '../firebase/maps.js';
 import headerImg from '../Images/headers.jpg';
 import menuImg from '../Images/menu.png';
-import nueve from '../Images/9.png';
-import diez from '../Images/10.1.png';
-import diez2 from '../Images/10.2.png';
+import closeImg from '../Images/9.png';
+import likeImage from '../Images/10.1.png';
+import likeImage2 from '../Images/10.2.png';
 import rock from '../Images/rock.png';
 import geo from '../Images/geo.png';
 
 export const Login = (onNavigate) => {
-  // INFORMACIÓN DEL USUARIO ACTUAL
+  // INFORMACIÓN DEL USUARIO LOGUEADO
   const currentUserInformation = currentUserInfo() ? currentUserInfo() : JSON.parse(localStorage.getItem('user'));
   console.log(currentUserInformation);
   const currentUserId = currentUserInfo() ? currentUserInfo().uid : JSON.parse(localStorage.getItem('user')).uid;
@@ -29,7 +28,7 @@ export const Login = (onNavigate) => {
   const currentUserName = currentUserInfo() ? currentUserInfo().displayName : JSON.parse(localStorage.getItem('user')).displayName;
   console.log(currentUserName);
   if (currentUserName === null || currentUserName === undefined) {
-    window.location.reload();
+    window.location.reload(); // si se tarda en cargar el nombre por la promesa, se recarga
   }
   const currentUserEmail = currentUserInfo() ? currentUserInfo().email : JSON.parse(localStorage.getItem('user')).email;
   console.log(currentUserId);
@@ -54,6 +53,9 @@ export const Login = (onNavigate) => {
   <img src="${menuImg}" alt="buttonMenu">`;
   const onlyMenu = document.createElement('div');
   onlyMenu.setAttribute('class', 'onlyMenu');
+  const menuOptionsDiv = document.createElement('div');
+  menuOptionsDiv.setAttribute('class', 'menuOptionsDiv');
+  menuOptionsDiv.setAttribute('id', 'menuOptionsDiv');
 
   loginDiv.appendChild(menu);
   menu.appendChild(labelLogin);
@@ -64,21 +66,16 @@ export const Login = (onNavigate) => {
   <button class="inputLogin" id="inputLogin">Crear publicación</button>
   <dialog class="divModal" id="divModal"></dialog>
   <div class="postsContainer">Aquí irán las publicaciones</div>`;
+  menuOptionsDiv.innerHTML = `
+          <button class="close" id="close"><img src="${closeImg}" alt="buttonMenu"></button>
+          <button class="optionMenu" id="acercaDe">Acerca de</button>
+          <button class="optionMenu" id="perfil">Editar perfil</button>
+          <a href="" class="optionMenu" id="signOut" style="text-decoration:none">Cerrar sesión</a>`;
 
   const windowsModal = loginDiv.querySelector('#divModal');
   windowsModal.style.display = 'none';
 
   // FUNCIONALIDAD MENU
-  const menuOptionsDiv = document.createElement('div');
-  menuOptionsDiv.setAttribute('class', 'menuOptionsDiv');
-  menuOptionsDiv.setAttribute('id', 'menuOptionsDiv');
-
-  menuOptionsDiv.innerHTML = `
-          <button class="close" id="close"><img src="${nueve}" alt="buttonMenu"></button>
-          <button class="optionMenu" id="acercaDe">Acerca de</button>
-          <button class="optionMenu" id="perfil">Editar perfil</button>
-          <a href="" class="optionMenu" id="cerrarSesion" style="text-decoration:none">Cerrar sesión</a>`;
-
   loginDiv.querySelector('#buttonMenu').addEventListener('click', () => { // abrir menu
     menuOptionsDiv.style.display = 'block';
     menuOptionsDiv.style.display = 'flex';
@@ -88,7 +85,7 @@ export const Login = (onNavigate) => {
     });
 
     // CERRAR SESION
-    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#cerrarSesion').addEventListener('click', () => {
+    loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#signOut').addEventListener('click', () => {
       localStorage.removeItem('user'); // si cierra sesión, la info del usuario se elimina del localstorage
       onNavigate('/');
     });
@@ -97,7 +94,7 @@ export const Login = (onNavigate) => {
     loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#acercaDe').addEventListener('click', () => {
       windowsModal.innerHTML = '';
       windowsModal.innerHTML = `
-      <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
+      <button class="closeModal" id="closeModal"><img src="${closeImg}" alt="buttonMenu"></button>
       <label class="labelModal">Acerca de Rockbook:</label>
       <p class="about">Esta es una red social en la que podrán ingresar usuarios con interés por la dinámica de las <b>piedras viajeras</b>. La piedra viajera es una piedra decorada, que pude contener un mensaje de aliento, esperanza o una reflexión. Éstas tienen el fin de dar un mensaje o mayor alegría al día de una persona.</p>
       <p class="about1">Existen dos formas de <b>contribuir a la dinámica</b>:</p>
@@ -125,7 +122,7 @@ export const Login = (onNavigate) => {
     loginDiv.querySelector('#menu').querySelector('#menuOptionsDiv').querySelector('#perfil').addEventListener('click', () => {
       windowsModal.innerHTML = '';
       windowsModal.innerHTML = `
-      <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
+      <button class="closeModal" id="closeModal"><img src="${closeImg}" alt="buttonMenu"></button>
       <label class="labelModal">Nombre:</label>
       <input type="text" class="inputModalProfile" placeholder="Escribe aquí">
       <label class="labelErrorsModal" id="labelErrorsModal"></label>
@@ -147,7 +144,6 @@ export const Login = (onNavigate) => {
         if (nameProfileEdit.value === '') {
           windowsModal.querySelector('#labelErrorsModal').textContent = 'Debe rellenar el campo para poder editar su nombre';
         } else {
-          // eslint-disable-next-line max-len
           await updateNameProfile(nameProfileEdit.value);
           localStorage.removeItem('user'); // la info del usuario se elimina del localstorage
           localStorage.setItem('user', JSON.stringify({ uid: currentUserId, email: currentUserEmail, displayName: nameProfileEdit.value }));
@@ -179,7 +175,7 @@ export const Login = (onNavigate) => {
     () => {
       windowsModal.innerHTML = '';
       windowsModal.innerHTML = `
-        <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
+        <button class="closeModal" id="closeModal"><img src="${closeImg}" alt="buttonMenu"></button>
         <label class="labelModal">Texto:</label>
         <input type="text" class="inputModalPost" placeholder="Escribe aquí">
         <label class="labelModal">Ingresar coordenadas:</label>
@@ -203,19 +199,18 @@ export const Login = (onNavigate) => {
       windowsModal.style.display = 'block';
       windowsModal.style.display = 'flex';
 
-      // Terminar de publicar posts
       const btnPublish = loginDiv.querySelector('#divModal').querySelector('#buttonModalPublish');
       const selecImg = windowsModal.querySelector('.divImgModal').querySelector('#buttonModalImg');
       const urlLocalImg = windowsModal.querySelector('.divImgModal').querySelector('.urlLocalImg');
 
-      // mostrar el nombre de la imagen que se va a subir al lado del boton subir imagen
+      // IMÁGENES
       selecImg.addEventListener('change', () => {
         const urlSelecImg = selecImg.files[0];
         const urlLocal = URL.createObjectURL(urlSelecImg);
         urlLocalImg.src = urlLocal;
       });
 
-      // Agregar Coordenadas
+      // AGREGAR COORDENADAS
       const buttonCoords = windowsModal.querySelector('.inputModal');
       buttonCoords.addEventListener('click', () => {
         const lat = windowsModal.querySelector('.latitud');
@@ -231,16 +226,16 @@ export const Login = (onNavigate) => {
               };
               lat.value = coords.lat;
               lng.value = coords.lng;
-              console.log(coords);
             },
             // Si no los entrega manda una alerta de error
             () => {
-              window.alert('No has dado permiso para acceder a tu localizacion');
+              window.alert('Aún no has dado permiso para acceder a tu ubicación');
             },
           );
         }
       });
 
+      // Terminar de publicar posts
       btnPublish.onclick = async () => {
         const inputModalPost = windowsModal.querySelector('.inputModalPost').value;
         const coordenadas = {
@@ -255,7 +250,6 @@ export const Login = (onNavigate) => {
         } else if (selecImgFile && size > 100000) {
           windowsModal.querySelector('#labelErrorsModal').textContent = 'La imagen supera el limite de 100kb';
         } else if (selecImgFile && size < 100000) {
-          console.log(size);
           uploadImg(name, selecImgFile)
             .then((snapshot) => {
               const fullPath = snapshot.metadata.fullPath;
@@ -263,22 +257,17 @@ export const Login = (onNavigate) => {
             });
           windowsModal.close();
           windowsModal.style.display = 'none';
-          console.log(inputModalPost, coordenadas, selecImg);
         } else if (!selecImgFile) {
           const urlImg = '';
-          console.log(selecImgFile);
           post(inputModalPost, coordenadas, urlImg);
 
           windowsModal.close();
           windowsModal.style.display = 'none';
-          console.log(inputModalPost, coordenadas, selecImg);
-
-        // loginDiv.querySelector('.containerPublications').appendChild();
         }
       };
+
       // cerrar la ventana modal
       const btnCloses = loginDiv.querySelector('.divModal').querySelector('.closeModal');
-      console.log(btnCloses);
 
       btnCloses.addEventListener('click', () => {
         windowsModal.close();
@@ -321,7 +310,7 @@ export const Login = (onNavigate) => {
 
       const dateElement = document.createElement('label');
       dateElement.setAttribute('class', 'datePosts');
-      // convierte la fecha de firebase a un string de js
+      // convierte la fecha de firebase a un string de js para traducirla
       const options = {
         weekday: 'long',
         year: 'numeric',
@@ -329,7 +318,6 @@ export const Login = (onNavigate) => {
         day: 'numeric',
       };
 
-      // lunes, 26 de diciembre de 2050 9 a. m.
       dateElement.textContent = `${doc.dateCreate.toDate().toLocaleDateString('es-CH', options)} - ${doc.dateCreate.toDate().toLocaleTimeString()} `;
       content1Posts.appendChild(dateElement);
 
@@ -351,10 +339,8 @@ export const Login = (onNavigate) => {
         const coordsElement = document.createElement('div');
         coordsElement.setAttribute('id', `${doc.id}`);
         coordsElement.setAttribute('class', 'map');
-        console.log(coordsElement);
 
         contentImgs.appendChild(coordsElement);
-        console.log(doc.id);
         initMap(doc.coords, doc.id);
       }
 
@@ -377,7 +363,7 @@ export const Login = (onNavigate) => {
       imgButtonLikes.setAttribute('class', 'imgButtonLikes');
 
       // si ya tiene like aparece rosa, si no blanco
-      const likeImg = doc.likes.includes(auth.currentUser.uid) ? diez : diez2;
+      const likeImg = doc.likes.includes(auth.currentUser.uid) ? likeImage : likeImage2;
       imgButtonLikes.src = `${likeImg}`;
       const likesElement = document.createElement('label');
       likesElement.setAttribute('class', 'likesElement');
@@ -403,13 +389,13 @@ export const Login = (onNavigate) => {
         optionsPosts.innerText = '...';
         content3Posts.appendChild(optionsPosts);
 
-        // si es el dueño crea el boton de eliminar
+        // cerrar menu de posts
         const closeMenuPosts = document.createElement('button');
         closeMenuPosts.setAttribute('class', 'closeMenuPosts');
         closeMenuPosts.value = doc.id;
         closeMenuPosts.id = doc.id;
 
-        closeMenuPosts.innerHTML = `<img src="${nueve}" alt="buttonMenu">`;
+        closeMenuPosts.innerHTML = `<img src="${closeImg}" alt="buttonMenu">`;
 
         // si es el dueño crea el boton de eliminar
         const deleteButton = document.createElement('button');
@@ -424,9 +410,8 @@ export const Login = (onNavigate) => {
         editButton.textContent = 'Editar';
         editButton.value = doc.id;
         editButton.id = doc.id;
-        console.log(doc.id);
-        console.log(doc.text);
 
+        // FUNCIONALIDAD DEL MENU DE POSTS
         optionsPosts.onclick = function () {
           optionsPosts.style.display = 'none';
           divButtons.style.display = 'block';
@@ -441,7 +426,6 @@ export const Login = (onNavigate) => {
           // FUNCIONALIDAD BOTON BORRAR
           deleteButton.onclick = function () {
             divButtons.style.display = 'none';
-            console.log(doc.id);
             const confirmDelete = window.confirm('¿Segur@ quieres eliminar el post?');
             if (confirmDelete) { // si el usuario confirma la eliminación del post
               deleteDocData(doc.id);
@@ -450,32 +434,31 @@ export const Login = (onNavigate) => {
 
           divButtons.appendChild(deleteButton);
 
-          // FUNCIONALIDAD BOTON EDITAR DE LA VENTANA MODAL
+          // FUNCIONALIDAD BOTON EDITAR
           editButton.onclick = function () {
             divButtons.style.display = 'none';
             optionsPosts.style.display = 'block';
-            // abre modal si quiere editar y le da el valor de cada espacio
             windowsModal.innerHTML = '';
             windowsModal.innerHTML = `
-        <button class="closeModal" id="closeModal"><img src="${nueve}" alt="buttonMenu"></button>
-        <label class="labelModal">Texto:</label>
-        <input type="text" class="inputModalPostEdit" placeholder="Escribe aquí">
-        <label class="labelModal">Cambiar Coordenadas:</label>
-        <div class="coordsEdit">
-        <input type="text" class="latitudEdit" placeholder="Ingresa latitud">
-        <input type="text" class="longitudEdit" placeholder="Ingresa longitud">
-        <button class="inputModalEdit"><img src="${geo}" class="buttonCoords" title="Obtener coordenadas de tu ubicación actual" alt="buttonMenu"></button>
-        </div>
-        <div class="divImgModal"> 
-        <label class="labelModalImgEdit">Subir Imagen
-        <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png"></input>
-        </label>
-        <br>
-        <img class="imgEditUrl">
-        </div>
-        <label class="labelErrorsModal" id="labelErrorsModal"></label>
-        <br>
-        <button class="buttonModalEdit" id="buttonModalEdit">Listo!</button>`;
+              <button class="closeModal" id="closeModal"><img src="${closeImg}" alt="buttonMenu"></button>
+              <label class="labelModal">Texto:</label>
+              <input type="text" class="inputModalPostEdit" placeholder="Escribe aquí">
+              <label class="labelModal">Cambiar Coordenadas:</label>
+              <div class="coordsEdit">
+              <input type="text" class="latitudEdit" placeholder="Ingresa latitud">
+              <input type="text" class="longitudEdit" placeholder="Ingresa longitud">
+              <button class="inputModalEdit"><img src="${geo}" class="buttonCoords" title="Obtener coordenadas de tu ubicación actual" alt="buttonMenu"></button>
+              </div>
+              <div class="divImgModal"> 
+              <label class="labelModalImgEdit">Subir Imagen
+              <input type="file" class="buttonModalImg" id="buttonModalImgEdit" accept=".jpg, .jpeg, .png"></input>
+              </label>
+              <br>
+              <img class="imgEditUrl">
+              </div>
+              <label class="labelErrorsModal" id="labelErrorsModal"></label>
+              <br>
+              <button class="buttonModalEdit" id="buttonModalEdit">Listo!</button>`;
 
             const postTextEdit = windowsModal.querySelector('.inputModalPostEdit');
             // eslint-disable-next-line max-len
@@ -485,21 +468,26 @@ export const Login = (onNavigate) => {
             const latitudEdit = windowsModal.querySelector('.coordsEdit').querySelector('.latitudEdit');
             const longitudEdit = windowsModal.querySelector('.coordsEdit').querySelector('.longitudEdit');
 
+            //  le da el valor del contenido del post a cada espacio
             postTextEdit.value = doc.text;
             latitudEdit.value = doc.coords.lat || '';
             longitudEdit.value = doc.coords.lng || '';
             imgEditUrl.src = doc.image;
             postTextEdit.id = doc.text;
+
+            // abre modal
             windowsModal.showModal();
             windowsModal.style.display = 'block';
             windowsModal.style.display = 'flex';
 
+            // Imagenes
             buttonImgEdit.addEventListener('change', () => {
               const urlButtonImgEdit = buttonImgEdit.files[0];
               const urlImgLocal = URL.createObjectURL(urlButtonImgEdit);
               imgEditUrl.src = urlImgLocal;
             });
-            // Editar Coordenadas
+
+            // Coordenadas
             const buttonCoordsEdit = windowsModal.querySelector('.inputModalEdit');
             buttonCoordsEdit.addEventListener('click', () => {
               const latEdit = windowsModal.querySelector('.latitudEdit');
@@ -515,11 +503,10 @@ export const Login = (onNavigate) => {
                     };
                     latEdit.value = coords.lat;
                     lngEdit.value = coords.lng;
-                    console.log(coords);
                   },
                   // Si no los entrega manda una alerta de error
                   () => {
-                    window.alert('No has dado permiso para acceder a tu localizacion');
+                    window.alert('Aún no has dado permiso para acceder a tu ubicación');
                   },
                 );
               }
@@ -537,15 +524,11 @@ export const Login = (onNavigate) => {
                 lat: parseFloat(windowsModal.querySelector('.coordsEdit').querySelector('.latitudEdit').value),
                 lng: parseFloat(windowsModal.querySelector('.coordsEdit').querySelector('.longitudEdit').value),
               };
-              console.log(coordenadasEdit);
 
-              console.log(nameButton);
               if (postTextEdit.value === '' && coordenadasEdit.value === '') {
                 windowsModal.querySelector('.labelErrorsModal').textContent = 'Debe rellenar al menos un campo para poder editar la publicación';
               } else {
-              // eslint-disable-next-line max-len
                 if (buttonImgFile) {
-                  console.log(coordenadasEdit);
                   uploadImg(nameButton, buttonImgFile)
                     .then((snapshot) => {
                       const fullPath = snapshot.metadata.fullPath;
@@ -582,10 +565,8 @@ export const Login = (onNavigate) => {
         // si ya tiene like, se borra el like de la data al dar click
         if (doc.likes.includes(auth.currentUser.uid)) {
           await disLike(doc.id, auth.currentUser.uid);
-          console.log('dislike');
         } else { // si no tiene like, se agrega el like a la data
           await like(doc.id, auth.currentUser.uid);
-          console.log('like');
         }
       };
     });
